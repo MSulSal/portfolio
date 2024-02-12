@@ -15,11 +15,50 @@ const Contact = () => {
         email: "",
         message: "",
     });
+    // eslint-disable-next-line no-unused-vars
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
 
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        emailjs
+            .send(
+                `${import.meta.env.VITE_EMAILJS_GMAIL_SERVICE_KEY}`,
+                `${import.meta.env.VITE_EMAILJS_TEMPLATE_KEY}`,
+                {
+                    from_name: form.name,
+                    to_name: "Suleman",
+                    from_email: form.email,
+                    to_email: "msulemansaleem01@gmail.com",
+                    message: form.message,
+                },
+                `${import.meta.env.VITE_EMAILJS_PUBLIC_KEY}`,
+            )
+            .then(
+                () => {
+                    setLoading(false);
+                    alert(
+                        "Thank you, I will get back to you as soon as possible.",
+                    );
+                    setForm({
+                        name: "",
+                        email: "",
+                        message: "",
+                    });
+                },
+                (error) => {
+                    setLoading(false);
+                    console.log(error);
+                    alert("Something went wrong.");
+                },
+            );
+    };
 
     return (
         <div className="xl:mt-12 xl:flex-row flex-col-reverse flex gap-10 overflow-hidden">
@@ -66,10 +105,10 @@ const Contact = () => {
                         </span>
                         <textarea
                             rows="7"
-                            name="name"
+                            name="message"
                             value={form.message}
                             onChange={handleChange}
-                            placeholder="What do you want to say?"
+                            placeholder="What would you like to discuss?"
                             className="bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outlined-none border-none font-medium"
                         />
                     </label>
