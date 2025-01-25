@@ -9,14 +9,14 @@ const Home = () => {
       <div className="container mx-auto h-full">
         <div className="flex flex-col xl:flex-row items-center justify-between xl:pt-8 xl:pb-24">
           {/* text */}
-          <div className="text-center xl:text-left">
-            <span className="text-xl">Software Engineer</span>
+          <div className="text-center xl:text-left order-2 xl:order-none">
             <h1 className="h1 mb-6">
               Hi, I&apos;m <br />{" "}
               <span className="text-accent">Suleman Saleem</span>
             </h1>
-            <p className="max-w-[500px] mb-9 text-white/80">
-              I&apos;m a highly motivated software engineer proficient in
+            <span className="text-xl">Software Engineer</span>
+            <p className="max-w-[500px] mb-9 mt-7 text-white/80">
+              I&apos;m  proficient in
               multiple programming languages and experienced with cloud native
               development and microservices architecture.
             </p>
@@ -39,7 +39,7 @@ const Home = () => {
             </div>
           </div>
           {/* photo */}
-          <div>
+          <div className="order-1 xl:order-none mb-8 xl:mb-0">
             <Photo />
           </div>
         </div>
