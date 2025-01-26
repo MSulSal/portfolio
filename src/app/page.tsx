@@ -1,5 +1,6 @@
 import Photo from "@/components/Photo";
 import Socials from "@/components/Socials";
+import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
 
@@ -16,9 +17,9 @@ const Home = () => {
             </h1>
             <span className="text-xl">Software Engineer</span>
             <p className="max-w-[500px] mb-9 mt-7 text-white/80">
-              I&apos;m  proficient in
-              multiple programming languages and experienced with cloud native
-              development and microservices architecture.
+              I&apos;m proficient in multiple programming languages and
+              experienced with cloud native development and microservices
+              architecture.
             </p>
             {/* btn and socials */}
             <div className="flex flex-col xl:flex-row items-center gap-8">
@@ -44,6 +45,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Stats />
     </section>
   );
 };
