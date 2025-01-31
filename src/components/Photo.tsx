@@ -16,7 +16,7 @@ const Photo = () => {
         {/* image */}
         <motion.div
           id="img"
-          className="mix-blend-lighten w-[290px] h-[250px] xl:w-[500px] xl:h-[420px] absolute"
+          className="mix-blend-lighten w-[290px] h-[250px] absolute"
         >
           <Image
             src="/profile_img_2.png"
