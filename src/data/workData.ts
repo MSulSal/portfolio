@@ -14,7 +14,7 @@ const data: ProjectCategory = {
   ],
   "ui-ux": [
     {
-      num: "02",
+      num: "01",
       title: "Dashlytics",
       description: "Admin dashboard design for a data analytics company.",
       stack: [
