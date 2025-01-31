@@ -14,9 +14,12 @@ const Photo = () => {
         }}
       >
         {/* image */}
-        <motion.div className="w-[290px] h-[300px] xl:w-[500px] xl:h-[500px] mix-blend-lighten absolute">
+        <motion.div
+          id="img"
+          className="mix-blend-lighten w-[290px] h-[250px] xl:w-[500px] xl:h-[420px] absolute"
+        >
           <Image
-            src="/profile_img.png"
+            src="/profile_img_2.png"
             priority
             quality={100}
             fill
@@ -33,9 +36,9 @@ const Photo = () => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <motion.circle
-            cx="253"
-            cy="253"
-            r="250"
+            cx="250"
+            cy="240"
+            r="240"
             stroke="#00ff99"
             strokeWidth="4"
             strokeLinecap="round"
