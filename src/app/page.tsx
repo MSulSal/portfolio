@@ -3,6 +3,7 @@ import Socials from "@/components/Socials";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
+import Link from "next/link";
 
 const Home = () => {
   return (
@@ -28,7 +29,11 @@ const Home = () => {
                 size="lg"
                 className="uppercase flex items-center gap-2"
               >
-                <span>Download Resume</span>
+                <span>
+                  <Link href="/resume.pdf" download="suleman-saleem-resume.pdf">
+                    Download Resume
+                  </Link>
+                </span>
                 <FiDownload className="text-xl" />
               </Button>
               <div className="mb-8 xl:mb-0">
