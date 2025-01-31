@@ -3,13 +3,13 @@ import { ProjectCategory } from "@/types";
 const data: ProjectCategory = {
   "web-development": [
     {
-      num: "01",
-      title: "Vanilla Sheets",
-      description: "Simple spread sheets program built with Vanilla JS.",
-      stack: [{ name: "HTML 5" }, { name: "CSS 3" }, { name: "JavaScript" }],
+      num: "",
+      title: "",
+      description: "",
+      stack: [{ name: "" }, { name: "" }, { name: "" }],
       image: "/",
       live: "",
-      github: "https://github.com/MSulSal/vanilla-sheets",
+      github: "",
     },
   ],
   "ui-ux": [
@@ -24,7 +24,7 @@ const data: ProjectCategory = {
         { name: "React.js" },
       ],
       image: "/projects/ui/dashlytics.png",
-      live: "",
+      live: "https://dashlytics-beta.vercel.app/",
       github: "https://github.com/MSulSal/dashlytics",
     },
   ],
