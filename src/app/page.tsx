@@ -30,7 +30,12 @@ const Home = () => {
                 className="uppercase flex items-center gap-2"
               >
                 <span>
-                  <Link href="/resume.pdf" download="suleman-saleem-resume.pdf">
+                  <Link
+                    href="/resume.pdf"
+                    download="suleman-saleem-resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Download Resume
                   </Link>
                 </span>
