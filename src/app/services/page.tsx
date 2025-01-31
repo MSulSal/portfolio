@@ -17,27 +17,27 @@ const projects = [
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     href: "",
   },
-  {
-    num: "03",
-    title: "Physical Modeling",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    href: "",
-  },
-  {
-    num: "04",
-    title: "Data Science",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    href: "",
-  },
-  {
-    num: "05",
-    title: "Animation",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    href: "",
-  },
+  // {
+  //   num: "03",
+  //   title: "Physical Modeling",
+  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+  //   href: "",
+  // },
+  // {
+  //   num: "04",
+  //   title: "Data Science",
+  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+  //   href: "",
+  // },
+  // {
+  //   num: "05",
+  //   title: "Animation",
+  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+  //   href: "",
+  // },
 ];
 
-const Projects = () => {
+const Services = () => {
   return (
     <section className="min-h-[80vh] flex flex-col justify-center py-12 xl:py-0">
       <div className="container mx-auto">
@@ -84,4 +84,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default Services;
