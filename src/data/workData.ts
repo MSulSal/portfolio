@@ -23,7 +23,7 @@ const data: ProjectCategory = {
         { name: "JavaScript" },
         { name: "React.js" },
       ],
-      image: "/",
+      image: "/projects/ui/dashlytics.png",
       live: "",
       github: "https://github.com/MSulSal/dashlytics",
     },
