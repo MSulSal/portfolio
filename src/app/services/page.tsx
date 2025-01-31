@@ -9,32 +9,14 @@ const projects = [
     num: "01",
     title: "Web Development",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    href: "",
+    href: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
   },
   {
     num: "02",
     title: "UI/UX Design",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    href: "",
+    href: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
   },
-  // {
-  //   num: "03",
-  //   title: "Physical Modeling",
-  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-  //   href: "",
-  // },
-  // {
-  //   num: "04",
-  //   title: "Data Science",
-  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-  //   href: "",
-  // },
-  // {
-  //   num: "05",
-  //   title: "Animation",
-  //   description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-  //   href: "",
-  // },
 ];
 
 const Services = () => {
