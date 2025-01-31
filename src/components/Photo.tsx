@@ -16,7 +16,7 @@ const Photo = () => {
         {/* image */}
         <motion.div
           id="img"
-          className="mix-blend-lighten w-[290px] h-[250px] absolute"
+          className="mix-blend-lighten w-[290px] h-[250px] xl:w-[500px] xl:h-[500px]"
         >
           <Image
             src="/profile_img_2.png"
@@ -29,7 +29,7 @@ const Photo = () => {
           />
         </motion.div>
         {/* circle */}
-        <motion.svg
+        {/* <motion.svg
           className="w-[300px] xl:w-[506px] h-[300px] xl:h-[506]"
           fill="transparent"
           viewBox="0 0 506 506"
@@ -54,7 +54,7 @@ const Photo = () => {
               repeatType: "reverse",
             }}
           />
-        </motion.svg>
+        </motion.svg> */}
       </motion.div>
     </div>
   );
