@@ -20,37 +20,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion } from "framer-motion";
 
-const about = {
-  title: "About me",
-  description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-  info: [
-    {
-      fieldName: "Name",
-      fieldValue: "Suleman Saleem",
-    },
-    {
-      fieldName: "Phone",
-      fieldValue: "(206) 331-5317",
-    },
-    {
-      fieldName: "Experience",
-      fieldValue: "3 Years",
-    },
-    {
-      fieldName: "Email",
-      fieldValue: "msulemansaleem01@gmail.com",
-    },
-    {
-      fieldName: "Freelance",
-      fieldValue: "Available",
-    },
-    {
-      fieldName: "Languages",
-      fieldValue: "English, Urdu",
-    },
-  ],
-};
-
 const experience = {
   icon: "/assets/resume/badge.svg",
   title: "My experience",
@@ -140,7 +109,6 @@ const Resume = () => {
             <TabsTrigger value="experience">Experience</TabsTrigger>
             <TabsTrigger value="education">Education</TabsTrigger>
             <TabsTrigger value="skills">Skills</TabsTrigger>
-            <TabsTrigger value="about">About me</TabsTrigger>
           </TabsList>
 
           <div className="min-h-[70vh] w-full">
@@ -226,30 +194,6 @@ const Resume = () => {
                             </TooltipContent>
                           </Tooltip>
                         </TooltipProvider>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </TabsContent>
-            <TabsContent
-              value="about"
-              className="w-full text-center xl:text-left"
-            >
-              <div className="flex flex-col gap-[30px]">
-                <h3 className="text-4xl font-bold">{about.title}</h3>
-                <p className="max-w-[600px] text-white/60 mx-auto xl:mx-0">
-                  {about.description}
-                </p>
-                <ul className="grid grid-cols-1 xl:grid-cols-2 gap-y-6 max-w-[620px] mx-auto xl:mx-0">
-                  {about.info.map((item, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className="flex items-center justify-center xl:justify-start gap-4"
-                      >
-                        <span className="text-white/60">{item.fieldName}</span>
-                        <span className="text-xl">{item.fieldValue}</span>
                       </li>
                     );
                   })}

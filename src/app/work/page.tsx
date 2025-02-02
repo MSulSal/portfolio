@@ -37,7 +37,7 @@ const projects = [
   },
   {
     num: "07",
-    title: "miscellaneous",
+    title: "Miscellaneous",
     href: "misc",
   },
 ];

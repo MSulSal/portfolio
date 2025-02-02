@@ -45,6 +45,8 @@ const Services = () => {
                   <Link
                     href={projectType.href}
                     className="w-[70px] h-[70px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center hover:-rotate-45"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <BsArrowDownRight className="text-primary text-3xl" />
                   </Link>
