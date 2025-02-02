@@ -1,28 +1,32 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-// Initialize Resend with environment variable
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Define CORS headers
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
+export async function OPTIONS() {
+  // This will handle CORS preflight requests
+  return new NextResponse(null, {
+    status: 200,
+    headers: CORS_HEADERS,
+  });
+}
+
 export async function POST(request: Request) {
   try {
-    // Debugging: Log environment variables (partial for security)
     console.log("Environment check:", {
       resendKey: process.env.RESEND_API_KEY
         ? "***" + process.env.RESEND_API_KEY.slice(-4)
         : "MISSING",
-      recipientEmail: process.env.YOUR_EMAIL,
+      recipientEmail: process.env.EMAIL,
       nodeEnv: process.env.NODE_ENV,
     });
 
-    // Validate Resend configuration
     if (!process.env.RESEND_API_KEY) {
       console.error("Missing RESEND_API_KEY environment variable");
       return new NextResponse(
@@ -34,7 +38,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Parse request body
     const body = await request.json().catch(() => null);
     if (!body) {
       return new NextResponse(JSON.stringify({ error: "Invalid JSON body" }), {
@@ -43,7 +46,6 @@ export async function POST(request: Request) {
       });
     }
 
-    // Validate required fields
     if (!body.email || !body.message) {
       return new NextResponse(
         JSON.stringify({ error: "Email and message are required" }),
@@ -54,13 +56,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Debugging: Log request body
     console.log("Request body:", JSON.stringify(body, null, 2));
 
-    // Send email through Resend
     const { data, error } = await resend.emails.send({
       from: "Website Contact <onboarding@resend.dev>",
-      to: process.env.YOUR_EMAIL!,
+      to: process.env.EMAIL!,
       replyTo: body.email,
       subject: `New message from ${body.firstname || "Unknown"} ${
         body.lastname || ""
@@ -104,9 +104,7 @@ export async function POST(request: Request) {
       console.error("Unexpected error:", {
         message: error.message,
         stack: error.stack,
-        rawError: error,
       });
-
       return new NextResponse(
         JSON.stringify({
           error: "Internal server error",
@@ -119,7 +117,6 @@ export async function POST(request: Request) {
       );
     } else {
       console.error("Unexpected error:", error);
-
       return new NextResponse(
         JSON.stringify({
           error: "Internal server error",
@@ -134,6 +131,4 @@ export async function POST(request: Request) {
   }
 }
 
-// Required configuration
-// export const dynamic = "force-dynamic"; // Prevent static optimization
-export const runtime = "nodejs"; // Force Node.js runtime
+export const runtime = "nodejs";

@@ -59,9 +59,18 @@ const Contact = () => {
         body: JSON.stringify(data),
       });
 
+      // Safely attempt to parse the response JSON.
+      let responseData: { error?: string } = {};
+      try {
+        responseData = await response.json();
+      } catch {
+        // If JSON parsing fails (e.g., empty response body), fallback to an empty object.
+        responseData = {};
+      }
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to send message");
+        // Throw an error with the message from the response if available.
+        throw new Error(responseData.error || "Failed to send message");
       }
 
       setSubmitSuccess(true);
@@ -160,19 +169,17 @@ const Contact = () => {
           </div>
           <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
             <ul className="flex flex-col gap-10">
-              {info.map((item, index) => {
-                return (
-                  <li key={index} className="flex items-center gap-6">
-                    <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-[0.375rem] flex items-center justify-center">
-                      <div className="text-[28px]">{item.icon}</div>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-white/60">{item.title}</p>
-                      <h3 className="text-xl">{item.description}</h3>
-                    </div>
-                  </li>
-                );
-              })}
+              {info.map((item, index) => (
+                <li key={index} className="flex items-center gap-6">
+                  <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-[0.375rem] flex items-center justify-center">
+                    <div className="text-[28px]">{item.icon}</div>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white/60">{item.title}</p>
+                    <h3 className="text-xl">{item.description}</h3>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
