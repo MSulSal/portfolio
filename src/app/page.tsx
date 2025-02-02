@@ -3,7 +3,6 @@ import Socials from "@/components/Socials";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
 import { FiDownload } from "react-icons/fi";
-import Link from "next/link";
 
 const Home = () => {
   return (
@@ -28,19 +27,19 @@ const Home = () => {
                 variant="outline"
                 size="lg"
                 className="uppercase flex items-center gap-2"
+                asChild // Makes the Button render as its child component
               >
-                <span>
-                  <Link
-                    href="/resume.pdf"
-                    download="suleman-saleem-resume.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Download Resume
-                  </Link>
-                </span>
-                <FiDownload className="text-xl" />
+                <a
+                  href="/resume.pdf"
+                  download="resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Download Resume
+                  <FiDownload className="text-xl" />
+                </a>
               </Button>
+
               <div className="mb-8 xl:mb-0">
                 <Socials
                   containerStyles="flex gap-6"
