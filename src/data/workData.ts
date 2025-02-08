@@ -3,13 +3,18 @@ import { ProjectCategory } from "@/types";
 const data: ProjectCategory = {
   "web-development": [
     {
-      num: "",
-      title: "",
-      description: "",
-      stack: [{ name: "" }, { name: "" }, { name: "" }],
-      image: "/",
-      live: "",
-      github: "",
+      num: "01",
+      title: "e-ventory",
+      description: "Online inventory record.",
+      stack: [
+        { name: "HTML 5" },
+        { name: "Tailwind CSS" },
+        { name: "React.js" },
+        { name: "Express.js" },
+      ],
+      image: "/projects/web/e-ventory.png",
+      live: "https://e-ventory-5q80.onrender.com/",
+      github: "https://github.com/MSulSal/e-ventory",
     },
   ],
   "ui-ux": [
