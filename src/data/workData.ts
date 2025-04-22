@@ -20,6 +20,20 @@ const data: ProjectCategory = {
   "ui-ux": [
     {
       num: "01",
+      title: "Miscellaneous",
+      description: "Collection of small to larges UI/UX projects.",
+      stack: [
+        { name: "HTML 5" },
+        { name: "CSS 3" },
+        { name: "JavaScript" },
+        { name: "React.js" },
+      ],
+      image: "/projects/ui/ui-contents.png",
+      live: "https://msulsal.github.io/ui-contents",
+      github: "https://github.com/MSulSal/ui-contents",
+    },
+    {
+      num: "02",
       title: "Dashlytics",
       description: "Admin dashboard design for a data analytics company.",
       stack: [
