@@ -35,7 +35,8 @@ const data: ProjectCategory = {
     {
       num: "02",
       title: "Dashlytics",
-      description: "Admin dashboard design for a data analytics company.",
+      description:
+        "Admin dashboard design for a hypothetical data analytics company.",
       stack: [
         { name: "HTML 5" },
         { name: "CSS 3" },
