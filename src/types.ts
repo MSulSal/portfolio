@@ -12,8 +12,5 @@ export type ProjectCategory = {
   "web-development": Project[];
   "ui-ux": Project[];
   "physical-modeling": Project[];
-  "data-science": Project[];
-  animation: Project[];
-  "game-development": Project[];
-  misc: Project[];
+  "data-analytics": Project[];
 };

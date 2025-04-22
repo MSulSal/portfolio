@@ -44,40 +44,7 @@ const data: ProjectCategory = {
       github: "",
     },
   ],
-  "data-science": [
-    {
-      num: "",
-      title: "",
-      description: "",
-      stack: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
-      image: "/",
-      live: "",
-      github: "",
-    },
-  ],
-  animation: [
-    {
-      num: "",
-      title: "",
-      description: "",
-      stack: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
-      image: "/",
-      live: "",
-      github: "",
-    },
-  ],
-  "game-development": [
-    {
-      num: "",
-      title: "",
-      description: "",
-      stack: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
-      image: "/",
-      live: "",
-      github: "",
-    },
-  ],
-  misc: [
+  "data-analytics": [
     {
       num: "",
       title: "",

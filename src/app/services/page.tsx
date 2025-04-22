@@ -8,13 +8,11 @@ const projects = [
   {
     num: "01",
     title: "Web Development",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     href: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
   },
   {
     num: "02",
     title: "UI/UX Design",
-    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
     href: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
   },
 ];
@@ -55,8 +53,6 @@ const Services = () => {
                 <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500">
                   {projectType.title}
                 </h2>
-                {/* description */}
-                <p className="text-white/60">{projectType.description}</p>
                 {/* border */}
                 <div className="border-b border-white/20 w-full"></div>
               </div>

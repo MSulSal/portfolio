@@ -22,23 +22,8 @@ const projects = [
   },
   {
     num: "04",
-    title: "Data Science",
-    href: "data-science",
-  },
-  {
-    num: "05",
-    title: "Animation",
-    href: "animation",
-  },
-  {
-    num: "06",
-    title: "Game Development",
-    href: "game-development",
-  },
-  {
-    num: "07",
-    title: "Miscellaneous",
-    href: "misc",
+    title: "Data Analytics/ Machine Learning",
+    href: "data-analytics",
   },
 ];
 
