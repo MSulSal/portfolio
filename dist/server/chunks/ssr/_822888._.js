@@ -119,26 +119,29 @@ const data = {
     ],
     "physical-modeling": [
         {
-            num: "",
-            title: "",
-            description: "",
+            num: "01",
+            title: "The Nature of Code",
+            description: `A collection of projects completed from or inspired by the book "The Nature of Code" by Daniel Shiffman`,
             stack: [
                 {
-                    name: ""
+                    name: "React.js"
                 },
                 {
-                    name: ""
+                    name: "HTML"
                 },
                 {
-                    name: ""
+                    name: "CSS"
                 },
                 {
-                    name: ""
+                    name: "JavaScript"
+                },
+                {
+                    name: "P5.js"
                 }
             ],
-            image: "/",
-            live: "",
-            github: ""
+            image: "/projects/physical-modeling/force.png",
+            live: "https://msulsal.github.io/nature-of-code",
+            github: "https://github.com/MSulSal/nature-of-code"
         }
     ],
     "data-analytics": [

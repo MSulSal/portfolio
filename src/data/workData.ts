@@ -49,13 +49,19 @@ const data: ProjectCategory = {
   ],
   "physical-modeling": [
     {
-      num: "",
-      title: "",
-      description: "",
-      stack: [{ name: "" }, { name: "" }, { name: "" }, { name: "" }],
-      image: "/",
-      live: "",
-      github: "",
+      num: "01",
+      title: "The Nature of Code",
+      description: `A collection of projects completed from or inspired by the book "The Nature of Code" by Daniel Shiffman`,
+      stack: [
+        { name: "React.js" },
+        { name: "HTML" },
+        { name: "CSS" },
+        { name: "JavaScript" },
+        { name: "P5.js" },
+      ],
+      image: "/projects/physical-modeling/force.png",
+      live: "https://msulsal.github.io/nature-of-code",
+      github: "https://github.com/MSulSal/nature-of-code",
     },
   ],
   "data-analytics": [
