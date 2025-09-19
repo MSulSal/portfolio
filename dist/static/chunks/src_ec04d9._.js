@@ -19,19 +19,23 @@ var _s = __turbopack_refresh__.signature();
 const links = [
     {
         name: "home",
-        path: "/"
+        path: "/",
+        external: false
     },
     {
-        name: "services",
-        path: "/services"
+        name: "projects",
+        path: "/projects",
+        external: false
     },
     {
         name: "resume",
-        path: "/resume"
+        path: "/resume",
+        external: false
     },
     {
-        name: "work",
-        path: "/work"
+        name: "upwork",
+        path: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
+        external: true
     }
 ];
 const Nav = ()=>{
@@ -39,20 +43,28 @@ const Nav = ()=>{
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
         className: "flex gap-8",
-        children: links.map((link, index)=>{
-            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+        children: links.map((link, index)=>link.external ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                href: link.path,
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "capitalize font-medium hover:text-accent transitional-all",
+                children: link.name
+            }, index, false, {
+                fileName: "[project]/src/components/Nav.tsx",
+                lineNumber: 36,
+                columnNumber: 11
+            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 href: link.path,
                 className: `${link.path === pathname && "text-accent border-b-2 border-accent"} capitalize font-medium hover:text-accent transitional-all`,
                 children: link.name
             }, index, false, {
                 fileName: "[project]/src/components/Nav.tsx",
-                lineNumber: 31,
+                lineNumber: 46,
                 columnNumber: 11
-            }, this);
-        })
+            }, this))
     }, void 0, false, {
         fileName: "[project]/src/components/Nav.tsx",
-        lineNumber: 28,
+        lineNumber: 33,
         columnNumber: 5
     }, this);
 };
@@ -279,23 +291,28 @@ var _s = __turbopack_refresh__.signature();
 const links = [
     {
         name: "home",
-        path: "/"
+        path: "/",
+        external: false
     },
     {
-        name: "services",
-        path: "/services"
+        name: "projects",
+        path: "/projects",
+        external: false
     },
     {
         name: "resume",
-        path: "/resume"
+        path: "/resume",
+        external: false
     },
     {
-        name: "work",
-        path: "/work"
+        name: "upwork",
+        path: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
+        external: true
     },
     {
         name: "contact",
-        path: "/contact"
+        path: "/contact",
+        external: false
     }
 ];
 const MobileNav = ()=>{
@@ -309,12 +326,12 @@ const MobileNav = ()=>{
                     className: "text-[32px] text-accent"
                 }, void 0, false, {
                     fileName: "[project]/src/components/MobileNav.tsx",
-                    lineNumber: 36,
+                    lineNumber: 41,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/MobileNav.tsx",
-                lineNumber: 35,
+                lineNumber: 40,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$sheet$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SheetContent"], {
@@ -333,54 +350,62 @@ const MobileNav = ()=>{
                                         children: "_"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/MobileNav.tsx",
-                                        lineNumber: 43,
+                                        lineNumber: 48,
                                         columnNumber: 18
                                     }, this),
                                     "eman"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/MobileNav.tsx",
-                                lineNumber: 42,
+                                lineNumber: 47,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/MobileNav.tsx",
-                            lineNumber: 41,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/MobileNav.tsx",
-                        lineNumber: 40,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
                         className: "flex flex-col justify-center items-center gap-8",
-                        children: links.map((link, index)=>{
-                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                        children: links.map((link, index)=>link.external ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                href: link.path,
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className: `${link.path === pathname && "text-accent border-b-2 border-accent"} text-xl capitalize hover:text-accent transition-all`,
+                                children: link.name
+                            }, index, false, {
+                                fileName: "[project]/src/components/MobileNav.tsx",
+                                lineNumber: 56,
+                                columnNumber: 15
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 href: link.path,
                                 className: `${link.path === pathname && "text-accent border-b-2 border-accent"} text-xl capitalize hover:text-accent transition-all`,
                                 children: link.name
                             }, index, false, {
                                 fileName: "[project]/src/components/MobileNav.tsx",
-                                lineNumber: 51,
+                                lineNumber: 69,
                                 columnNumber: 15
-                            }, this);
-                        })
+                            }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/MobileNav.tsx",
-                        lineNumber: 48,
+                        lineNumber: 53,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/MobileNav.tsx",
-                lineNumber: 38,
+                lineNumber: 43,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/MobileNav.tsx",
-        lineNumber: 34,
+        lineNumber: 39,
         columnNumber: 5
     }, this);
 };

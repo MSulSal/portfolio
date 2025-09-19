@@ -1,4 +1,3 @@
-// import Photo from "@/components/Photo";
 import Socials from "@/components/Socials";
 import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
@@ -48,10 +47,6 @@ const Home = () => {
               </div>
             </div>
           </div>
-          {/* photo */}
-          {/* <div className="order-1 xl:order-none mb-8 xl:mb-0"> */}
-          {/* <Photo /> */}
-          {/* </div> */}
         </div>
       </div>
       <Stats />

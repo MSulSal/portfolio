@@ -9,22 +9,27 @@ const links = [
   {
     name: "home",
     path: "/",
+    external: false,
   },
   {
-    name: "services",
-    path: "/services",
+    name: "projects",
+    path: "/projects",
+    external: false,
   },
   {
     name: "resume",
     path: "/resume",
+    external: false,
   },
   {
-    name: "work",
-    path: "/work",
+    name: "upwork",
+    path: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
+    external: true,
   },
   {
     name: "contact",
     path: "/contact",
+    external: false,
   },
 ];
 
@@ -46,11 +51,24 @@ const MobileNav = () => {
         </div>
         {/* nav */}
         <nav className="flex flex-col justify-center items-center gap-8">
-          {links.map((link, index) => {
-            return (
-              <Link
-                href={link.path}
+          {links.map((link, index) =>
+            link.external ? (
+              <a
                 key={index}
+                href={link.path}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${
+                  link.path === pathname &&
+                  "text-accent border-b-2 border-accent"
+                } text-xl capitalize hover:text-accent transition-all`}
+              >
+                {link.name}
+              </a>
+            ) : (
+              <Link
+                key={index}
+                href={link.path}
                 className={`${
                   link.path === pathname &&
                   "text-accent border-b-2 border-accent"
@@ -58,8 +76,8 @@ const MobileNav = () => {
               >
                 {link.name}
               </Link>
-            );
-          })}
+            )
+          )}
         </nav>
       </SheetContent>
     </Sheet>
