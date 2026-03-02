@@ -2,14 +2,11 @@ import Link from "next/link";
 
 import ProofCharts from "@/components/ProofCharts";
 import { Button } from "@/components/ui/button";
-import { profile, portfolioProjects, roleTracks } from "@/data/portfolioData";
+import { profile, roleTracks } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
 
 const ResumePage = async () => {
-  const activity = await getPortfolioActivity(
-    profile.githubUsername,
-    portfolioProjects.length
-  );
+  const activity = await getPortfolioActivity(profile.githubUsername);
 
   return (
     <main className="section-wrap pt-14">

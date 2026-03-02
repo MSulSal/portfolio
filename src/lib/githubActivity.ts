@@ -67,6 +67,7 @@ const MAX_FEED_ITEMS = 20;
 const PER_PAGE = 100;
 const REVALIDATE_SECONDS = 900;
 const CONCURRENCY = 5;
+const DEFAULT_EXCLUDED_REPO = "portfolio";
 
 function getAuthToken() {
   return (
@@ -75,6 +76,19 @@ function getAuthToken() {
     process.env.GITHUB_TOKEN ||
     ""
   );
+}
+
+function getExcludedRepos(username: string): Set<string> {
+  const envValue = process.env.GITHUB_ACTIVITY_EXCLUDE_REPOS || "";
+  const envRepos = envValue
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean);
+
+  // Exclude this repo by default so portfolio maintenance commits don't skew activity.
+  envRepos.push(`${username}/${DEFAULT_EXCLUDED_REPO}`.toLowerCase());
+
+  return new Set(envRepos);
 }
 
 function buildHeaders(token: string): HeadersInit {
@@ -453,15 +467,17 @@ function buildCommitsByRepo(
 }
 
 export async function getPortfolioActivity(
-  username: string,
-  projectCount: number
+  username: string
 ): Promise<PortfolioActivity> {
   const sinceMs = Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000;
   const sinceIso = new Date(sinceMs).toISOString();
   const token = getAuthToken();
+  const excludedRepos = getExcludedRepos(username);
 
   try {
-    const repos = await fetchRepos(username, token);
+    const repos = (await fetchRepos(username, token)).filter(
+      (repo) => !excludedRepos.has(repo.full_name.toLowerCase())
+    );
     const repoNames = Array.from(new Set(repos.map((repo) => repo.full_name)));
     const privateReposScanned = repos.filter((repo) => Boolean(repo.private)).length;
     const publicReposScanned = repos.length - privateReposScanned;
@@ -492,6 +508,14 @@ export async function getPortfolioActivity(
       const timestamp = new Date(commit.createdAt).getTime();
       return !Number.isNaN(timestamp) && timestamp >= sinceMs;
     }).length;
+    const activeReposLast30Days = new Set(
+      commits
+        .filter((commit) => {
+          const timestamp = new Date(commit.createdAt).getTime();
+          return !Number.isNaN(timestamp) && timestamp >= sinceMs;
+        })
+        .map((commit) => commit.repo)
+    ).size;
 
     const issuesClosedLast30Days = issueTimestamps.length;
 
@@ -499,7 +523,7 @@ export async function getPortfolioActivity(
       metrics: [
         { label: "Commits (30d)", value: String(commitsLast30Days) },
         { label: "Issues Closed (30d)", value: String(issuesClosedLast30Days) },
-        { label: "Projects Overall", value: String(projectCount) },
+        { label: "Active Repos (30d)", value: String(activeReposLast30Days) },
       ],
       commits: commits.slice(0, MAX_FEED_ITEMS),
       charts: {
@@ -522,7 +546,7 @@ export async function getPortfolioActivity(
       metrics: [
         { label: "Commits (30d)", value: "N/A" },
         { label: "Issues Closed (30d)", value: "N/A" },
-        { label: "Projects Overall", value: String(projectCount) },
+        { label: "Active Repos (30d)", value: "N/A" },
       ],
       commits: [],
       charts: {

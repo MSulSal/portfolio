@@ -1,13 +1,10 @@
 import AnimatedMetricValue from "@/components/AnimatedMetricValue";
-import { profile, portfolioProjects } from "@/data/portfolioData";
+import { profile } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const GitActivityPanel = async () => {
-  const activity = await getPortfolioActivity(
-    profile.githubUsername,
-    portfolioProjects.length
-  );
+  const activity = await getPortfolioActivity(profile.githubUsername);
 
   return (
     <aside className="surface-card p-6 sm:p-7">
