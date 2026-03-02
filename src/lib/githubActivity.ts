@@ -166,21 +166,57 @@ function formatRelativeTime(dateInput: string): string {
 }
 
 async function fetchRepos(username: string, token: string): Promise<GitHubRepo[]> {
-  let nextUrl: string | null = token
-    ? `https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=owner,collaborator,organization_member`
-    : `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&type=owner`;
+  const fetchRepoPages = async (initialUrl: string) => {
+    let nextUrl: string | null = initialUrl;
+    const collected: GitHubRepo[] = [];
 
+    while (nextUrl) {
+      const page: { data: GitHubRepo[]; nextPageUrl: string | null } =
+        await githubFetchPage<GitHubRepo[]>(nextUrl, token);
+
+      collected.push(...(Array.isArray(page.data) ? page.data : []));
+      nextUrl = page.nextPageUrl;
+    }
+
+    return collected;
+  };
+
+  const affiliation = "owner,collaborator,organization_member";
   const repos: GitHubRepo[] = [];
 
-  while (nextUrl) {
-    const page: { data: GitHubRepo[]; nextPageUrl: string | null } =
-      await githubFetchPage<GitHubRepo[]>(nextUrl, token);
+  if (token) {
+    const privateRepos = await fetchRepoPages(
+      `https://api.github.com/user/repos?visibility=private&sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
+    );
+    const publicRepos = await fetchRepoPages(
+      `https://api.github.com/user/repos?visibility=public&sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
+    );
 
-    repos.push(...(Array.isArray(page.data) ? page.data : []));
-    nextUrl = page.nextPageUrl;
+    repos.push(...privateRepos, ...publicRepos);
+
+    if (repos.length === 0) {
+      const fallback = await fetchRepoPages(
+        `https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
+      );
+      repos.push(...fallback);
+    }
+  } else {
+    const publicOwnedRepos = await fetchRepoPages(
+      `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&type=owner`
+    );
+    repos.push(...publicOwnedRepos);
   }
 
-  return repos
+  const deduped = Array.from(
+    repos.reduce((map, repo) => {
+      if (!map.has(repo.full_name)) {
+        map.set(repo.full_name, repo);
+      }
+      return map;
+    }, new Map<string, GitHubRepo>()).values()
+  );
+
+  return deduped
     .filter((repo) => !repo.archived)
     .sort(
       (a, b) =>
