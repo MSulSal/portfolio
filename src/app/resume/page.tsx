@@ -1,11 +1,12 @@
 import Link from "next/link";
 
 import ProofCharts from "@/components/ProofCharts";
+import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
 import {
   employmentHistory,
   profile,
-  skillRankings,
+  technicalSkillGroups,
 } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
 
@@ -56,35 +57,23 @@ const ResumePage = async () => {
         </section>
 
         <section className="surface-card p-7 sm:p-10">
-          <span className="chip">Skill ranking</span>
-          <h2 className="h2-fluid mt-4 text-primary">Core strengths from shipped work</h2>
+          <span className="chip">Technical skills</span>
+          <h2 className="h2-fluid mt-4 text-primary">Stack and tooling</h2>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Ranked by demonstrated depth across active repositories and delivery outcomes.
+            Core technologies currently used across active product and lab repositories.
           </p>
 
-          <div className="mt-7 grid gap-5 xl:grid-cols-2">
-            {skillRankings.map((skill) => (
-              <article key={skill.id} className="surface-subtle p-5">
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-base font-semibold text-primary">{skill.skill}</p>
-                  <p className="text-sm font-semibold text-accent">{skill.score}/100</p>
-                </div>
-
-                <div className="mt-3 h-2 rounded-full bg-[color:var(--code-bg)]">
-                  <div
-                    className="h-full rounded-full bg-accent"
-                    style={{ width: `${skill.score}%` }}
-                  />
-                </div>
-
-                <p className="mt-4 text-sm leading-relaxed muted-text">
-                  {skill.summary}
+          <div className="mt-7 grid gap-5 lg:grid-cols-2">
+            {technicalSkillGroups.map((group) => (
+              <article key={group.id} className="surface-subtle p-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.08em] text-primary">
+                  {group.title}
                 </p>
-                <ul className="mt-3 space-y-2 text-sm muted-text">
-                  {skill.evidence.map((item) => (
-                    <li key={item}>- {item}</li>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <TechBadge key={skill} tech={skill} />
                   ))}
-                </ul>
+                </div>
               </article>
             ))}
           </div>

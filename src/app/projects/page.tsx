@@ -1,5 +1,6 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 
+import TechBadge from "@/components/TechBadge";
 import { portfolioProjects } from "@/data/portfolioData";
 
 const sectionOrder = [
@@ -29,9 +30,7 @@ const ProjectsPage = () => {
       <div className="container mx-auto">
         <div className="max-w-4xl">
           <span className="chip">Project index</span>
-          <h1 className="h1-fluid mt-4 text-primary">
-            Projects
-          </h1>
+          <h1 className="h1-fluid mt-4 text-primary">Projects</h1>
           <p className="mt-4 text-base leading-relaxed muted-text">
             Featured product work first, current builds second, and technical
             labs as supporting depth.
@@ -55,10 +54,7 @@ const ProjectsPage = () => {
 
                 <div className="mt-6 grid gap-6 md:grid-cols-2">
                   {projects.map((project) => (
-                    <article
-                      key={project.slug}
-                      className="surface-subtle p-5"
-                    >
+                    <article key={project.slug} className="surface-subtle p-5">
                       <div className="flex items-start justify-between gap-4">
                         <h3 className="h3-fluid text-primary">{project.name}</h3>
                         <span className="chip">{project.status}</span>
@@ -70,12 +66,7 @@ const ProjectsPage = () => {
 
                       <div className="mt-4 flex flex-wrap gap-2">
                         {project.stack.slice(0, 5).map((tech) => (
-                          <span
-                            key={tech}
-                            className="rounded-full border border-[color:var(--border)] bg-[color:var(--code-bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] muted-text"
-                          >
-                            {tech}
-                          </span>
+                          <TechBadge key={tech} tech={tech} />
                         ))}
                       </div>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import GitActivityPanel from "@/components/GitActivityPanel";
 import Socials from "@/components/Socials";
+import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
 import {
   featuredProjects,
@@ -88,6 +89,11 @@ const Home = () => {
                 <p className="mt-4 text-sm leading-relaxed muted-text">
                   {project.oneLiner}
                 </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {project.stack.slice(0, 4).map((tech) => (
+                    <TechBadge key={tech} tech={tech} />
+                  ))}
+                </div>
                 <ul className="mt-5 space-y-2 text-sm muted-text">
                   {project.highlights.slice(0, 2).map((item) => (
                     <li key={item}>- {item}</li>

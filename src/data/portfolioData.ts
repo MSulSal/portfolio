@@ -26,12 +26,10 @@ export interface RoleTrack {
   topEvidence: string[];
 }
 
-export interface SkillRanking {
+export interface TechnicalSkillGroup {
   id: string;
-  skill: string;
-  score: number;
-  summary: string;
-  evidence: string[];
+  title: string;
+  skills: string[];
 }
 
 export interface EmploymentEntry {
@@ -188,98 +186,79 @@ export const services = [
   },
 ];
 
-export const skillRankings: SkillRanking[] = [
+export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
-    id: "fullstack-delivery",
-    skill: "Full-Stack Product Delivery",
-    score: 96,
-    summary:
-      "Ships scoped features across frontend, backend, data, and release workflow with production readiness.",
-    evidence: [
-      "Delivered CRM, ordering, ecommerce, and analytics flows in a unified platform build.",
-      "Maintained implementation velocity while preserving test and deployment discipline.",
+    id: "languages",
+    title: "Languages",
+    skills: ["Java", "TypeScript", "JavaScript", "Python", "SQL"],
+  },
+  {
+    id: "backend",
+    title: "Backend and Architecture",
+    skills: [
+      "Spring Boot",
+      "Node.js",
+      "RESTful APIs",
+      "Microservices",
+      "Event-Driven Architecture",
+      "Serverless",
     ],
   },
   {
-    id: "backend-architecture",
-    skill: "Backend Architecture and API Design",
-    score: 93,
-    summary:
-      "Designs domain models and API boundaries that support scale, maintainability, and operational clarity.",
-    evidence: [
-      "Built typed API contracts and service-layer structure across multiple stacks.",
-      "Designed multi-domain schemas with policy-aware data access boundaries.",
-    ],
+    id: "frontend",
+    title: "Frontend",
+    skills: ["React", "Next.js", "React Native", "Redux", "HTML/CSS"],
   },
   {
-    id: "quality-automation",
-    skill: "Quality Engineering and Test Automation",
-    score: 92,
-    summary:
-      "Implements layered quality gates to reduce regressions and improve release confidence.",
-    evidence: [
-      "Unit, integration, DB assertions, and E2E checks wired into CI workflows.",
-      "Fail-fast checks align local development and pipeline behavior.",
-    ],
+    id: "cloud-infra",
+    title: "Data, Cloud and Infrastructure",
+    skills: ["PostgreSQL", "MySQL", "Docker", "Kubernetes", "AWS"],
   },
   {
-    id: "frontend-systems",
-    skill: "Frontend Systems and UX Implementation",
-    score: 88,
-    summary:
-      "Builds conversion-focused, responsive interfaces with deliberate hierarchy and interaction design.",
-    evidence: [
-      "Developed design-forward frontend systems under practical product constraints.",
-      "Balanced visual clarity with implementation speed and maintainability.",
-    ],
-  },
-  {
-    id: "devops-reliability",
-    skill: "Delivery Operations and Reliability",
-    score: 86,
-    summary:
-      "Creates predictable engineering loops through CI guardrails, clear tracking, and recoverable workflows.",
-    evidence: [
-      "Established repeatable release gates for lint, type, test, and build verification.",
-      "Used issue-linked execution and documented recovery practices to stabilize delivery.",
-    ],
+    id: "delivery",
+    title: "Delivery and Tooling",
+    skills: ["GitHub Actions", "Jenkins", "Test Automation", "Git/GitHub"],
   },
 ];
 
 export const employmentHistory: EmploymentEntry[] = [
   {
-    id: "independent-engineer",
-    title: "Independent Software Engineer",
-    company: "Contract and Freelance",
-    period: "2023 - Present",
-    location: "Remote | Dallas-Fort Worth, TX",
+    id: "fullstack-contract",
+    title: "Full-Stack Engineer (Contract)",
+    company: "Hospitality Guest Ordering and Operations Platform",
+    period: "05/2025 - Current",
+    location: "McKinney, TX",
     highlights: [
-      "Delivered full-stack product slices for service and operations workflows from scope to deploy-ready handoff.",
-      "Owned architecture decisions, implementation, testing, and stakeholder communication across active engagements.",
-      "Worked in fast-turn cycles with measurable output through commits, issue resolution, and release checkpoints.",
+      "Architected and delivered a cross-platform Progressive Web App (React/Next.js) supporting restaurant and retail ordering, CRM, and real-time operational analytics.",
+      "Built backend services with Java/Spring Boot and PostgreSQL using event-driven architecture for live order tracking and analytics dashboards.",
+      "Integrated Stripe for secure tokenized payments and deposit workflows with production-safe transaction handling.",
+      "Designed role-based authentication and access controls for guests, staff, and admin with isolated data flows.",
+      "Delivered the solution from prototype to production-ready system, including architecture decisions, documentation, and deployment planning.",
     ],
   },
   {
-    id: "product-engineer",
-    title: "Product Engineer",
-    company: "Chama Inn Platform Build",
-    period: "2024 - Present",
-    location: "Product Development",
+    id: "software-development-engineer",
+    title: "Software Development Engineer",
+    company: "Anko Retail, Inc.",
+    period: "06/2021 - 11/2023",
+    location: "Seattle, WA",
     highlights: [
-      "Built and iterated a hospitality operations platform spanning CRM, ordering, ecommerce, and analytics.",
-      "Implemented policy-aware data design and automated quality coverage in support of production behavior.",
-      "Maintained roadmap-to-delivery execution with transparent progress and outcome tracking.",
+      "Built scalable microservices and RESTful APIs for inventory management across 300+ stores using Java/Spring Boot and Node.js.",
+      "Developed internal tools for automated data integrity testing and SFTP file transfer and processing.",
+      "Designed responsive UIs in React and Next.js and wrote backend integration and unit tests.",
+      "Collaborated in agile teams with CI/CD pipelines, trunk-based development, and event-driven data processing.",
     ],
   },
   {
-    id: "history-template",
-    title: "Previous Role (Edit)",
-    company: "Add Company Name",
-    period: "Add Dates",
-    location: "Add Location",
+    id: "software-engineer-intern",
+    title: "Software Engineer Intern",
+    company: "UNT Systems",
+    period: "01/2021 - 05/2021",
+    location: "Denton, TX",
     highlights: [
-      "Replace this entry with your prior employment role and concrete outcomes.",
-      "Use metrics where possible: delivery volume, uptime, cycle-time improvements, or team impact.",
+      "Assisted in design and development of a mobile app for theft and identity protection using React Native.",
+      "Implemented real-time security rating updates, geolocation features, and user authentication.",
+      "Developed permissions-based functionality for multiple user roles, improving usability and security.",
     ],
   },
 ];
@@ -288,7 +267,8 @@ export const roleTracks: RoleTrack[] = [
   {
     id: "sde",
     label: "SDE",
-    summary: "Production-focused full-stack engineering with architecture depth and verifiable delivery outcomes.",
+    summary:
+      "Production-focused full-stack engineering with architecture depth and verifiable delivery outcomes.",
     topEvidence: [
       "Core schema and API delivery across CRM flows with tested contracts.",
       "Strong L4-L5 evidence in architecture ownership and release readiness.",
@@ -298,7 +278,8 @@ export const roleTracks: RoleTrack[] = [
   {
     id: "sdet",
     label: "SDET",
-    summary: "Layered quality strategy using unit, integration, database contract, and browser E2E gates.",
+    summary:
+      "Layered quality strategy using unit, integration, database contract, and browser E2E gates.",
     topEvidence: [
       "146 pgTAP assertions plus CI-enforced quality gates.",
       "Deterministic Playwright smoke coverage integrated into release flow.",
@@ -308,7 +289,8 @@ export const roleTracks: RoleTrack[] = [
   {
     id: "devops-sre",
     label: "DevOps/SRE",
-    summary: "Early-stage operational rigor: CI enforcement, release guardrails, rollback readiness, and runbook discipline.",
+    summary:
+      "Early-stage operational rigor: CI enforcement, release guardrails, rollback readiness, and runbook discipline.",
     topEvidence: [
       "CI gate stack active on PR and main workflows.",
       "Local pre-push parity for fail-fast reliability.",
@@ -318,7 +300,8 @@ export const roleTracks: RoleTrack[] = [
   {
     id: "data-analyst",
     label: "Data Analyst",
-    summary: "Analytics-ready data architecture with SQL quality controls and KPI-focused evolution path.",
+    summary:
+      "Analytics-ready data architecture with SQL quality controls and KPI-focused evolution path.",
     topEvidence: [
       "Event-ready schema design and role-governed data boundaries.",
       "Database tests validating constraints and policy assumptions.",
@@ -330,23 +313,28 @@ export const roleTracks: RoleTrack[] = [
 export const labTracks = [
   {
     name: "MCP Sandbox",
-    objective: "Ship MCP integrations with production-style engineering hygiene.",
+    objective:
+      "Ship MCP integrations with production-style engineering hygiene.",
   },
   {
     name: "Crypto Lab",
-    objective: "Build cryptography depth from first principles to system-level tradeoffs.",
+    objective:
+      "Build cryptography depth from first principles to system-level tradeoffs.",
   },
   {
     name: "Concurrency Lab",
-    objective: "Develop rigorous intuition for correctness, parallelism, and distributed behavior.",
+    objective:
+      "Develop rigorous intuition for correctness, parallelism, and distributed behavior.",
   },
   {
     name: "Graphics Lab",
-    objective: "Build rendering systems from scratch with architecture-first constraints.",
+    objective:
+      "Build rendering systems from scratch with architecture-first constraints.",
   },
   {
     name: "Neural Nets Sandbox",
-    objective: "Implement neural and agentic systems from fundamentals to reproducible experiments.",
+    objective:
+      "Implement neural and agentic systems from fundamentals to reproducible experiments.",
   },
 ];
 
@@ -355,5 +343,5 @@ export function getProjectBySlug(slug: string) {
 }
 
 export const featuredProjects = portfolioProjects.filter(
-  (project) => project.track !== "lab"
+  (project) => project.track !== "lab",
 );

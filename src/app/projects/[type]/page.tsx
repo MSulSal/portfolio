@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
 import { getProjectBySlug, portfolioProjects } from "@/data/portfolioData";
 
@@ -67,12 +68,7 @@ export default async function ProjectDetailPage({
               <h2 className="h3-fluid text-primary">Stack</h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-full border border-[color:var(--border)] bg-[color:var(--code-bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] muted-text"
-                  >
-                    {tech}
-                  </span>
+                  <TechBadge key={tech} tech={tech} />
                 ))}
               </div>
             </section>
