@@ -23,11 +23,6 @@ const Home = () => {
               Built systems. Tested paths. Production-ready handoff.
             </h1>
 
-            <p className="max-w-3xl text-lg leading-relaxed muted-text">
-              Recent commit activity and portfolio-wide delivery metrics are live
-              below, pulled from active repositories.
-            </p>
-
             <p className="max-w-3xl text-base font-medium muted-text">
               {profile.focus}
             </p>
