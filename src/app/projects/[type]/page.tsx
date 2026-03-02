@@ -38,7 +38,7 @@ export default async function ProjectDetailPage({
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <span className="chip">{project.status}</span>
-                <h1 className="mt-4 text-5xl text-primary sm:text-6xl">{project.name}</h1>
+                <h1 className="h1-fluid mt-4 text-primary">{project.name}</h1>
                 <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
                   {project.summary}
                 </p>
@@ -46,7 +46,7 @@ export default async function ProjectDetailPage({
             </div>
 
             <section className="mt-8">
-              <h2 className="text-3xl text-primary">Delivery highlights</h2>
+              <h2 className="h3-fluid text-primary">Delivery highlights</h2>
               <ul className="mt-4 space-y-2 text-sm muted-text">
                 {project.highlights.map((item) => (
                   <li key={item}>- {item}</li>
@@ -55,7 +55,7 @@ export default async function ProjectDetailPage({
             </section>
 
             <section className="mt-8">
-              <h2 className="text-3xl text-primary">Proof points</h2>
+              <h2 className="h3-fluid text-primary">Proof points</h2>
               <ul className="mt-4 space-y-2 text-sm muted-text">
                 {project.proof.map((item) => (
                   <li key={item}>- {item}</li>
@@ -64,7 +64,7 @@ export default async function ProjectDetailPage({
             </section>
 
             <section className="mt-8">
-              <h2 className="text-3xl text-primary">Stack</h2>
+              <h2 className="h3-fluid text-primary">Stack</h2>
               <div className="mt-4 flex flex-wrap gap-2">
                 {project.stack.map((tech) => (
                   <span

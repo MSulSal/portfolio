@@ -9,14 +9,14 @@ const ResumePage = () => {
       <div className="container mx-auto space-y-10">
         <section className="surface-card p-7 sm:p-10">
           <span className="chip">Execution snapshot</span>
-          <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
+          <h1 className="h1-fluid mt-4 text-primary">
             Metrics and track record
           </h1>
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
             Current quality counters first, then capability-specific evidence.
           </p>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {proofPoints.map((point) => (
               <article key={point.label} className="surface-subtle p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.1em] muted-text">
@@ -41,7 +41,7 @@ const ResumePage = () => {
           </div>
         </section>
 
-        <section className="grid gap-6 lg:grid-cols-2">
+        <section className="grid gap-6 md:grid-cols-2">
           {roleTracks.map((track) => (
             <article key={track.id} className="surface-card p-6">
               <span className="chip">{track.label}</span>
@@ -58,7 +58,7 @@ const ResumePage = () => {
         </section>
 
         <section className="surface-card p-7 sm:p-10">
-          <h2 className="text-4xl text-primary">Contact snapshot</h2>
+          <h2 className="h2-fluid text-primary">Contact snapshot</h2>
           <p className="mt-4 text-base muted-text">
             {profile.name} | {profile.title} | {profile.location}
           </p>

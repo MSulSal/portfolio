@@ -15,11 +15,11 @@ const Home = () => {
   return (
     <main>
       <section className="section-wrap pb-12 pt-16">
-        <div className="container mx-auto grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
+        <div className="container mx-auto grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
           <div className="space-y-7">
             <span className="chip">Shipping full-stack systems</span>
 
-            <h1 className="max-w-4xl text-5xl leading-[1.05] text-primary sm:text-6xl xl:text-7xl">
+            <h1 className="h1-fluid max-w-4xl text-primary">
               Built systems. Tested paths. Production-ready handoff.
             </h1>
 
@@ -98,7 +98,7 @@ const Home = () => {
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="chip">Selected work</p>
-              <h2 className="mt-4 text-4xl text-primary sm:text-5xl">
+              <h2 className="h2-fluid mt-4 text-primary">
                 Selected projects
               </h2>
             </div>
@@ -107,7 +107,7 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {featuredProjects.map((project) => (
               <article key={project.slug} className="surface-card p-6">
                 <div className="flex items-start justify-between gap-3">
@@ -137,10 +137,10 @@ const Home = () => {
       </section>
 
       <section className="section-wrap py-12">
-        <div className="container mx-auto grid gap-8 lg:grid-cols-[1fr_1fr]">
+        <div className="container mx-auto grid gap-8 md:grid-cols-2">
           <div className="surface-card p-7">
             <p className="chip">Working model</p>
-            <h2 className="mt-4 text-4xl text-primary">Ways I can help</h2>
+            <h2 className="h2-fluid mt-4 text-primary">Ways I can help</h2>
             <ul className="mt-5 space-y-4">
               {services.map((service) => (
                 <li key={service.title}>
@@ -157,7 +157,7 @@ const Home = () => {
 
           <div className="surface-card p-7">
             <p className="chip">Depth tracks</p>
-            <h2 className="mt-4 text-4xl text-primary">Technical labs</h2>
+            <h2 className="h2-fluid mt-4 text-primary">Technical labs</h2>
             <p className="mt-4 text-sm leading-relaxed muted-text">
               Labs stay visible as supporting signal for systems depth while
               product projects remain the primary evidence surface.

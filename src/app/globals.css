@@ -46,6 +46,7 @@
     background: var(--bg);
     color: var(--ink);
     font-family: var(--font-inter), sans-serif;
+    overflow-x: hidden;
   }
 
   body::before {
@@ -104,7 +105,7 @@
 
 @layer components {
   .section-wrap {
-    @apply py-14 lg:py-20;
+    @apply py-12 sm:py-14 lg:py-20;
   }
 
   .surface-card {
@@ -149,5 +150,20 @@
     border-color: var(--border);
     background: var(--code-bg);
     color: var(--ink);
+  }
+
+  .h1-fluid {
+    font-size: clamp(2rem, 7.5vw, 4.5rem);
+    line-height: 1.05;
+  }
+
+  .h2-fluid {
+    font-size: clamp(1.6rem, 4.8vw, 3rem);
+    line-height: 1.1;
+  }
+
+  .h3-fluid {
+    font-size: clamp(1.2rem, 3.5vw, 1.9rem);
+    line-height: 1.2;
   }
 }

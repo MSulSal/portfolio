@@ -29,7 +29,7 @@ const ProjectsPage = () => {
       <div className="container mx-auto">
         <div className="max-w-4xl">
           <span className="chip">Project index</span>
-          <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
+          <h1 className="h1-fluid mt-4 text-primary">
             Projects
           </h1>
           <p className="mt-4 text-base leading-relaxed muted-text">
@@ -49,18 +49,18 @@ const ProjectsPage = () => {
             }
 
             return (
-              <section key={section.track} className="surface-card p-7">
-                <h2 className="text-3xl text-primary">{section.title}</h2>
+              <section key={section.track} className="surface-card p-6 sm:p-7">
+                <h2 className="h3-fluid text-primary">{section.title}</h2>
                 <p className="mt-2 text-sm muted-text">{section.description}</p>
 
-                <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <div className="mt-6 grid gap-6 md:grid-cols-2">
                   {projects.map((project) => (
                     <article
                       key={project.slug}
                       className="surface-subtle p-5"
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-2xl text-primary">{project.name}</h3>
+                        <h3 className="h3-fluid text-primary">{project.name}</h3>
                         <span className="chip">{project.status}</span>
                       </div>
 

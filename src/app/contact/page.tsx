@@ -74,10 +74,10 @@ const ContactPage = () => {
 
   return (
     <main className="section-wrap pt-14">
-      <div className="container mx-auto grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+      <div className="container mx-auto grid gap-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
         <section className="surface-card p-7 sm:p-10">
           <span className="chip">Contact</span>
-          <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
+          <h1 className="h1-fluid mt-4 text-primary">
             Share what you need built
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
@@ -145,7 +145,7 @@ const ContactPage = () => {
 
         <aside className="space-y-6">
           <section className="surface-card p-6">
-            <h2 className="text-3xl text-primary">Collaboration topics</h2>
+            <h2 className="h3-fluid text-primary">Collaboration topics</h2>
             <ul className="mt-4 space-y-3 text-sm muted-text">
               {services.map((service) => (
                 <li key={service.title}>
@@ -157,7 +157,7 @@ const ContactPage = () => {
           </section>
 
           <section className="surface-card p-6">
-            <h2 className="text-3xl text-primary">Direct contact</h2>
+            <h2 className="h3-fluid text-primary">Direct contact</h2>
             <p className="mt-4 text-sm muted-text">{profile.name}</p>
             <p className="text-sm muted-text">{profile.location}</p>
             <p className="mt-2 text-sm">
