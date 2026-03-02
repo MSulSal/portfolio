@@ -1,15 +1,24 @@
-import Link from "next/link";
-
+﻿import Link from "next/link";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
+import { SiUpwork } from "react-icons/si";
+
+import { profile } from "@/data/portfolioData";
 
 const socials = [
   {
     icon: <FaGithub />,
-    path: "https://github.com/MSulSal",
+    path: profile.github,
+    label: "GitHub",
   },
   {
     icon: <FaLinkedinIn />,
-    path: "https://www.linkedin.com/in/m-suleman-saleem/",
+    path: profile.linkedin,
+    label: "LinkedIn",
+  },
+  {
+    icon: <SiUpwork />,
+    path: profile.upwork,
+    label: "Upwork",
   },
 ];
 
@@ -21,19 +30,18 @@ interface SocialsProps {
 const Socials = ({ containerStyles, iconStyles }: SocialsProps) => {
   return (
     <div className={containerStyles}>
-      {socials.map((item, index) => {
-        return (
-          <Link
-            key={index}
-            href={item.path}
-            className={iconStyles}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {item.icon}
-          </Link>
-        );
-      })}
+      {socials.map((item) => (
+        <Link
+          key={item.label}
+          href={item.path}
+          className={iconStyles}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={item.label}
+        >
+          {item.icon}
+        </Link>
+      ))}
     </div>
   );
 };

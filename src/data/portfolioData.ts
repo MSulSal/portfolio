@@ -1,0 +1,260 @@
+﻿export type WorkTrack = "flagship" | "active" | "lab";
+
+export type ProjectStatus = "Live Prototype" | "Active Build" | "Lab Track";
+
+export interface PortfolioProject {
+  slug: string;
+  name: string;
+  status: ProjectStatus;
+  track: WorkTrack;
+  oneLiner: string;
+  summary: string;
+  stack: string[];
+  highlights: string[];
+  proof: string[];
+  links: {
+    live?: string;
+    repo?: string;
+    docs?: string;
+  };
+}
+
+export interface RoleTrack {
+  id: string;
+  label: string;
+  summary: string;
+  topEvidence: string[];
+}
+
+export const profile = {
+  name: "Suleman Saleem",
+  title: "Software Engineer",
+  focus:
+    "Build operational software with test-first delivery, production-safe architecture, and clear execution discipline.",
+  availability:
+    "Available for full-time roles, staffing-agency engagements, and contract software delivery.",
+  location: "Dallas-Fort Worth, TX",
+  email: "msulemansaleem01@gmail.com",
+  github: "https://github.com/MSulSal",
+  linkedin: "https://www.linkedin.com/in/m-suleman-saleem/",
+  upwork: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
+};
+
+export const activeExecutionLane = {
+  label: "Current delivery lane",
+  value: "CRM staff edit/delete UI flow plus UI and E2E coverage (TST-07)",
+};
+
+export const proofPoints = [
+  { label: "Postgres domain tables", value: "22" },
+  { label: "RLS policies implemented", value: "48" },
+  { label: "pgTAP assertions", value: "146" },
+  { label: "Unit/Integration tests", value: "30" },
+  { label: "CI gate layers", value: "lint + typecheck + unit + build + e2e" },
+];
+
+export const portfolioProjects: PortfolioProject[] = [
+  {
+    slug: "chama-inn",
+    name: "Chama Inn PWA",
+    status: "Live Prototype",
+    track: "flagship",
+    oneLiner:
+      "Hospitality operations platform combining CRM, restaurant ordering, gift-shop ecommerce, and realtime staff analytics.",
+    summary:
+      "This is the strongest current hiring proof: production-minded data modeling, API contracts, layered testing, and repeatable delivery workflows in one project.",
+    stack: [
+      "Next.js 16",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Stripe",
+      "GitHub Actions",
+      "Playwright",
+      "pgTAP",
+    ],
+    highlights: [
+      "Shipped CRM API contracts for GET/POST/PATCH/DELETE with integration coverage.",
+      "Implemented deterministic quality gates across CI and local pre-push workflows.",
+      "Maintained architecture, tracker, and implementation logs as auditable delivery artifacts.",
+    ],
+    proof: [
+      "22-table schema spanning CRM, orders, ecommerce, inventory, and event tracking.",
+      "48 role-based RLS policies for guest/staff/manager/admin boundaries.",
+      "146 pgTAP assertions for schema objects, constraints, and policy behavior.",
+      "Playwright CRM smoke coverage wired into CI.",
+    ],
+    links: {
+      live: "https://chama-inn-cyo4.vercel.app/",
+    },
+  },
+  {
+    slug: "opsledger",
+    name: "OpsLedger",
+    status: "Active Build",
+    track: "active",
+    oneLiner:
+      "Spring Boot and React operations platform for service businesses managing clients, work orders, invoices, and deposit payments.",
+    summary:
+      "OpsLedger is your enterprise-leaning build track. It positions you for Java/Spring roles while preserving your test-first delivery narrative.",
+    stack: [
+      "Java 21",
+      "Spring Boot 3",
+      "React",
+      "TypeScript",
+      "PostgreSQL",
+      "Flyway",
+      "Docker",
+      "GitHub Actions",
+    ],
+    highlights: [
+      "Structured around clean backend layering and migration safety from day one.",
+      "Roadmap is publicly documented for transparent execution.",
+      "Built to demonstrate realistic business software delivery, not tutorial-only code.",
+    ],
+    proof: [
+      "Public engineering practices and roadmap docs are already in place.",
+      "Project targets full service-business workflow from intake to billing.",
+      "Workflow emphasizes issue-linked commits and regression discipline.",
+    ],
+    links: {
+      docs: "https://github.com/MSulSal/opsledger",
+    },
+  },
+  {
+    slug: "forced-design-lab",
+    name: "Forced Design Frontend",
+    status: "Active Build",
+    track: "active",
+    oneLiner:
+      "Frontend lab intentionally built to prove design decisions under constraints, not template reuse.",
+    summary:
+      "This project is where UI taste, narrative clarity, and implementation craft converge. It supports contract and agency conversations where execution speed matters.",
+    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
+    highlights: [
+      "Explores deliberate visual systems and high-contrast communication layouts.",
+      "Designed as a practical showcase for conversion-focused frontend decision making.",
+      "Acts as your design-forward complement to backend-heavy flagship work.",
+    ],
+    proof: [
+      "Built to show intentional typography, layout hierarchy, and usability clarity.",
+      "Targets portfolio differentiation against generic template-heavy sites.",
+      "Used as a sandbox for interface systems you can apply to client work quickly.",
+    ],
+    links: {},
+  },
+  {
+    slug: "labs",
+    name: "Technical Labs (Crypto, Concurrency, Graphics, Neural Nets, MCP)",
+    status: "Lab Track",
+    track: "lab",
+    oneLiner:
+      "Long-horizon labs that deepen systems understanding and provide proof of learning velocity.",
+    summary:
+      "These labs are supporting evidence of range and rigor. They should reinforce your main hiring story, not replace it.",
+    stack: ["Rust", "C/C++", "CUDA", "Python", "Node.js"],
+    highlights: [
+      "Crypto lab focuses on threat models, reproducible benchmarks, and secure implementation choices.",
+      "Concurrency lab targets correctness, performance, and distributed systems intuition.",
+      "Graphics and neural-net labs develop first-principles systems thinking and research discipline.",
+    ],
+    proof: [
+      "Documented roadmaps and learning plans across multiple deep technical domains.",
+      "Commit-driven progression with explicit definitions of done.",
+      "Clear translation of learning artifacts into interview and career signal.",
+    ],
+    links: {},
+  },
+];
+
+export const services = [
+  {
+    title: "Full-Time and Staff Augmentation",
+    detail:
+      "Plug into an existing team and contribute across feature delivery, quality depth, and reliability practices.",
+  },
+  {
+    title: "Contract Delivery Sprints",
+    detail:
+      "Deliver scoped software slices with clear acceptance criteria, tested behavior, and deployment-ready handoff.",
+  },
+  {
+    title: "Agency Subcontract Partnership",
+    detail:
+      "Operate inside agency workflows for client builds, quality hardening, and project stabilization.",
+  },
+];
+
+export const roleTracks: RoleTrack[] = [
+  {
+    id: "sde",
+    label: "SDE",
+    summary: "Production-focused full-stack engineering with architecture depth and verifiable delivery outcomes.",
+    topEvidence: [
+      "Core schema and API delivery across CRM flows with tested contracts.",
+      "Strong L4-L5 evidence in architecture ownership and release readiness.",
+      "Cross-stack implementation in Next.js/Supabase and Spring Boot tracks.",
+    ],
+  },
+  {
+    id: "sdet",
+    label: "SDET",
+    summary: "Layered quality strategy using unit, integration, database contract, and browser E2E gates.",
+    topEvidence: [
+      "146 pgTAP assertions plus CI-enforced quality gates.",
+      "Deterministic Playwright smoke coverage integrated into release flow.",
+      "Risk-based testing discipline with explicit failure-path coverage.",
+    ],
+  },
+  {
+    id: "devops-sre",
+    label: "DevOps/SRE",
+    summary: "Early-stage operational rigor: CI enforcement, release guardrails, rollback readiness, and runbook discipline.",
+    topEvidence: [
+      "CI gate stack active on PR and main workflows.",
+      "Local pre-push parity for fail-fast reliability.",
+      "Operational docs and recovery automation for repeatable execution.",
+    ],
+  },
+  {
+    id: "data-analyst",
+    label: "Data Analyst",
+    summary: "Analytics-ready data architecture with SQL quality controls and KPI-focused evolution path.",
+    topEvidence: [
+      "Event-ready schema design and role-governed data boundaries.",
+      "Database tests validating constraints and policy assumptions.",
+      "Clear next lane for KPI dictionary, marts, and analysis memos.",
+    ],
+  },
+];
+
+export const labTracks = [
+  {
+    name: "MCP Sandbox",
+    objective: "Ship MCP integrations with production-style engineering hygiene.",
+  },
+  {
+    name: "Crypto Lab",
+    objective: "Build cryptography depth from first principles to system-level tradeoffs.",
+  },
+  {
+    name: "Concurrency Lab",
+    objective: "Develop rigorous intuition for correctness, parallelism, and distributed behavior.",
+  },
+  {
+    name: "Graphics Lab",
+    objective: "Build rendering systems from scratch with architecture-first constraints.",
+  },
+  {
+    name: "Neural Nets Sandbox",
+    objective: "Implement neural and agentic systems from fundamentals to reproducible experiments.",
+  },
+];
+
+export function getProjectBySlug(slug: string) {
+  return portfolioProjects.find((project) => project.slug === slug);
+}
+
+export const featuredProjects = portfolioProjects.filter(
+  (project) => project.track !== "lab"
+);

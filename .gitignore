@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# portfolio build artifacts
+/dist
+/test-results
+/playwright-report
+
+# local makeover notes (do not publish)
+/docs/makeover/

@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Suleman Saleem Portfolio
 
-## Getting Started
+Hiring-focused portfolio showcasing product engineering, test discipline, and operational reliability across full-time and contract-ready work.
 
-First, run the development server:
+## Positioning
+
+This site is intentionally organized for fast recruiter/client clarity:
+
+1. Flagship project evidence first
+2. Active build lanes second
+3. Supporting technical labs third
+
+## Core Projects
+
+1. Chama Inn PWA (flagship)
+2. OpsLedger (active build)
+3. Forced Design Frontend (active build)
+4. Technical labs (MCP, cryptography, concurrency, graphics, neural nets)
+
+## Tech Stack
+
+1. Next.js App Router
+2. TypeScript
+3. Tailwind CSS
+4. Resend contact integration
+
+## Local Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contact Form Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Set environment variables before using `/contact` email send:
 
-## Learn More
+```bash
+RESEND_API_KEY=your_resend_key
+EMAIL=your_inbox@example.com
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Notes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- This repository is the public portfolio surface.
+- Some active build docs reference private or separate repos; the portfolio presents only truthful shipped evidence and current execution lanes.

@@ -1,57 +1,183 @@
+import Link from "next/link";
+
 import Socials from "@/components/Socials";
-import Stats from "@/components/Stats";
 import { Button } from "@/components/ui/button";
-import { FiDownload } from "react-icons/fi";
+import {
+  activeExecutionLane,
+  featuredProjects,
+  labTracks,
+  profile,
+  proofPoints,
+  services,
+} from "@/data/portfolioData";
 
 const Home = () => {
   return (
-    <section className="h-full">
-      <div className="container mx-auto h-full">
-        <div className="flex flex-col xl:flex-row items-center justify-center xl:pt-8 xl:pb-24">
-          {/* text */}
-          <div className="text-center xl:text-left order-2 xl:order-none">
-            <h1 className="h1 mb-6">
-              Hi, I&apos;m <br />{" "}
-              <span className="text-accent">Suleman Saleem</span>
-            </h1>
-            <span className="text-xl">Software Engineer</span>
-            <p className="max-w-[500px] mb-9 mt-7 text-white/80">
-              I&apos;m proficient in multiple programming languages and
-              experienced with cloud native development and microservices
-              architecture.
-            </p>
-            {/* btn and socials */}
-            <div className="flex flex-col xl:flex-row items-center gap-8">
-              <Button
-                variant="outline"
-                size="lg"
-                className="uppercase flex items-center gap-2"
-                asChild // Makes the Button render as its child component
-              >
-                <a
-                  href="/resume.pdf"
-                  download="resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Download Resume
-                  <FiDownload className="text-xl" />
-                </a>
-              </Button>
+    <main>
+      <section className="section-wrap pb-12 pt-16">
+        <div className="container mx-auto grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
+          <div className="space-y-7">
+            <span className="chip">Hiring for full-stack delivery</span>
 
-              <div className="mb-8 xl:mb-0">
-                <Socials
-                  containerStyles="flex gap-6"
-                  iconStyles="w-9 h-9 border border-accent rounded-full flex justify-center items-center text-accent text-base hover:bg-accent hover:text-primary hover:transition-all duration-500"
-                />
-              </div>
+            <h1 className="max-w-4xl text-5xl leading-[1.05] text-primary sm:text-6xl xl:text-7xl">
+              Need a full-stack engineer who ships features without reliability
+              debt?
+            </h1>
+
+            <p className="max-w-3xl text-lg leading-relaxed muted-text">
+              If you need someone to build quickly and still protect quality,
+              this portfolio is built for that evaluation. You can review code
+              scope, testing depth, and delivery discipline in one place.
+            </p>
+
+            <p className="max-w-3xl text-base font-medium muted-text">
+              {profile.availability}
+            </p>
+
+            <div className="code-panel max-w-3xl">
+              <p className="uppercase tracking-[0.1em] muted-text">
+                delivery-loop.ts
+              </p>
+              <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
+                {`scope() -> implement() -> test() -> ship() -> document()`}
+              </pre>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Button size="lg" asChild>
+                <Link href="/projects">Review projects</Link>
+              </Button>
+              <Button variant="outline" size="lg" asChild>
+                <Link href="/contact">Discuss your role or project</Link>
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <p className="text-sm font-semibold uppercase tracking-[0.1em] muted-text">
+                Check references
+              </p>
+              <Socials
+                containerStyles="flex gap-3"
+                iconStyles="flex h-10 w-10 items-center justify-center rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-strong)] text-primary hover:border-accent hover:text-accent"
+              />
             </div>
           </div>
+
+          <aside className="surface-card p-6 sm:p-7">
+            <p className="chip">What you can expect</p>
+            <ul className="mt-4 space-y-2 text-sm muted-text">
+              <li>- Clear architecture and API contracts.</li>
+              <li>- Test-first delivery with visible quality gates.</li>
+              <li>- Predictable communication and scope tracking.</li>
+              <li>- Production-ready handoff, not prototype-only code.</li>
+            </ul>
+
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.1em] muted-text">
+              {activeExecutionLane.label}
+            </p>
+            <p className="mt-2 text-base font-semibold text-primary">
+              {activeExecutionLane.value}
+            </p>
+
+            <div className="mt-7 space-y-3">
+              {proofPoints.map((item) => (
+                <div key={item.label} className="surface-subtle p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.12em] muted-text">
+                    {item.label}
+                  </p>
+                  <p className="mt-2 text-lg font-semibold text-primary">
+                    {item.value}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </aside>
         </div>
-      </div>
-      <Stats />
-    </section>
+      </section>
+
+      <section className="section-wrap py-12">
+        <div className="container mx-auto">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="chip">Selected work</p>
+              <h2 className="mt-4 text-4xl text-primary sm:text-5xl">
+                Projects you can evaluate quickly
+              </h2>
+            </div>
+            <Link href="/projects" className="link-inline">
+              Open full project index
+            </Link>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            {featuredProjects.map((project) => (
+              <article key={project.slug} className="surface-card p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-2xl text-primary">{project.name}</h3>
+                  <span className="chip">{project.status}</span>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed muted-text">
+                  {project.oneLiner}
+                </p>
+                <ul className="mt-5 space-y-2 text-sm muted-text">
+                  {project.highlights.slice(0, 2).map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+                <div className="mt-6">
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="link-inline text-sm uppercase tracking-[0.1em]"
+                  >
+                    View case details
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-wrap py-12">
+        <div className="container mx-auto grid gap-8 lg:grid-cols-[1fr_1fr]">
+          <div className="surface-card p-7">
+            <p className="chip">Working model</p>
+            <h2 className="mt-4 text-4xl text-primary">Ways I can help</h2>
+            <ul className="mt-5 space-y-4">
+              {services.map((service) => (
+                <li key={service.title}>
+                  <p className="text-lg font-semibold text-primary">
+                    {service.title}
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed muted-text">
+                    {service.detail}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="surface-card p-7">
+            <p className="chip">Depth tracks</p>
+            <h2 className="mt-4 text-4xl text-primary">Technical labs</h2>
+            <p className="mt-4 text-sm leading-relaxed muted-text">
+              Labs stay visible as supporting proof of systems depth, while
+              flagship product work stays the main hiring signal.
+            </p>
+            <ul className="mt-5 space-y-3 text-sm muted-text">
+              {labTracks.map((lab) => (
+                <li key={lab.name}>
+                  <p className="font-semibold text-primary">{lab.name}</p>
+                  <p className="muted-text">{lab.objective}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 };
 
 export default Home;
+

@@ -1,26 +1,110 @@
-import WorkSlides from "@/components/WorkSlides";
-import data from "@/data/workData";
-import { ProjectCategory } from "@/types";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
+import { Button } from "@/components/ui/button";
+import { getProjectBySlug, portfolioProjects } from "@/data/portfolioData";
 
 export async function generateStaticParams() {
-  return Object.keys(data).map((type) => ({
-    type: type as keyof ProjectCategory,
+  return portfolioProjects.map((project) => ({
+    type: project.slug,
   }));
 }
 
-// Define proper type for params Promise
 type ParamsPromise = Promise<{
-  type: keyof ProjectCategory;
+  type: string;
 }>;
 
-export default async function WorkTypePage({
+export default async function ProjectDetailPage({
   params,
 }: {
   params: ParamsPromise;
 }) {
-  // Properly await the params promise
-  const resolvedParams = await params;
-  const projects = data[resolvedParams.type];
+  const resolved = await params;
+  const project = getProjectBySlug(resolved.type);
 
-  return <WorkSlides projects={projects} />;
+  if (!project) {
+    notFound();
+  }
+
+  return (
+    <main className="section-wrap pt-14">
+      <div className="container mx-auto">
+        <div className="max-w-5xl space-y-8">
+          <Link href="/projects" className="link-inline text-sm uppercase tracking-[0.1em]">
+            Back to projects
+          </Link>
+
+          <div className="surface-card p-7 sm:p-10">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <span className="chip">{project.status}</span>
+                <h1 className="mt-4 text-5xl text-primary sm:text-6xl">{project.name}</h1>
+                <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
+                  {project.summary}
+                </p>
+              </div>
+            </div>
+
+            <section className="mt-8">
+              <h2 className="text-3xl text-primary">Delivery highlights</h2>
+              <ul className="mt-4 space-y-2 text-sm muted-text">
+                {project.highlights.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-8">
+              <h2 className="text-3xl text-primary">Proof points</h2>
+              <ul className="mt-4 space-y-2 text-sm muted-text">
+                {project.proof.map((item) => (
+                  <li key={item}>- {item}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section className="mt-8">
+              <h2 className="text-3xl text-primary">Stack</h2>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.stack.map((tech) => (
+                  <span
+                    key={tech}
+                    className="rounded-full border border-[color:var(--border)] bg-[color:var(--code-bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] muted-text"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </section>
+
+            <div className="mt-10 flex flex-wrap gap-3">
+              {project.links.live ? (
+                <Button asChild>
+                  <a href={project.links.live} target="_blank" rel="noopener noreferrer">
+                    Live Preview
+                  </a>
+                </Button>
+              ) : null}
+
+              {project.links.repo ? (
+                <Button variant="outline" asChild>
+                  <a href={project.links.repo} target="_blank" rel="noopener noreferrer">
+                    Repository
+                  </a>
+                </Button>
+              ) : null}
+
+              {project.links.docs ? (
+                <Button variant="outline" asChild>
+                  <a href={project.links.docs} target="_blank" rel="noopener noreferrer">
+                    Docs or Repo
+                  </a>
+                </Button>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }

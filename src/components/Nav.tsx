@@ -4,58 +4,54 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { name: "Home", path: "/", external: false },
+  { name: "Projects", path: "/projects", external: false },
+  { name: "Proof + Resume", path: "/resume", external: false },
   {
-    name: "home",
-    path: "/",
-    external: false,
-  },
-  {
-    name: "projects",
-    path: "/projects",
-    external: false,
-  },
-  {
-    name: "resume",
-    path: "/resume",
-    external: false,
-  },
-  {
-    name: "upwork",
+    name: "Upwork",
     path: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
     external: true,
   },
+  { name: "Contact", path: "/contact", external: false },
 ];
 
 const Nav = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-8">
-      {links.map((link, index) =>
-        link.external ? (
-          <a
-            key={index}
-            href={link.path}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="capitalize font-medium hover:text-accent transitional-all"
-          >
-            {link.name}
-          </a>
-        ) : (
+    <nav className="flex items-center gap-6">
+      {links.map((link) => {
+        const isActive = !link.external && pathname === link.path;
+
+        if (link.external) {
+          return (
+            <a
+              key={link.name}
+              href={link.path}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[color:var(--muted)] hover:text-accent"
+            >
+              {link.name}
+            </a>
+          );
+        }
+
+        return (
           <Link
-            key={index}
+            key={link.name}
             href={link.path}
-            className={`${
-              link.path === pathname && "text-accent border-b-2 border-accent"
-            } capitalize font-medium hover:text-accent transitional-all`}
+            className={`text-sm font-medium transition-colors hover:text-accent ${
+              isActive ? "text-accent" : "text-[color:var(--muted)]"
+            }`}
           >
             {link.name}
           </Link>
-        )
-      )}
+        );
+      })}
     </nav>
   );
 };
 
 export default Nav;
+

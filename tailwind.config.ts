@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+﻿import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
@@ -11,30 +11,33 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "15px",
+      padding: "1rem",
     },
     screens: {
       sm: "640px",
       md: "768px",
-      lg: "960px",
-      xl: "1200px",
-    },
-    fontFamily: {
-      primary: "var(--font-jetbrainsMono)",
+      lg: "1024px",
+      xl: "1280px",
     },
     extend: {
       colors: {
-        primary: "#1c1c22",
+        primary: "var(--ink)",
         accent: {
-          DEFAULT: "#00ff99",
-          hover: "#00e187",
+          DEFAULT: "var(--accent)",
+          hover: "var(--accent-hover)",
         },
+        teal: {
+          DEFAULT: "var(--teal)",
+          hover: "var(--teal-hover)",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        DEFAULT: "0.375rem", // Tailwind's default `rounded-md` value
       },
     },
   },

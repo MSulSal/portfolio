@@ -1,75 +1,103 @@
-"use client";
+﻿import Link from "next/link";
 
-import { BsArrowDownRight } from "react-icons/bs";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { portfolioProjects } from "@/data/portfolioData";
 
-const projects = [
+const sectionOrder = [
   {
-    num: "01",
-    title: "Web Development",
-    href: "web-development",
+    track: "flagship",
+    title: "Flagship",
+    description:
+      "Highest-signal project where architecture, delivery, and quality evidence are strongest.",
   },
   {
-    num: "02",
-    title: "UI/UX Design",
-    href: "ui-ux",
+    track: "active",
+    title: "Now Building",
+    description:
+      "Active projects shaping your current interview narrative and contract positioning.",
   },
   {
-    num: "03",
-    title: "Physical Modeling",
-    href: "physical-modeling",
+    track: "lab",
+    title: "Labs",
+    description:
+      "Supporting tracks that prove technical depth and sustained learning velocity.",
   },
-  {
-    num: "04",
-    title: "Data Analytics/ Machine Learning",
-    href: "data-analytics",
-  },
-];
+] as const;
 
-const Services = () => {
+const ProjectsPage = () => {
   return (
-    <section className="min-h-[80vh] flex flex-col justify-center py-12 xl:py-0">
+    <main className="section-wrap pt-14">
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
-          }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-[60px]"
-        >
-          {projects.map((projectType, index) => {
+        <div className="max-w-4xl">
+          <span className="chip">Project index</span>
+          <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
+            Evaluate delivery quality at project level
+          </h1>
+          <p className="mt-4 text-base leading-relaxed muted-text">
+            Browse work in the order most teams evaluate candidates: flagship
+            production proof first, active builds second, and labs as supporting
+            technical depth.
+          </p>
+        </div>
+
+        <div className="mt-12 space-y-10">
+          {sectionOrder.map((section) => {
+            const projects = portfolioProjects.filter(
+              (project) => project.track === section.track
+            );
+
+            if (projects.length === 0) {
+              return null;
+            }
+
             return (
-              <div
-                key={index}
-                className="flex-1 flex flex-col justify-center gap-6 group"
-              >
-                {/* top */}
-                <div className="w-full flex justify-between items-center">
-                  <div className="text-5xl font-extrabold text-outline text-transparent group-hover:text-outline-hover transition-all duration-500">
-                    {projectType.num}
-                  </div>
-                  <Link
-                    href={`/projects/${projectType.href}`}
-                    className="w-[70px] h-[70px] rounded-full bg-white group-hover:bg-accent transition-all duration-500 flex justify-center items-center hover:-rotate-45"
-                  >
-                    <BsArrowDownRight className="text-primary text-3xl" />
-                  </Link>
+              <section key={section.track} className="surface-card p-7">
+                <h2 className="text-3xl text-primary">{section.title}</h2>
+                <p className="mt-2 text-sm muted-text">{section.description}</p>
+
+                <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                  {projects.map((project) => (
+                    <article
+                      key={project.slug}
+                      className="surface-subtle p-5"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-2xl text-primary">{project.name}</h3>
+                        <span className="chip">{project.status}</span>
+                      </div>
+
+                      <p className="mt-3 text-sm leading-relaxed muted-text">
+                        {project.oneLiner}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {project.stack.slice(0, 5).map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-full border border-[color:var(--border)] bg-[color:var(--code-bg)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.08em] muted-text"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="mt-5">
+                        <Link
+                          href={`/projects/${project.slug}`}
+                          className="link-inline text-sm uppercase tracking-[0.1em]"
+                        >
+                          View details
+                        </Link>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-                {/* title */}
-                <h2 className="text-[42px] font-bold leading-none text-white group-hover:text-accent transition-all duration-500">
-                  {projectType.title}
-                </h2>
-                {/* border */}
-                <div className="border-b border-white/20 w-full"></div>
-              </div>
+              </section>
             );
           })}
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </main>
   );
 };
 
-export default Services;
+export default ProjectsPage;

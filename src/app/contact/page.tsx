@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+
+import { profile, services } from "@/data/portfolioData";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -13,23 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FaEnvelope } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { Textarea } from "@/components/ui/textarea";
 
-const info = [
-  {
-    icon: <FaEnvelope />,
-    title: "Email",
-    description: "msulemansaleem01@gmail.com",
-  },
-];
-
-const Contact = () => {
+const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  interface FormData {
+  interface ContactPayload {
     firstname: string;
     lastname: string;
     email: string;
@@ -37,49 +29,43 @@ const Contact = () => {
     message: string;
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
     setSubmitSuccess(false);
 
-    const formData = new FormData(e.currentTarget);
-    const data: FormData = {
-      firstname: formData.get("firstname") as string,
-      lastname: formData.get("lastname") as string,
-      email: formData.get("email") as string,
-      service: formData.get("service") as string,
-      message: formData.get("message") as string,
+    const formData = new FormData(event.currentTarget);
+    const payload: ContactPayload = {
+      firstname: String(formData.get("firstname") || ""),
+      lastname: String(formData.get("lastname") || ""),
+      email: String(formData.get("email") || ""),
+      service: String(formData.get("service") || ""),
+      message: String(formData.get("message") || ""),
     };
 
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
 
-      // Safely attempt to parse the response JSON.
-      let responseData: { error?: string } = {};
-      try {
-        responseData = await response.json();
-      } catch {
-        // If JSON parsing fails (e.g., empty response body), fallback to an empty object.
-        responseData = {};
-      }
+      const result = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
 
       if (!response.ok) {
-        // Throw an error with the message from the response if available.
-        throw new Error(responseData.error || "Failed to send message");
+        throw new Error(result.error || "Unable to send your message");
       }
 
       setSubmitSuccess(true);
-      (e.target as HTMLFormElement).reset();
+      (event.target as HTMLFormElement).reset();
     } catch (error: unknown) {
       if (error instanceof Error) {
         setSubmitError(error.message);
       } else {
-        setSubmitError("An unknown error occurred");
+        setSubmitError("Unexpected error while sending the message");
       }
     } finally {
       setIsSubmitting(false);
@@ -87,105 +73,122 @@ const Contact = () => {
   };
 
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{
-        opacity: 1,
-        transition: { delay: 2.4, duration: 0.4, ease: "easeIn" },
-      }}
-      className="py-6"
-    >
-      <div className="container mx-auto">
-        <div className="flex flex-col xl:flex-row gap-[30px]">
-          <div className="xl:w-[54%] order-2 xl:order-none">
-            <form
-              className="flex flex-col gap-6 p-10 bg-[#27272c] rounded-xl"
-              onSubmit={handleSubmit}
-            >
-              <h3 className="text-4xl text-accent">
-                Let&apos;s work together.
-              </h3>
+    <main className="section-wrap pt-14">
+      <div className="container mx-auto grid gap-8 xl:grid-cols-[1.1fr_0.9fr]">
+        <section className="surface-card p-7 sm:p-10">
+          <span className="chip">Contact</span>
+          <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
+            Share what you need built
+          </h1>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
+            Send the role, project scope, or staffing requirement. You will get
+            a response focused on scope clarity, delivery approach, and next
+            concrete steps.
+          </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Input
-                  type="text"
-                  name="firstname"
-                  placeholder="First Name"
-                  required
-                />
-                <Input
-                  type="text"
-                  name="lastname"
-                  placeholder="Last Name"
-                  required
-                />
-                <Input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  required
-                />
-                <Select name="service" required>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select a service" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Services</SelectLabel>
-                      <SelectItem value="Web Development">
-                        Web Development
-                      </SelectItem>
-                      <SelectItem value="UI/UX Design">UI/UX Design</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Input type="text" name="firstname" placeholder="First name" required />
+              <Input type="text" name="lastname" placeholder="Last name" required />
+            </div>
 
-              <Textarea
-                className="h-[200px]"
-                name="message"
-                placeholder="Type your message here."
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Input
+                type="email"
+                name="email"
+                placeholder="Work email"
                 required
               />
 
-              <div className="space-y-2">
-                <Button
-                  size="md"
-                  className="max-w-40"
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Sending..." : "Send message"}
-                </Button>
+              <Select name="service" required>
+                <SelectTrigger>
+                  <SelectValue placeholder="Choose engagement type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Engagement type</SelectLabel>
+                    <SelectItem value="Full-Time or Staff Augmentation">
+                      Full-Time or Staff Augmentation
+                    </SelectItem>
+                    <SelectItem value="Contract Delivery Sprint">
+                      Contract Delivery Sprint
+                    </SelectItem>
+                    <SelectItem value="Agency Subcontract Partnership">
+                      Agency Subcontract Partnership
+                    </SelectItem>
+                    <SelectItem value="Technical Discovery Call">
+                      Technical Discovery Call
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
 
-                {submitSuccess && (
-                  <p className="text-green-500">Message sent successfully!</p>
-                )}
-                {submitError && (
-                  <p className="text-red-500">Error: {submitError}</p>
-                )}
-              </div>
-            </form>
-          </div>
-          <div className="flex-1 flex items-center xl:justify-end order-1 xl:order-none mb-8 xl:mb-0">
-            <ul className="flex flex-col gap-10">
-              {info.map((item, index) => (
-                <li key={index} className="flex items-center gap-6">
-                  <div className="w-[52px] h-[52px] xl:w-[72px] xl:h-[72px] bg-[#27272c] text-accent rounded-[0.375rem] flex items-center justify-center">
-                    <div className="text-[28px]">{item.icon}</div>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-white/60">{item.title}</p>
-                    <h3 className="text-xl">{item.description}</h3>
-                  </div>
+            <Textarea
+              name="message"
+              className="min-h-[180px]"
+              placeholder="What role or project are you hiring for, and what timeline matters most?"
+              required
+            />
+
+            <div className="space-y-2">
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Send message"}
+              </Button>
+
+              {submitSuccess ? (
+                <p className="text-sm font-semibold text-teal-700">
+                  Message sent successfully.
+                </p>
+              ) : null}
+
+              {submitError ? (
+                <p className="text-sm font-semibold text-red-700">
+                  Error: {submitError}
+                </p>
+              ) : null}
+            </div>
+          </form>
+        </section>
+
+        <aside className="space-y-6">
+          <section className="surface-card p-6">
+            <h2 className="text-3xl text-primary">Engagement options</h2>
+            <ul className="mt-4 space-y-3 text-sm muted-text">
+              {services.map((service) => (
+                <li key={service.title}>
+                  <p className="font-semibold text-primary">{service.title}</p>
+                  <p className="muted-text">{service.detail}</p>
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </section>
+
+          <section className="surface-card p-6">
+            <h2 className="text-3xl text-primary">Direct contact</h2>
+            <p className="mt-4 text-sm muted-text">{profile.name}</p>
+            <p className="text-sm muted-text">{profile.location}</p>
+            <p className="mt-2 text-sm">
+              <a href={`mailto:${profile.email}`} className="link-inline">
+                {profile.email}
+              </a>
+            </p>
+            <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold uppercase tracking-[0.08em]">
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="link-inline">
+                LinkedIn
+              </a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="link-inline">
+                GitHub
+              </a>
+              <a href={profile.upwork} target="_blank" rel="noopener noreferrer" className="link-inline">
+                Upwork
+              </a>
+            </div>
+          </section>
+        </aside>
       </div>
-    </motion.section>
+    </main>
   );
 };
 
-export default Contact;
+export default ContactPage;
