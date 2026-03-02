@@ -69,7 +69,12 @@ const REVALIDATE_SECONDS = 900;
 const CONCURRENCY = 5;
 
 function getAuthToken() {
-  return process.env.GITHUB_ACTIVITY_TOKEN || process.env.GITHUB_TOKEN || "";
+  return (
+    process.env.GH_ACTIVITY_FN_TOKEN ||
+    process.env.GITHUB_ACTIVITY_TOKEN ||
+    process.env.GITHUB_TOKEN ||
+    ""
+  );
 }
 
 function buildHeaders(token: string): HeadersInit {

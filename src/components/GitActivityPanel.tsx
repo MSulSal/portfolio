@@ -86,8 +86,8 @@ const GitActivityPanel = async () => {
 
       {!activity.hasLiveData ? (
         <p className="mt-4 text-xs muted-text">
-          Live metrics could not be fetched. Ensure
-          `GITHUB_ACTIVITY_TOKEN` has repository access.
+          Live metrics could not be fetched. Ensure `GH_ACTIVITY_FN_TOKEN`
+          (or `GITHUB_ACTIVITY_TOKEN`) has repository access.
         </p>
       ) : null}
     </aside>
