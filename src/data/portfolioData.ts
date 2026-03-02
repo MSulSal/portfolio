@@ -131,7 +131,7 @@ export const portfolioProjects: PortfolioProject[] = [
       "Frontend lab built to pressure-test design decisions under real product constraints, not template reuse.",
     summary:
       "Design-focused frontend build exploring high-contrast systems, hierarchy, and motion under practical product constraints.",
-    stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
+    stack: ["HTML", "CSS", "Vanilla JavaScript"],
     highlights: [
       "Explores deliberate visual systems and high-contrast communication layouts.",
       "Designed as a practical showcase for conversion-focused frontend decision making.",
