@@ -2,7 +2,11 @@ import Link from "next/link";
 
 import ProofCharts from "@/components/ProofCharts";
 import { Button } from "@/components/ui/button";
-import { profile, roleTracks } from "@/data/portfolioData";
+import {
+  employmentHistory,
+  profile,
+  skillRankings,
+} from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
 
 const ResumePage = async () => {
@@ -51,20 +55,72 @@ const ResumePage = async () => {
           </div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2">
-          {roleTracks.map((track) => (
-            <article key={track.id} className="surface-card p-6">
-              <span className="chip">{track.label}</span>
-              <p className="mt-4 text-lg font-semibold text-primary">
-                {track.summary}
-              </p>
-              <ul className="mt-4 space-y-2 text-sm muted-text">
-                {track.topEvidence.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
+        <section className="surface-card p-7 sm:p-10">
+          <span className="chip">Skill ranking</span>
+          <h2 className="h2-fluid mt-4 text-primary">Core strengths from shipped work</h2>
+          <p className="mt-4 text-base leading-relaxed muted-text">
+            Ranked by demonstrated depth across active repositories and delivery outcomes.
+          </p>
+
+          <div className="mt-7 grid gap-5 xl:grid-cols-2">
+            {skillRankings.map((skill) => (
+              <article key={skill.id} className="surface-subtle p-5">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-base font-semibold text-primary">{skill.skill}</p>
+                  <p className="text-sm font-semibold text-accent">{skill.score}/100</p>
+                </div>
+
+                <div className="mt-3 h-2 rounded-full bg-[color:var(--code-bg)]">
+                  <div
+                    className="h-full rounded-full bg-accent"
+                    style={{ width: `${skill.score}%` }}
+                  />
+                </div>
+
+                <p className="mt-4 text-sm leading-relaxed muted-text">
+                  {skill.summary}
+                </p>
+                <ul className="mt-3 space-y-2 text-sm muted-text">
+                  {skill.evidence.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="surface-card p-7 sm:p-10">
+          <span className="chip">Employment history</span>
+          <h2 className="h2-fluid mt-4 text-primary">Experience timeline</h2>
+          <p className="mt-4 text-base leading-relaxed muted-text">
+            Summary of recent roles and delivery context. Edit titles, dates, and outcomes as needed.
+          </p>
+
+          <div className="mt-7 space-y-5">
+            {employmentHistory.map((entry) => (
+              <article key={entry.id} className="surface-subtle p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <p className="text-lg font-semibold text-primary">{entry.title}</p>
+                    <p className="text-sm font-semibold muted-text">{entry.company}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold text-primary">{entry.period}</p>
+                    <p className="text-xs uppercase tracking-[0.08em] muted-text">
+                      {entry.location}
+                    </p>
+                  </div>
+                </div>
+
+                <ul className="mt-4 space-y-2 text-sm muted-text">
+                  {entry.highlights.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section className="surface-card p-7 sm:p-10">

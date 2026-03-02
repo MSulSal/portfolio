@@ -26,6 +26,23 @@ export interface RoleTrack {
   topEvidence: string[];
 }
 
+export interface SkillRanking {
+  id: string;
+  skill: string;
+  score: number;
+  summary: string;
+  evidence: string[];
+}
+
+export interface EmploymentEntry {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  location: string;
+  highlights: string[];
+}
+
 export const profile = {
   name: "Suleman Saleem",
   title: "Software Engineer",
@@ -168,6 +185,102 @@ export const services = [
     title: "Architecture and Stabilization",
     detail:
       "Improve boundaries, reduce fragility, and make systems easier to evolve under real product pressure.",
+  },
+];
+
+export const skillRankings: SkillRanking[] = [
+  {
+    id: "fullstack-delivery",
+    skill: "Full-Stack Product Delivery",
+    score: 96,
+    summary:
+      "Ships scoped features across frontend, backend, data, and release workflow with production readiness.",
+    evidence: [
+      "Delivered CRM, ordering, ecommerce, and analytics flows in a unified platform build.",
+      "Maintained implementation velocity while preserving test and deployment discipline.",
+    ],
+  },
+  {
+    id: "backend-architecture",
+    skill: "Backend Architecture and API Design",
+    score: 93,
+    summary:
+      "Designs domain models and API boundaries that support scale, maintainability, and operational clarity.",
+    evidence: [
+      "Built typed API contracts and service-layer structure across multiple stacks.",
+      "Designed multi-domain schemas with policy-aware data access boundaries.",
+    ],
+  },
+  {
+    id: "quality-automation",
+    skill: "Quality Engineering and Test Automation",
+    score: 92,
+    summary:
+      "Implements layered quality gates to reduce regressions and improve release confidence.",
+    evidence: [
+      "Unit, integration, DB assertions, and E2E checks wired into CI workflows.",
+      "Fail-fast checks align local development and pipeline behavior.",
+    ],
+  },
+  {
+    id: "frontend-systems",
+    skill: "Frontend Systems and UX Implementation",
+    score: 88,
+    summary:
+      "Builds conversion-focused, responsive interfaces with deliberate hierarchy and interaction design.",
+    evidence: [
+      "Developed design-forward frontend systems under practical product constraints.",
+      "Balanced visual clarity with implementation speed and maintainability.",
+    ],
+  },
+  {
+    id: "devops-reliability",
+    skill: "Delivery Operations and Reliability",
+    score: 86,
+    summary:
+      "Creates predictable engineering loops through CI guardrails, clear tracking, and recoverable workflows.",
+    evidence: [
+      "Established repeatable release gates for lint, type, test, and build verification.",
+      "Used issue-linked execution and documented recovery practices to stabilize delivery.",
+    ],
+  },
+];
+
+export const employmentHistory: EmploymentEntry[] = [
+  {
+    id: "independent-engineer",
+    title: "Independent Software Engineer",
+    company: "Contract and Freelance",
+    period: "2023 - Present",
+    location: "Remote | Dallas-Fort Worth, TX",
+    highlights: [
+      "Delivered full-stack product slices for service and operations workflows from scope to deploy-ready handoff.",
+      "Owned architecture decisions, implementation, testing, and stakeholder communication across active engagements.",
+      "Worked in fast-turn cycles with measurable output through commits, issue resolution, and release checkpoints.",
+    ],
+  },
+  {
+    id: "product-engineer",
+    title: "Product Engineer",
+    company: "Chama Inn Platform Build",
+    period: "2024 - Present",
+    location: "Product Development",
+    highlights: [
+      "Built and iterated a hospitality operations platform spanning CRM, ordering, ecommerce, and analytics.",
+      "Implemented policy-aware data design and automated quality coverage in support of production behavior.",
+      "Maintained roadmap-to-delivery execution with transparent progress and outcome tracking.",
+    ],
+  },
+  {
+    id: "history-template",
+    title: "Previous Role (Edit)",
+    company: "Add Company Name",
+    period: "Add Dates",
+    location: "Add Location",
+    highlights: [
+      "Replace this entry with your prior employment role and concrete outcomes.",
+      "Use metrics where possible: delivery volume, uptime, cycle-time improvements, or team impact.",
+    ],
   },
 ];
 
