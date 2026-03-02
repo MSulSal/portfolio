@@ -1,13 +1,12 @@
 import Link from "next/link";
 
+import GitActivityPanel from "@/components/GitActivityPanel";
 import Socials from "@/components/Socials";
 import { Button } from "@/components/ui/button";
 import {
-  activeExecutionLane,
   featuredProjects,
   labTracks,
   profile,
-  proofPoints,
   services,
 } from "@/data/portfolioData";
 
@@ -24,8 +23,8 @@ const Home = () => {
             </h1>
 
             <p className="max-w-3xl text-lg leading-relaxed muted-text">
-              22 Postgres domain tables, 48 RLS policies, 146 pgTAP assertions,
-              and CI gates from lint to E2E.
+              Recent commit activity and portfolio-wide delivery metrics are live
+              below, pulled from active repositories.
             </p>
 
             <p className="max-w-3xl text-base font-medium muted-text">
@@ -61,35 +60,7 @@ const Home = () => {
             </div>
           </div>
 
-          <aside className="surface-card p-6 sm:p-7">
-            <p className="chip">Execution baseline</p>
-            <ul className="mt-4 space-y-2 text-sm muted-text">
-              <li>- Clear architecture and API contracts.</li>
-              <li>- Test-first delivery with visible quality gates.</li>
-              <li>- Predictable communication and scope tracking.</li>
-              <li>- Production-ready handoff, not prototype-only code.</li>
-            </ul>
-
-            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.1em] muted-text">
-              {activeExecutionLane.label}
-            </p>
-            <p className="mt-2 text-base font-semibold text-primary">
-              {activeExecutionLane.value}
-            </p>
-
-            <div className="mt-7 space-y-3">
-              {proofPoints.map((item) => (
-                <div key={item.label} className="surface-subtle p-4">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] muted-text">
-                    {item.label}
-                  </p>
-                  <p className="mt-2 text-lg font-semibold text-primary">
-                    {item.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </aside>
+          <GitActivityPanel />
         </div>
       </section>
 

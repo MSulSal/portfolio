@@ -1,9 +1,15 @@
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { profile, proofPoints, roleTracks } from "@/data/portfolioData";
+import { profile, portfolioProjects, roleTracks } from "@/data/portfolioData";
+import { getPortfolioActivity } from "@/lib/githubActivity";
 
-const ResumePage = () => {
+const ResumePage = async () => {
+  const activity = await getPortfolioActivity(
+    profile.githubUsername,
+    portfolioProjects.length
+  );
+
   return (
     <main className="section-wrap pt-14">
       <div className="container mx-auto space-y-10">
@@ -17,7 +23,7 @@ const ResumePage = () => {
           </p>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {proofPoints.map((point) => (
+            {activity.metrics.map((point) => (
               <article key={point.label} className="surface-subtle p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.1em] muted-text">
                   {point.label}

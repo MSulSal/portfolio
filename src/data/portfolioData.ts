@@ -34,22 +34,10 @@ export const profile = {
   location: "Dallas-Fort Worth, TX",
   email: "msulemansaleem01@gmail.com",
   github: "https://github.com/MSulSal",
+  githubUsername: "MSulSal",
   linkedin: "https://www.linkedin.com/in/m-suleman-saleem/",
   upwork: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
 };
-
-export const activeExecutionLane = {
-  label: "Current delivery lane",
-  value: "CRM staff edit/delete UI flow plus UI and E2E coverage (TST-07)",
-};
-
-export const proofPoints = [
-  { label: "Postgres domain tables", value: "22" },
-  { label: "RLS policies implemented", value: "48" },
-  { label: "pgTAP assertions", value: "146" },
-  { label: "Unit/Integration tests", value: "30" },
-  { label: "CI gate layers", value: "lint + typecheck + unit + build + e2e" },
-];
 
 export const portfolioProjects: PortfolioProject[] = [
   {
