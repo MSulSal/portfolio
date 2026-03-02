@@ -68,8 +68,7 @@ const GitActivityPanel = async () => {
           ) : (
             <div className="surface-subtle p-4">
               <p className="text-sm muted-text">
-                Commit stream is temporarily unavailable. Use the GitHub link above
-                for live activity.
+                No recent commits were found for the connected repositories.
               </p>
             </div>
           )}
@@ -78,7 +77,8 @@ const GitActivityPanel = async () => {
 
       {!activity.hasLiveData ? (
         <p className="mt-4 text-xs muted-text">
-          Live metrics could not be fetched at this moment.
+          Live metrics could not be fetched. Ensure
+          `GITHUB_ACTIVITY_TOKEN` has repository access.
         </p>
       ) : null}
     </aside>
