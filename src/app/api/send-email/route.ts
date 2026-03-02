@@ -11,11 +11,11 @@ interface ContactPayload {
 
 export async function POST(request: Request) {
   try {
-    if (!process.env.RESEND_API_KEY || !process.env.EMAIL) {
+    if (!process.env.RESEND_API_KEY) {
       return NextResponse.json(
         {
           error:
-            "Email service is not configured. Set RESEND_API_KEY and EMAIL in environment variables.",
+            "Email service is not configured. Set RESEND_API_KEY in environment variables.",
         },
         { status: 500 }
       );
@@ -41,10 +41,20 @@ export async function POST(request: Request) {
 
     const fullName = `${body.firstname || ""} ${body.lastname || ""}`.trim();
     const resend = new Resend(process.env.RESEND_API_KEY);
+    const inbox = process.env.EMAIL || "msulemansaleem01@gmail.com";
+    const from = process.env.RESEND_FROM || "Portfolio Contact <onboarding@resend.dev>";
+
+    const escapeHtml = (value: string) =>
+      value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
 
     const { data, error } = await resend.emails.send({
-      from: "Portfolio Contact <onboarding@resend.dev>",
-      to: process.env.EMAIL,
+      from,
+      to: inbox,
       replyTo: email,
       subject: `Portfolio inquiry from ${fullName || "Unknown sender"}`,
       text: [
@@ -54,11 +64,11 @@ export async function POST(request: Request) {
         `Message:\n${message}`,
       ].join("\n\n"),
       html: [
-        `<p><strong>Name:</strong> ${fullName || "Not provided"}</p>`,
-        `<p><strong>Email:</strong> ${email}</p>`,
-        `<p><strong>Engagement:</strong> ${body.service || "Not specified"}</p>`,
+        `<p><strong>Name:</strong> ${escapeHtml(fullName || "Not provided")}</p>`,
+        `<p><strong>Email:</strong> ${escapeHtml(email)}</p>`,
+        `<p><strong>Engagement:</strong> ${escapeHtml(body.service || "Not specified")}</p>`,
         `<p><strong>Message:</strong></p>`,
-        `<p>${message.replace(/\n/g, "<br>")}</p>`,
+        `<p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>`,
       ].join(""),
     });
 

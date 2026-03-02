@@ -20,6 +20,11 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [service, setService] = useState("");
+  const [message, setMessage] = useState("");
 
   interface ContactPayload {
     firstname: string;
@@ -35,14 +40,26 @@ const ContactPage = () => {
     setSubmitError(null);
     setSubmitSuccess(false);
 
-    const formData = new FormData(event.currentTarget);
     const payload: ContactPayload = {
-      firstname: String(formData.get("firstname") || ""),
-      lastname: String(formData.get("lastname") || ""),
-      email: String(formData.get("email") || ""),
-      service: String(formData.get("service") || ""),
-      message: String(formData.get("message") || ""),
+      firstname: firstname.trim(),
+      lastname: lastname.trim(),
+      email: email.trim(),
+      service: service.trim(),
+      message: message.trim(),
     };
+
+    if (!payload.firstname || !payload.lastname || !payload.email || !payload.service || !payload.message) {
+      setSubmitError("Please fill out all fields before sending.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email);
+    if (!isValidEmail) {
+      setSubmitError("Please enter a valid email address.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch("/api/send-email", {
@@ -60,7 +77,11 @@ const ContactPage = () => {
       }
 
       setSubmitSuccess(true);
-      (event.target as HTMLFormElement).reset();
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setService("");
+      setMessage("");
     } catch (error: unknown) {
       if (error instanceof Error) {
         setSubmitError(error.message);
@@ -85,10 +106,22 @@ const ContactPage = () => {
             implementation plan with milestones.
           </p>
 
-          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit} noValidate>
             <div className="grid gap-4 sm:grid-cols-2">
-              <Input type="text" name="firstname" placeholder="First name" required />
-              <Input type="text" name="lastname" placeholder="Last name" required />
+              <Input
+                type="text"
+                name="firstname"
+                placeholder="First name"
+                value={firstname}
+                onChange={(event) => setFirstname(event.target.value)}
+              />
+              <Input
+                type="text"
+                name="lastname"
+                placeholder="Last name"
+                value={lastname}
+                onChange={(event) => setLastname(event.target.value)}
+              />
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -96,10 +129,11 @@ const ContactPage = () => {
                 type="email"
                 name="email"
                 placeholder="Work email"
-                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               />
 
-              <Select name="service" required>
+              <Select name="service" value={service} onValueChange={setService}>
                 <SelectTrigger>
                   <SelectValue placeholder="Choose discussion topic" />
                 </SelectTrigger>
@@ -120,10 +154,11 @@ const ContactPage = () => {
               name="message"
               className="min-h-[180px]"
               placeholder="What are you building, and what timeline matters most?"
-              required
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
             />
 
-            <div className="space-y-2">
+            <div className="space-y-2" aria-live="polite">
               <Button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send message"}
               </Button>

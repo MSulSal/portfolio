@@ -39,7 +39,9 @@ Set environment variables before using `/contact` email send:
 
 ```bash
 RESEND_API_KEY=your_resend_key
-EMAIL=your_inbox@example.com
+EMAIL=your_gmail@example.com
+# optional
+RESEND_FROM=Portfolio Contact <onboarding@resend.dev>
 ```
 
 ## Notes
