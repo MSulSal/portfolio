@@ -13,7 +13,7 @@ const sectionOrder = [
     track: "active",
     title: "Now Building",
     description:
-      "Active projects shaping your current interview narrative and contract positioning.",
+      "Active projects that show current execution capability and implementation range.",
   },
   {
     track: "lab",
@@ -30,12 +30,11 @@ const ProjectsPage = () => {
         <div className="max-w-4xl">
           <span className="chip">Project index</span>
           <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
-            Evaluate delivery quality at project level
+            Projects
           </h1>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Browse work in the order most teams evaluate candidates: flagship
-            production proof first, active builds second, and labs as supporting
-            technical depth.
+            Flagship product first, active build lanes second, labs for
+            long-horizon systems depth.
           </p>
         </div>
 

@@ -31,8 +31,6 @@ export const profile = {
   title: "Software Engineer",
   focus:
     "Build operational software with test-first delivery, production-safe architecture, and clear execution discipline.",
-  availability:
-    "Available for full-time roles, staffing-agency engagements, and contract software delivery.",
   location: "Dallas-Fort Worth, TX",
   email: "msulemansaleem01@gmail.com",
   github: "https://github.com/MSulSal",
@@ -62,7 +60,7 @@ export const portfolioProjects: PortfolioProject[] = [
     oneLiner:
       "Hospitality operations platform combining CRM, restaurant ordering, gift-shop ecommerce, and realtime staff analytics.",
     summary:
-      "This is the strongest current hiring proof: production-minded data modeling, API contracts, layered testing, and repeatable delivery workflows in one project.",
+      "Production hospitality stack with schema design, API contracts, layered testing, and repeatable delivery workflows.",
     stack: [
       "Next.js 16",
       "TypeScript",
@@ -96,7 +94,7 @@ export const portfolioProjects: PortfolioProject[] = [
     oneLiner:
       "Spring Boot and React operations platform for service businesses managing clients, work orders, invoices, and deposit payments.",
     summary:
-      "OpsLedger is your enterprise-leaning build track. It positions you for Java/Spring roles while preserving your test-first delivery narrative.",
+      "OpsLedger demonstrates enterprise-oriented Java/Spring delivery with test-first implementation practices and operational discipline.",
     stack: [
       "Java 21",
       "Spring Boot 3",
@@ -129,12 +127,12 @@ export const portfolioProjects: PortfolioProject[] = [
     oneLiner:
       "Frontend lab intentionally built to prove design decisions under constraints, not template reuse.",
     summary:
-      "This project is where UI taste, narrative clarity, and implementation craft converge. It supports contract and agency conversations where execution speed matters.",
+      "Design-focused frontend build exploring high-contrast systems, hierarchy, and motion under practical product constraints.",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
     highlights: [
       "Explores deliberate visual systems and high-contrast communication layouts.",
       "Designed as a practical showcase for conversion-focused frontend decision making.",
-      "Acts as your design-forward complement to backend-heavy flagship work.",
+      "Acts as a design-forward complement to backend-heavy flagship work.",
     ],
     proof: [
       "Built to show intentional typography, layout hierarchy, and usability clarity.",
@@ -151,7 +149,7 @@ export const portfolioProjects: PortfolioProject[] = [
     oneLiner:
       "Long-horizon labs that deepen systems understanding and provide proof of learning velocity.",
     summary:
-      "These labs are supporting evidence of range and rigor. They should reinforce your main hiring story, not replace it.",
+      "Long-horizon tracks in cryptography, concurrency, graphics, neural nets, and MCP integrations.",
     stack: ["Rust", "C/C++", "CUDA", "Python", "Node.js"],
     highlights: [
       "Crypto lab focuses on threat models, reproducible benchmarks, and secure implementation choices.",
@@ -161,7 +159,7 @@ export const portfolioProjects: PortfolioProject[] = [
     proof: [
       "Documented roadmaps and learning plans across multiple deep technical domains.",
       "Commit-driven progression with explicit definitions of done.",
-      "Clear translation of learning artifacts into interview and career signal.",
+      "Clear translation of learning artifacts into practical engineering outcomes.",
     ],
     links: {},
   },
@@ -169,19 +167,19 @@ export const portfolioProjects: PortfolioProject[] = [
 
 export const services = [
   {
-    title: "Full-Time and Staff Augmentation",
+    title: "Feature Delivery and Ownership",
     detail:
-      "Plug into an existing team and contribute across feature delivery, quality depth, and reliability practices.",
+      "Own scoped features end-to-end with clean implementation, testing depth, and production-ready handoff.",
   },
   {
-    title: "Contract Delivery Sprints",
+    title: "Quality and Reliability Hardening",
     detail:
-      "Deliver scoped software slices with clear acceptance criteria, tested behavior, and deployment-ready handoff.",
+      "Increase confidence with stronger test coverage, failure-path handling, and release guardrails.",
   },
   {
-    title: "Agency Subcontract Partnership",
+    title: "Architecture and Stabilization",
     detail:
-      "Operate inside agency workflows for client builds, quality hardening, and project stabilization.",
+      "Improve boundaries, reduce fragility, and make systems easier to evolve under real product pressure.",
   },
 ];
 

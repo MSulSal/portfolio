@@ -29,7 +29,9 @@ const MobileNav = () => {
 
       <SheetContent>
         <div className="mt-10">
-          <p className="text-2xl font-semibold text-primary">Suleman Saleem</p>
+          <p className="text-2xl font-semibold tracking-tight text-primary">
+            suleman.saleem
+          </p>
           <p className="mt-1 text-sm muted-text">Full-Stack Software Engineer</p>
         </div>
 
@@ -70,4 +72,3 @@ const MobileNav = () => {
 };
 
 export default MobileNav;
-

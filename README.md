@@ -1,10 +1,10 @@
 # Suleman Saleem Portfolio
 
-Hiring-focused portfolio showcasing product engineering, test discipline, and operational reliability across full-time and contract-ready work.
+Portfolio showcasing product engineering, test discipline, and operational reliability across modern full-stack systems.
 
 ## Positioning
 
-This site is intentionally organized for fast recruiter/client clarity:
+This site is intentionally organized for fast technical clarity:
 
 1. Flagship project evidence first
 2. Active build lanes second

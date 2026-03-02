@@ -10,8 +10,8 @@ const Header = () => {
     <header className="sticky top-0 z-50 border-b border-[color:var(--border)] bg-[color:var(--bg)] backdrop-blur">
       <div className="container mx-auto flex items-center justify-between py-5">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-semibold text-primary sm:text-3xl">
-            Suleman Saleem
+          <span className="text-xl font-semibold tracking-tight text-primary sm:text-2xl">
+            suleman.saleem
           </span>
         </Link>
 

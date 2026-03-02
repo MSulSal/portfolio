@@ -8,13 +8,12 @@ const ResumePage = () => {
     <main className="section-wrap pt-14">
       <div className="container mx-auto space-y-10">
         <section className="surface-card p-7 sm:p-10">
-          <span className="chip">Proof and positioning</span>
+          <span className="chip">Execution snapshot</span>
           <h1 className="mt-4 text-5xl text-primary sm:text-6xl">
-            What teams can verify quickly
+            Metrics and track record
           </h1>
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
-            This page is optimized for recruiter and hiring-manager scan speed:
-            concrete proof points first, then role-specific evidence summaries.
+            Current quality counters first, then capability-specific evidence.
           </p>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -37,7 +36,7 @@ const ResumePage = () => {
               </a>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/contact">Discuss opportunities</Link>
+              <Link href="/contact">Share project context</Link>
             </Button>
           </div>
         </section>

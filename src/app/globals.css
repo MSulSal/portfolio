@@ -3,35 +3,33 @@
 @tailwind utilities;
 
 :root {
-  --bg: #f3f7ff;
-  --surface: rgba(255, 255, 255, 0.82);
-  --surface-strong: #ffffff;
-  --border: rgba(15, 23, 42, 0.14);
-  --ink: #0f172a;
-  --muted: #475569;
-  --accent: #0ea5e9;
-  --accent-hover: #0284c7;
-  --teal: #22c55e;
-  --teal-hover: #16a34a;
-  --shadow: 0 24px 55px -40px rgba(15, 23, 42, 0.32);
-  --grid: rgba(71, 85, 105, 0.16);
-  --code-bg: rgba(15, 23, 42, 0.05);
+  --bg: #eaf1fb;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.94);
+  --border: rgba(15, 23, 42, 0.16);
+  --ink: #0b1220;
+  --muted: #334155;
+  --accent: #0f766e;
+  --accent-hover: #115e59;
+  --teal: #0369a1;
+  --teal-hover: #075985;
+  --shadow: 0 20px 48px -36px rgba(15, 23, 42, 0.34);
+  --code-bg: rgba(15, 23, 42, 0.06);
 }
 
 .dark {
-  --bg: #050b17;
-  --surface: rgba(15, 23, 42, 0.78);
-  --surface-strong: rgba(15, 23, 42, 0.96);
-  --border: rgba(148, 163, 184, 0.3);
+  --bg: #050711;
+  --surface: rgba(9, 14, 28, 0.78);
+  --surface-strong: rgba(9, 14, 28, 0.96);
+  --border: rgba(100, 116, 139, 0.28);
   --ink: #e2e8f0;
-  --muted: #94a3b8;
-  --accent: #38bdf8;
-  --accent-hover: #0ea5e9;
-  --teal: #22c55e;
-  --teal-hover: #16a34a;
-  --shadow: 0 26px 68px -52px rgba(14, 165, 233, 0.58);
-  --grid: rgba(30, 41, 59, 0.45);
-  --code-bg: rgba(148, 163, 184, 0.12);
+  --muted: #93a4bd;
+  --accent: #2dd4bf;
+  --accent-hover: #14b8a6;
+  --teal: #22d3ee;
+  --teal-hover: #06b6d4;
+  --shadow: 0 26px 68px -54px rgba(20, 184, 166, 0.45);
+  --code-bg: rgba(100, 116, 139, 0.14);
 }
 
 @layer base {
@@ -54,19 +52,42 @@
     content: "";
     position: fixed;
     inset: 0;
-    background:
-      linear-gradient(to bottom, rgba(14, 165, 233, 0.12), transparent 42%),
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 100% 100%, 32px 32px, 32px 32px;
-    mask-image: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.95),
-      rgba(0, 0, 0, 0.45) 76%,
-      transparent
-    );
     pointer-events: none;
     z-index: -2;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  html.dark body::before {
+    background:
+      radial-gradient(circle at 18% -8%, rgba(45, 212, 191, 0.14), transparent 40%),
+      radial-gradient(circle at 88% 8%, rgba(34, 211, 238, 0.12), transparent 44%);
+  }
+
+  html.dark body::after {
+    background: transparent;
+  }
+
+  html.light body::before {
+    background:
+      radial-gradient(circle at 8% -12%, rgba(14, 116, 144, 0.2), transparent 42%),
+      radial-gradient(circle at 88% 2%, rgba(2, 132, 199, 0.16), transparent 40%),
+      linear-gradient(160deg, rgba(255, 255, 255, 0.88), rgba(235, 244, 255, 0.9));
+  }
+
+  html.light body::after {
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at 52% 16%, #000 12%, transparent 76%);
+    opacity: 0.5;
   }
 
   h1,
@@ -83,11 +104,11 @@
 
 @layer components {
   .section-wrap {
-    @apply py-16 lg:py-24;
+    @apply py-14 lg:py-20;
   }
 
   .surface-card {
-    @apply rounded-2xl border backdrop-blur-sm;
+    @apply rounded-2xl border backdrop-blur;
     background: var(--surface);
     border-color: var(--border);
     box-shadow: var(--shadow);
@@ -99,8 +120,12 @@
     border-color: var(--border);
   }
 
+  html.light .surface-card {
+    box-shadow: 0 24px 52px -38px rgba(15, 23, 42, 0.42);
+  }
+
   .chip {
-    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em];
+    @apply inline-flex items-center rounded-md border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.1em];
     color: var(--muted);
     border-color: var(--border);
     background: var(--code-bg);
@@ -126,4 +151,3 @@
     color: var(--ink);
   }
 }
-

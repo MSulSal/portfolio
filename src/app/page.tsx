@@ -17,26 +17,24 @@ const Home = () => {
       <section className="section-wrap pb-12 pt-16">
         <div className="container mx-auto grid gap-10 lg:grid-cols-[1.3fr_0.7fr]">
           <div className="space-y-7">
-            <span className="chip">Hiring for full-stack delivery</span>
+            <span className="chip">Shipping full-stack systems</span>
 
             <h1 className="max-w-4xl text-5xl leading-[1.05] text-primary sm:text-6xl xl:text-7xl">
-              Need a full-stack engineer who ships features without reliability
-              debt?
+              Built systems. Tested paths. Production-ready handoff.
             </h1>
 
             <p className="max-w-3xl text-lg leading-relaxed muted-text">
-              If you need someone to build quickly and still protect quality,
-              this portfolio is built for that evaluation. You can review code
-              scope, testing depth, and delivery discipline in one place.
+              22 Postgres domain tables, 48 RLS policies, 146 pgTAP assertions,
+              and CI gates from lint to E2E.
             </p>
 
             <p className="max-w-3xl text-base font-medium muted-text">
-              {profile.availability}
+              {profile.focus}
             </p>
 
             <div className="code-panel max-w-3xl">
               <p className="uppercase tracking-[0.1em] muted-text">
-                delivery-loop.ts
+                core loop
               </p>
               <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
                 {`scope() -> implement() -> test() -> ship() -> document()`}
@@ -48,13 +46,13 @@ const Home = () => {
                 <Link href="/projects">Review projects</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="/contact">Discuss your role or project</Link>
+                <Link href="/contact">Talk about your project</Link>
               </Button>
             </div>
 
             <div className="flex items-center gap-4">
-              <p className="text-sm font-semibold uppercase tracking-[0.1em] muted-text">
-                Check references
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] muted-text">
+                References
               </p>
               <Socials
                 containerStyles="flex gap-3"
@@ -64,7 +62,7 @@ const Home = () => {
           </div>
 
           <aside className="surface-card p-6 sm:p-7">
-            <p className="chip">What you can expect</p>
+            <p className="chip">Execution baseline</p>
             <ul className="mt-4 space-y-2 text-sm muted-text">
               <li>- Clear architecture and API contracts.</li>
               <li>- Test-first delivery with visible quality gates.</li>
@@ -82,7 +80,7 @@ const Home = () => {
             <div className="mt-7 space-y-3">
               {proofPoints.map((item) => (
                 <div key={item.label} className="surface-subtle p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.12em] muted-text">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.1em] muted-text">
                     {item.label}
                   </p>
                   <p className="mt-2 text-lg font-semibold text-primary">
@@ -101,11 +99,11 @@ const Home = () => {
             <div>
               <p className="chip">Selected work</p>
               <h2 className="mt-4 text-4xl text-primary sm:text-5xl">
-                Projects you can evaluate quickly
+                Selected projects
               </h2>
             </div>
             <Link href="/projects" className="link-inline">
-              Open full project index
+              View full project index
             </Link>
           </div>
 
@@ -161,8 +159,8 @@ const Home = () => {
             <p className="chip">Depth tracks</p>
             <h2 className="mt-4 text-4xl text-primary">Technical labs</h2>
             <p className="mt-4 text-sm leading-relaxed muted-text">
-              Labs stay visible as supporting proof of systems depth, while
-              flagship product work stays the main hiring signal.
+              Labs stay visible as supporting signal for systems depth while
+              product projects remain the primary evidence surface.
             </p>
             <ul className="mt-5 space-y-3 text-sm muted-text">
               {labTracks.map((lab) => (
@@ -180,4 +178,3 @@ const Home = () => {
 };
 
 export default Home;
-

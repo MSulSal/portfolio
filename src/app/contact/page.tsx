@@ -81,9 +81,8 @@ const ContactPage = () => {
             Share what you need built
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
-            Send the role, project scope, or staffing requirement. You will get
-            a response focused on scope clarity, delivery approach, and next
-            concrete steps.
+            Include scope, constraints, and timeline. You will get a direct
+            implementation plan with milestones.
           </p>
 
           <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
@@ -102,23 +101,16 @@ const ContactPage = () => {
 
               <Select name="service" required>
                 <SelectTrigger>
-                  <SelectValue placeholder="Choose engagement type" />
+                  <SelectValue placeholder="Choose discussion topic" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Engagement type</SelectLabel>
-                    <SelectItem value="Full-Time or Staff Augmentation">
-                      Full-Time or Staff Augmentation
-                    </SelectItem>
-                    <SelectItem value="Contract Delivery Sprint">
-                      Contract Delivery Sprint
-                    </SelectItem>
-                    <SelectItem value="Agency Subcontract Partnership">
-                      Agency Subcontract Partnership
-                    </SelectItem>
-                    <SelectItem value="Technical Discovery Call">
-                      Technical Discovery Call
-                    </SelectItem>
+                    <SelectLabel>Discussion topic</SelectLabel>
+                    {services.map((service) => (
+                      <SelectItem key={service.title} value={service.title}>
+                        {service.title}
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -127,7 +119,7 @@ const ContactPage = () => {
             <Textarea
               name="message"
               className="min-h-[180px]"
-              placeholder="What role or project are you hiring for, and what timeline matters most?"
+              placeholder="What are you building, and what timeline matters most?"
               required
             />
 
@@ -137,13 +129,13 @@ const ContactPage = () => {
               </Button>
 
               {submitSuccess ? (
-                <p className="text-sm font-semibold text-teal-700">
+                <p className="text-sm font-semibold text-teal">
                   Message sent successfully.
                 </p>
               ) : null}
 
               {submitError ? (
-                <p className="text-sm font-semibold text-red-700">
+                <p className="text-sm font-semibold text-red-400">
                   Error: {submitError}
                 </p>
               ) : null}
@@ -153,7 +145,7 @@ const ContactPage = () => {
 
         <aside className="space-y-6">
           <section className="surface-card p-6">
-            <h2 className="text-3xl text-primary">Engagement options</h2>
+            <h2 className="text-3xl text-primary">Collaboration topics</h2>
             <ul className="mt-4 space-y-3 text-sm muted-text">
               {services.map((service) => (
                 <li key={service.title}>

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Suleman Saleem | Software Engineer",
     description:
-      "Hiring-focused portfolio showing production-minded software delivery and verifiable engineering outcomes.",
+      "Portfolio showing production-minded software delivery and verifiable engineering outcomes.",
     type: "website",
     locale: "en_US",
     siteName: "Suleman Saleem Portfolio",
@@ -57,4 +57,3 @@ export default function RootLayout({
     </html>
   );
 }
-

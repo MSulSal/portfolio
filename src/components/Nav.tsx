@@ -30,7 +30,7 @@ const Nav = () => {
               href={link.path}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm font-medium text-[color:var(--muted)] hover:text-accent"
+              className="text-sm font-medium tracking-tight text-[color:var(--muted)] hover:text-accent"
             >
               {link.name}
             </a>
@@ -41,7 +41,7 @@ const Nav = () => {
           <Link
             key={link.name}
             href={link.path}
-            className={`text-sm font-medium transition-colors hover:text-accent ${
+            className={`text-sm font-medium tracking-tight transition-colors hover:text-accent ${
               isActive ? "text-accent" : "text-[color:var(--muted)]"
             }`}
           >
@@ -54,4 +54,3 @@ const Nav = () => {
 };
 
 export default Nav;
-
