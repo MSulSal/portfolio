@@ -1,3 +1,4 @@
+import AnimatedMetricValue from "@/components/AnimatedMetricValue";
 import { profile, portfolioProjects } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -28,7 +29,9 @@ const GitActivityPanel = async () => {
             <p className="text-[11px] font-semibold uppercase tracking-[0.1em] muted-text">
               {item.label}
             </p>
-            <p className="mt-2 text-lg font-semibold text-primary">{item.value}</p>
+            <p className="mt-2 text-lg font-semibold text-primary">
+              <AnimatedMetricValue value={item.value} />
+            </p>
           </div>
         ))}
       </div>
@@ -74,6 +77,12 @@ const GitActivityPanel = async () => {
           )}
         </ScrollArea>
       </div>
+
+      <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
+        {activity.context.reposScanned} repos scanned (
+        {activity.context.privateReposScanned} private /{" "}
+        {activity.context.publicReposScanned} public)
+      </p>
 
       {!activity.hasLiveData ? (
         <p className="mt-4 text-xs muted-text">

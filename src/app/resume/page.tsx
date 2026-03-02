@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import ProofCharts from "@/components/ProofCharts";
 import { Button } from "@/components/ui/button";
 import { profile, portfolioProjects, roleTracks } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
@@ -14,25 +15,31 @@ const ResumePage = async () => {
     <main className="section-wrap pt-14">
       <div className="container mx-auto space-y-10">
         <section className="surface-card p-7 sm:p-10">
-          <span className="chip">Execution snapshot</span>
+          <span className="chip">Engineering dashboard</span>
           <h1 className="h1-fluid mt-4 text-primary">
-            Metrics and track record
+            Delivery trends and execution depth
           </h1>
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
-            Current quality counters first, then capability-specific evidence.
+            Interactive charts summarize commit cadence, issue resolution, and
+            repository-level delivery distribution.
           </p>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-            {activity.metrics.map((point) => (
-              <article key={point.label} className="surface-subtle p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.1em] muted-text">
-                  {point.label}
-                </p>
-                <p className="mt-2 text-lg font-semibold text-primary">
-                  {point.value}
-                </p>
-              </article>
-            ))}
+          <div className="mt-7">
+            <ProofCharts
+              commitsByDay={activity.charts.commitsByDay}
+              issuesByWeek={activity.charts.issuesByWeek}
+              commitsByRepo={activity.charts.commitsByRepo}
+            />
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs uppercase tracking-[0.08em] muted-text">
+            <span>
+              Repos scanned: {activity.context.reposScanned} (
+              {activity.context.privateReposScanned} private /{" "}
+              {activity.context.publicReposScanned} public)
+            </span>
+            <span>Commits processed: {activity.context.commitsLoaded}</span>
+            <span>Issues processed: {activity.context.issuesClosedLoaded}</span>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">

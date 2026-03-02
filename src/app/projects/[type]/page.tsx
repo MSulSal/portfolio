@@ -55,7 +55,7 @@ export default async function ProjectDetailPage({
             </section>
 
             <section className="mt-8">
-              <h2 className="h3-fluid text-primary">Proof points</h2>
+              <h2 className="h3-fluid text-primary">Key outcomes</h2>
               <ul className="mt-4 space-y-2 text-sm muted-text">
                 {project.proof.map((item) => (
                   <li key={item}>- {item}</li>

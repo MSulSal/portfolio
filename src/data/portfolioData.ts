@@ -113,7 +113,7 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "Active Build",
     track: "active",
     oneLiner:
-      "Frontend lab intentionally built to prove design decisions under constraints, not template reuse.",
+      "Frontend lab built to pressure-test design decisions under real product constraints, not template reuse.",
     summary:
       "Design-focused frontend build exploring high-contrast systems, hierarchy, and motion under practical product constraints.",
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Motion"],
@@ -135,7 +135,7 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "Lab Track",
     track: "lab",
     oneLiner:
-      "Long-horizon labs that deepen systems understanding and provide proof of learning velocity.",
+      "Long-horizon labs focused on deeper systems understanding and practical experimentation.",
     summary:
       "Long-horizon tracks in cryptography, concurrency, graphics, neural nets, and MCP integrations.",
     stack: ["Rust", "C/C++", "CUDA", "Python", "Node.js"],
@@ -209,7 +209,7 @@ export const roleTracks: RoleTrack[] = [
     topEvidence: [
       "Event-ready schema design and role-governed data boundaries.",
       "Database tests validating constraints and policy assumptions.",
-      "Clear next lane for KPI dictionary, marts, and analysis memos.",
+      "Clear next roadmap for KPI dictionary, marts, and analysis memos.",
     ],
   },
 ];

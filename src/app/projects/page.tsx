@@ -5,21 +5,21 @@ import { portfolioProjects } from "@/data/portfolioData";
 const sectionOrder = [
   {
     track: "flagship",
-    title: "Flagship",
+    title: "Featured Product",
     description:
-      "Highest-signal project where architecture, delivery, and quality evidence are strongest.",
+      "End-to-end build with the strongest production architecture and delivery depth.",
   },
   {
     track: "active",
-    title: "Now Building",
+    title: "In Progress",
     description:
-      "Active projects that show current execution capability and implementation range.",
+      "Current builds in active development across product and systems work.",
   },
   {
     track: "lab",
-    title: "Labs",
+    title: "Technical Labs",
     description:
-      "Supporting tracks that prove technical depth and sustained learning velocity.",
+      "Exploratory tracks focused on systems depth, experiments, and fundamentals.",
   },
 ] as const;
 
@@ -33,8 +33,8 @@ const ProjectsPage = () => {
             Projects
           </h1>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Flagship product first, active build lanes second, labs for
-            long-horizon systems depth.
+            Featured product work first, current builds second, and technical
+            labs as supporting depth.
           </p>
         </div>
 

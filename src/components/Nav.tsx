@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 const links = [
   { name: "Home", path: "/", external: false },
   { name: "Projects", path: "/projects", external: false },
-  { name: "Proof + Resume", path: "/resume", external: false },
+  { name: "Resume", path: "/resume", external: false },
   {
     name: "Upwork",
     path: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",

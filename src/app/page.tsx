@@ -110,7 +110,7 @@ const Home = () => {
       <section className="section-wrap py-12">
         <div className="container mx-auto grid gap-8 md:grid-cols-2">
           <div className="surface-card p-7">
-            <p className="chip">Working model</p>
+            <p className="chip">Services</p>
             <h2 className="h2-fluid mt-4 text-primary">Ways I can help</h2>
             <ul className="mt-5 space-y-4">
               {services.map((service) => (
@@ -127,11 +127,10 @@ const Home = () => {
           </div>
 
           <div className="surface-card p-7">
-            <p className="chip">Depth tracks</p>
+            <p className="chip">Technical labs</p>
             <h2 className="h2-fluid mt-4 text-primary">Technical labs</h2>
             <p className="mt-4 text-sm leading-relaxed muted-text">
-              Labs stay visible as supporting signal for systems depth while
-              product projects remain the primary evidence surface.
+              Active lab tracks in systems, performance, and applied research.
             </p>
             <ul className="mt-5 space-y-3 text-sm muted-text">
               {labTracks.map((lab) => (

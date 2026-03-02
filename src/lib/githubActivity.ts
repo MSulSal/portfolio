@@ -3,6 +3,11 @@ export interface ActivityMetric {
   value: string;
 }
 
+export interface ActivityChartPoint {
+  label: string;
+  value: number;
+}
+
 export interface CommitFeedItem {
   id: string;
   repo: string;
@@ -16,16 +21,115 @@ export interface CommitFeedItem {
 export interface PortfolioActivity {
   metrics: ActivityMetric[];
   commits: CommitFeedItem[];
+  charts: {
+    commitsByDay: ActivityChartPoint[];
+    issuesByWeek: ActivityChartPoint[];
+    commitsByRepo: ActivityChartPoint[];
+  };
+  context: {
+    reposScanned: number;
+    privateReposScanned: number;
+    publicReposScanned: number;
+    commitsLoaded: number;
+    issuesClosedLoaded: number;
+  };
   hasLiveData: boolean;
   fetchedAt: string;
 }
 
+interface GitHubRepo {
+  full_name: string;
+  pushed_at?: string | null;
+  archived: boolean;
+  private?: boolean;
+}
+
+interface GitHubCommit {
+  sha: string;
+  html_url: string;
+  commit?: {
+    message?: string;
+    author?: {
+      date?: string | null;
+    };
+  };
+}
+
+interface GitHubIssue {
+  closed_at?: string | null;
+  pull_request?: unknown;
+}
+
 const WINDOW_DAYS = 30;
-const MAX_REPOS_WITH_TOKEN = 12;
-const MAX_REPOS_NO_TOKEN = 4;
-const MAX_COMMITS_PER_REPO = 30;
-const MAX_ISSUES_PER_REPO = 100;
-const MAX_FEED_ITEMS = 25;
+const ISSUE_WEEKS = 8;
+const TOP_REPOS = 8;
+const MAX_FEED_ITEMS = 20;
+const PER_PAGE = 100;
+const REVALIDATE_SECONDS = 900;
+const CONCURRENCY = 5;
+
+function getAuthToken() {
+  return process.env.GITHUB_ACTIVITY_TOKEN || process.env.GITHUB_TOKEN || "";
+}
+
+function buildHeaders(token: string): HeadersInit {
+  const headers: HeadersInit = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+}
+
+function parseNextUrl(linkHeader: string | null): string | null {
+  if (!linkHeader) {
+    return null;
+  }
+
+  for (const rawPart of linkHeader.split(",")) {
+    const part = rawPart.trim();
+    if (!part.includes('rel="next"')) {
+      continue;
+    }
+
+    const start = part.indexOf("<");
+    const end = part.indexOf(">");
+
+    if (start >= 0 && end > start) {
+      return part.slice(start + 1, end);
+    }
+  }
+
+  return null;
+}
+
+async function githubFetchPage<T>(
+  url: string,
+  token: string
+): Promise<{ data: T; nextPageUrl: string | null }> {
+  const response = await fetch(url, {
+    headers: buildHeaders(token),
+    next: { revalidate: REVALIDATE_SECONDS },
+  });
+
+  if (!response.ok) {
+    throw new Error(`GitHub API request failed with ${response.status}`);
+  }
+
+  return {
+    data: (await response.json()) as T,
+    nextPageUrl: parseNextUrl(response.headers.get("link")),
+  };
+}
+
+function sanitizeCommitMessage(message: string): string {
+  const firstLine = message.split("\n")[0]?.trim() ?? "";
+  return firstLine || "Commit message unavailable";
+}
 
 function formatRelativeTime(dateInput: string): string {
   const time = new Date(dateInput).getTime();
@@ -61,161 +165,277 @@ function formatRelativeTime(dateInput: string): string {
   }).format(new Date(time));
 }
 
-function sanitizeCommitMessage(message: string): string {
-  const firstLine = message.split("\n")[0]?.trim() ?? "";
-  return firstLine || "Commit message unavailable";
-}
-
-function getAuthToken() {
-  return process.env.GITHUB_ACTIVITY_TOKEN || process.env.GITHUB_TOKEN || "";
-}
-
-function buildHeaders(token: string): HeadersInit {
-  const headers: HeadersInit = {
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
-}
-
-async function githubFetch<T>(url: string, token: string): Promise<T> {
-  const response = await fetch(url, {
-    headers: buildHeaders(token),
-    next: { revalidate: 900 },
-  });
-
-  if (!response.ok) {
-    throw new Error(`GitHub API request failed with ${response.status}`);
-  }
-
-  return (await response.json()) as T;
-}
-
-interface GitHubRepo {
-  full_name: string;
-  pushed_at: string;
-  archived: boolean;
-  fork: boolean;
-}
-
-interface GitHubCommit {
-  sha: string;
-  html_url: string;
-  commit?: {
-    message?: string;
-    author?: {
-      date?: string;
-    };
-  };
-}
-
-interface GitHubIssue {
-  closed_at?: string | null;
-  pull_request?: unknown;
-}
-
 async function fetchRepos(username: string, token: string): Promise<GitHubRepo[]> {
-  const endpoint = token
-    ? "https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=100&type=owner"
-    : `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=100&type=owner`;
+  let nextUrl: string | null = token
+    ? `https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=owner,collaborator,organization_member`
+    : `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&type=owner`;
 
-  const repos = await githubFetch<GitHubRepo[]>(endpoint, token);
+  const repos: GitHubRepo[] = [];
 
-  return (Array.isArray(repos) ? repos : [])
-    .filter((repo) => !repo.archived && !repo.fork)
+  while (nextUrl) {
+    const page: { data: GitHubRepo[]; nextPageUrl: string | null } =
+      await githubFetchPage<GitHubRepo[]>(nextUrl, token);
+
+    repos.push(...(Array.isArray(page.data) ? page.data : []));
+    nextUrl = page.nextPageUrl;
+  }
+
+  return repos
+    .filter((repo) => !repo.archived)
     .sort(
       (a, b) =>
-        new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+        new Date(b.pushed_at || 0).getTime() - new Date(a.pushed_at || 0).getTime()
     );
 }
 
 async function fetchRepoCommits(
   repoFullName: string,
-  username: string,
-  token: string
+  token: string,
+  sinceMs: number
 ): Promise<CommitFeedItem[]> {
-  const endpoint =
-    `https://api.github.com/repos/${repoFullName}/commits` +
-    `?author=${encodeURIComponent(username)}&per_page=${MAX_COMMITS_PER_REPO}`;
+  let nextUrl: string | null =
+    `https://api.github.com/repos/${repoFullName}/commits?per_page=${PER_PAGE}`;
+  const commits: CommitFeedItem[] = [];
 
   try {
-    const commits = await githubFetch<GitHubCommit[]>(endpoint, token);
+    while (nextUrl) {
+      const page: { data: GitHubCommit[]; nextPageUrl: string | null } =
+        await githubFetchPage<GitHubCommit[]>(nextUrl, token);
 
-    return (Array.isArray(commits) ? commits : []).map((commit) => {
-      const createdAt = commit.commit?.author?.date || "";
+      const pageItems = (Array.isArray(page.data) ? page.data : []).map((item) => {
+        const createdAt = item.commit?.author?.date || "";
 
-      return {
-        id: `${repoFullName}-${commit.sha}`,
-        repo: repoFullName,
-        message: sanitizeCommitMessage(commit.commit?.message || ""),
-        url: commit.html_url,
-        shortSha: commit.sha.slice(0, 7),
-        relativeTime: formatRelativeTime(createdAt),
-        createdAt,
-      };
-    });
+        return {
+          id: `${repoFullName}-${item.sha}`,
+          repo: repoFullName,
+          message: sanitizeCommitMessage(item.commit?.message || ""),
+          url: item.html_url,
+          shortSha: item.sha.slice(0, 7),
+          relativeTime: formatRelativeTime(createdAt),
+          createdAt,
+        };
+      });
+
+      if (pageItems.length === 0) {
+        break;
+      }
+
+      commits.push(...pageItems);
+
+      const oldestItem = pageItems[pageItems.length - 1];
+      const oldestTimestamp = oldestItem?.createdAt
+        ? new Date(oldestItem.createdAt).getTime()
+        : Number.NEGATIVE_INFINITY;
+
+      if (!Number.isNaN(oldestTimestamp) && oldestTimestamp < sinceMs) {
+        break;
+      }
+
+      nextUrl = page.nextPageUrl;
+    }
+
+    return commits;
   } catch {
     return [];
   }
 }
 
-async function fetchClosedIssuesCount(
+async function fetchClosedIssueTimestamps(
   repoFullName: string,
+  token: string,
   sinceIso: string,
-  token: string
-): Promise<number> {
-  const endpoint =
+  sinceMs: number
+): Promise<number[]> {
+  let nextUrl: string | null =
     `https://api.github.com/repos/${repoFullName}/issues` +
-    `?state=closed&since=${encodeURIComponent(sinceIso)}&per_page=${MAX_ISSUES_PER_REPO}`;
+    `?state=closed&since=${encodeURIComponent(sinceIso)}&per_page=${PER_PAGE}`;
+
+  const closedAtTimestamps: number[] = [];
 
   try {
-    const issues = await githubFetch<GitHubIssue[]>(endpoint, token);
+    while (nextUrl) {
+      const page: { data: GitHubIssue[]; nextPageUrl: string | null } =
+        await githubFetchPage<GitHubIssue[]>(nextUrl, token);
 
-    return (Array.isArray(issues) ? issues : []).filter((issue) => {
-      if (issue.pull_request) {
-        return false;
+      for (const item of Array.isArray(page.data) ? page.data : []) {
+        if (item.pull_request || !item.closed_at) {
+          continue;
+        }
+
+        const closedAtMs = new Date(item.closed_at).getTime();
+        if (!Number.isNaN(closedAtMs) && closedAtMs >= sinceMs) {
+          closedAtTimestamps.push(closedAtMs);
+        }
       }
 
-      if (!issue.closed_at) {
-        return false;
-      }
+      nextUrl = page.nextPageUrl;
+    }
 
-      return new Date(issue.closed_at).getTime() >= new Date(sinceIso).getTime();
-    }).length;
+    return closedAtTimestamps;
   } catch {
-    return 0;
+    return [];
   }
+}
+
+async function mapWithConcurrency<T, R>(
+  items: T[],
+  concurrency: number,
+  worker: (item: T) => Promise<R>
+): Promise<R[]> {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const results = new Array<R>(items.length);
+  let cursor = 0;
+
+  const runWorker = async () => {
+    while (true) {
+      const index = cursor;
+      cursor += 1;
+
+      if (index >= items.length) {
+        return;
+      }
+
+      results[index] = await worker(items[index]);
+    }
+  };
+
+  await Promise.all(
+    Array.from({ length: Math.min(concurrency, items.length) }, () => runWorker())
+  );
+
+  return results;
+}
+
+function formatLabelDate(date: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  }).format(date);
+}
+
+function buildCommitsByDay(
+  commits: CommitFeedItem[],
+  sinceMs: number
+): ActivityChartPoint[] {
+  const dayMs = 24 * 60 * 60 * 1000;
+  const buckets = Array.from({ length: WINDOW_DAYS }, (_, offset) => {
+    const date = new Date(Date.now() - (WINDOW_DAYS - 1 - offset) * dayMs);
+    const key = date.toISOString().slice(0, 10);
+    return {
+      key,
+      label: formatLabelDate(date),
+      value: 0,
+    };
+  });
+
+  const bucketIndex = new Map<string, number>();
+  buckets.forEach((bucket, index) => {
+    bucketIndex.set(bucket.key, index);
+  });
+
+  for (const commit of commits) {
+    const timestamp = new Date(commit.createdAt).getTime();
+    if (Number.isNaN(timestamp) || timestamp < sinceMs) {
+      continue;
+    }
+
+    const key = new Date(timestamp).toISOString().slice(0, 10);
+    const index = bucketIndex.get(key);
+    if (index === undefined) {
+      continue;
+    }
+
+    buckets[index].value += 1;
+  }
+
+  return buckets.map((bucket) => ({
+    label: bucket.label,
+    value: bucket.value,
+  }));
+}
+
+function buildIssuesByWeek(issueClosedAt: number[]): ActivityChartPoint[] {
+  const weekMs = 7 * 24 * 60 * 60 * 1000;
+  const startMs = Date.now() - ISSUE_WEEKS * weekMs;
+
+  const buckets = Array.from({ length: ISSUE_WEEKS }, (_, index) => {
+    const bucketStart = startMs + index * weekMs;
+    return {
+      start: bucketStart,
+      end: bucketStart + weekMs,
+      label: formatLabelDate(new Date(bucketStart)),
+      value: 0,
+    };
+  });
+
+  for (const closedAtMs of issueClosedAt) {
+    if (Number.isNaN(closedAtMs) || closedAtMs < startMs) {
+      continue;
+    }
+
+    for (const bucket of buckets) {
+      if (closedAtMs >= bucket.start && closedAtMs < bucket.end) {
+        bucket.value += 1;
+        break;
+      }
+    }
+  }
+
+  return buckets.map((bucket) => ({
+    label: bucket.label,
+    value: bucket.value,
+  }));
+}
+
+function buildCommitsByRepo(
+  commits: CommitFeedItem[],
+  sinceMs: number
+): ActivityChartPoint[] {
+  const counts = new Map<string, number>();
+
+  for (const commit of commits) {
+    const timestamp = new Date(commit.createdAt).getTime();
+    if (Number.isNaN(timestamp) || timestamp < sinceMs) {
+      continue;
+    }
+
+    counts.set(commit.repo, (counts.get(commit.repo) || 0) + 1);
+  }
+
+  return Array.from(counts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, TOP_REPOS)
+    .map(([label, value]) => ({ label, value }));
 }
 
 export async function getPortfolioActivity(
   username: string,
   projectCount: number
 ): Promise<PortfolioActivity> {
-  const now = Date.now();
-  const since = now - WINDOW_DAYS * 24 * 60 * 60 * 1000;
-  const sinceIso = new Date(since).toISOString();
+  const sinceMs = Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000;
+  const sinceIso = new Date(sinceMs).toISOString();
   const token = getAuthToken();
-  const repoLimit = token ? MAX_REPOS_WITH_TOKEN : MAX_REPOS_NO_TOKEN;
 
   try {
     const repos = await fetchRepos(username, token);
-    const targetRepos = repos.slice(0, repoLimit);
+    const repoNames = Array.from(new Set(repos.map((repo) => repo.full_name)));
+    const privateReposScanned = repos.filter((repo) => Boolean(repo.private)).length;
+    const publicReposScanned = repos.length - privateReposScanned;
 
-    const [commitsByRepo, closedIssueCounts] = await Promise.all([
-      Promise.all(
-        targetRepos.map((repo) => fetchRepoCommits(repo.full_name, username, token))
-      ),
-      Promise.all(
-        targetRepos.map((repo) =>
-          fetchClosedIssuesCount(repo.full_name, sinceIso, token)
-        )
-      ),
-    ]);
+    const commitsByRepo = await mapWithConcurrency(
+      repoNames,
+      CONCURRENCY,
+      (repoName) => fetchRepoCommits(repoName, token, sinceMs)
+    );
+
+    const issueTimestampsByRepo = await mapWithConcurrency(
+      repoNames,
+      CONCURRENCY,
+      (repoName) => fetchClosedIssueTimestamps(repoName, token, sinceIso, sinceMs)
+    );
 
     const commits = commitsByRepo
       .flat()
@@ -225,14 +445,14 @@ export async function getPortfolioActivity(
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-    const commitsLast30Days = commits.filter(
-      (commit) => new Date(commit.createdAt).getTime() >= since
-    ).length;
+    const issueTimestamps = issueTimestampsByRepo.flat();
 
-    const issuesClosedLast30Days = closedIssueCounts.reduce(
-      (total, value) => total + value,
-      0
-    );
+    const commitsLast30Days = commits.filter((commit) => {
+      const timestamp = new Date(commit.createdAt).getTime();
+      return !Number.isNaN(timestamp) && timestamp >= sinceMs;
+    }).length;
+
+    const issuesClosedLast30Days = issueTimestamps.length;
 
     return {
       metrics: [
@@ -241,7 +461,19 @@ export async function getPortfolioActivity(
         { label: "Projects Overall", value: String(projectCount) },
       ],
       commits: commits.slice(0, MAX_FEED_ITEMS),
-      hasLiveData: targetRepos.length > 0,
+      charts: {
+        commitsByDay: buildCommitsByDay(commits, sinceMs),
+        issuesByWeek: buildIssuesByWeek(issueTimestamps),
+        commitsByRepo: buildCommitsByRepo(commits, sinceMs),
+      },
+      context: {
+        reposScanned: repoNames.length,
+        privateReposScanned,
+        publicReposScanned,
+        commitsLoaded: commits.length,
+        issuesClosedLoaded: issueTimestamps.length,
+      },
+      hasLiveData: repoNames.length > 0,
       fetchedAt: new Date().toISOString(),
     };
   } catch {
@@ -252,6 +484,18 @@ export async function getPortfolioActivity(
         { label: "Projects Overall", value: String(projectCount) },
       ],
       commits: [],
+      charts: {
+        commitsByDay: [],
+        issuesByWeek: [],
+        commitsByRepo: [],
+      },
+      context: {
+        reposScanned: 0,
+        privateReposScanned: 0,
+        publicReposScanned: 0,
+        commitsLoaded: 0,
+        issuesClosedLoaded: 0,
+      },
       hasLiveData: false,
       fetchedAt: new Date().toISOString(),
     };
