@@ -6,7 +6,6 @@ import type { ActivityChartPoint } from "@/lib/githubActivity";
 
 interface ProofChartsProps {
   commitsByDay: ActivityChartPoint[];
-  issuesByWeek: ActivityChartPoint[];
   commitsByRepo: ActivityChartPoint[];
 }
 
@@ -117,7 +116,6 @@ const VerticalBarChart = ({
 
 const ProofCharts = ({
   commitsByDay,
-  issuesByWeek,
   commitsByRepo,
 }: ProofChartsProps) => {
   const [activeRepoIndex, setActiveRepoIndex] = useState(0);
@@ -126,21 +124,13 @@ const ProofCharts = ({
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6">
         <VerticalBarChart
           title="Commit cadence"
           subtitle="Last 30 days across connected repositories."
           points={commitsByDay}
           valueLabel="commits"
           tone="accent"
-        />
-
-        <VerticalBarChart
-          title="Issue resolution"
-          subtitle="Weekly closed-issue trend over the last 8 weeks."
-          points={issuesByWeek}
-          valueLabel="issues"
-          tone="teal"
         />
       </div>
 

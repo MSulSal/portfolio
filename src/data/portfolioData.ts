@@ -56,8 +56,8 @@ export const profile = {
 
 export const portfolioProjects: PortfolioProject[] = [
   {
-    slug: "chama-inn",
-    name: "Chama Inn PWA",
+    slug: "hearthstone-hospitality",
+    name: "Hearthstone Hospitality Platform",
     status: "Live Prototype",
     track: "flagship",
     oneLiner:
@@ -116,7 +116,7 @@ export const portfolioProjects: PortfolioProject[] = [
     proof: [
       "Public engineering practices and roadmap docs are already in place.",
       "Project targets full service-business workflow from intake to billing.",
-      "Workflow emphasizes issue-linked commits and regression discipline.",
+      "Workflow emphasizes milestone-linked commits and regression discipline.",
     ],
     links: {
       docs: "https://github.com/MSulSal/opsledger",
@@ -339,6 +339,12 @@ export const labTracks = [
 ];
 
 export function getProjectBySlug(slug: string) {
+  if (slug === "chama-inn") {
+    return portfolioProjects.find(
+      (project) => project.slug === "hearthstone-hospitality",
+    );
+  }
+
   return portfolioProjects.find((project) => project.slug === slug);
 }
 

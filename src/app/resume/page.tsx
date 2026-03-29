@@ -22,14 +22,13 @@ const ResumePage = async () => {
             Delivery trends and execution depth
           </h1>
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
-            Interactive charts summarize commit cadence, issue resolution, and
-            repository-level delivery distribution.
+            Interactive charts summarize commit cadence and repository-level
+            delivery distribution.
           </p>
 
           <div className="mt-7">
             <ProofCharts
               commitsByDay={activity.charts.commitsByDay}
-              issuesByWeek={activity.charts.issuesByWeek}
               commitsByRepo={activity.charts.commitsByRepo}
             />
           </div>
@@ -41,7 +40,6 @@ const ResumePage = async () => {
               {activity.context.publicReposScanned} public)
             </span>
             <span>Commits processed: {activity.context.commitsLoaded}</span>
-            <span>Issues processed: {activity.context.issuesClosedLoaded}</span>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">

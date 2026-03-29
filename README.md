@@ -12,7 +12,7 @@ This site is intentionally organized for fast technical clarity:
 
 ## Core Projects
 
-1. Chama Inn PWA (flagship)
+1. Hearthstone Hospitality Platform (flagship)
 2. OpsLedger (active build)
 3. Forced Design Frontend (active build)
 4. Technical labs (MCP, cryptography, concurrency, graphics, neural nets)

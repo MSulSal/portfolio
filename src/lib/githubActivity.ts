@@ -23,7 +23,6 @@ export interface PortfolioActivity {
   commits: CommitFeedItem[];
   charts: {
     commitsByDay: ActivityChartPoint[];
-    issuesByWeek: ActivityChartPoint[];
     commitsByRepo: ActivityChartPoint[];
   };
   context: {
@@ -31,7 +30,6 @@ export interface PortfolioActivity {
     privateReposScanned: number;
     publicReposScanned: number;
     commitsLoaded: number;
-    issuesClosedLoaded: number;
   };
   hasLiveData: boolean;
   fetchedAt: string;
@@ -55,13 +53,7 @@ interface GitHubCommit {
   };
 }
 
-interface GitHubIssue {
-  closed_at?: string | null;
-  pull_request?: unknown;
-}
-
 const WINDOW_DAYS = 30;
-const ISSUE_WEEKS = 8;
 const TOP_REPOS = 8;
 const MAX_FEED_ITEMS = 20;
 const PER_PAGE = 100;
@@ -295,43 +287,6 @@ async function fetchRepoCommits(
   }
 }
 
-async function fetchClosedIssueTimestamps(
-  repoFullName: string,
-  token: string,
-  sinceIso: string,
-  sinceMs: number
-): Promise<number[]> {
-  let nextUrl: string | null =
-    `https://api.github.com/repos/${repoFullName}/issues` +
-    `?state=closed&since=${encodeURIComponent(sinceIso)}&per_page=${PER_PAGE}`;
-
-  const closedAtTimestamps: number[] = [];
-
-  try {
-    while (nextUrl) {
-      const page: { data: GitHubIssue[]; nextPageUrl: string | null } =
-        await githubFetchPage<GitHubIssue[]>(nextUrl, token);
-
-      for (const item of Array.isArray(page.data) ? page.data : []) {
-        if (item.pull_request || !item.closed_at) {
-          continue;
-        }
-
-        const closedAtMs = new Date(item.closed_at).getTime();
-        if (!Number.isNaN(closedAtMs) && closedAtMs >= sinceMs) {
-          closedAtTimestamps.push(closedAtMs);
-        }
-      }
-
-      nextUrl = page.nextPageUrl;
-    }
-
-    return closedAtTimestamps;
-  } catch {
-    return [];
-  }
-}
-
 async function mapWithConcurrency<T, R>(
   items: T[],
   concurrency: number,
@@ -412,39 +367,6 @@ function buildCommitsByDay(
   }));
 }
 
-function buildIssuesByWeek(issueClosedAt: number[]): ActivityChartPoint[] {
-  const weekMs = 7 * 24 * 60 * 60 * 1000;
-  const startMs = Date.now() - ISSUE_WEEKS * weekMs;
-
-  const buckets = Array.from({ length: ISSUE_WEEKS }, (_, index) => {
-    const bucketStart = startMs + index * weekMs;
-    return {
-      start: bucketStart,
-      end: bucketStart + weekMs,
-      label: formatLabelDate(new Date(bucketStart)),
-      value: 0,
-    };
-  });
-
-  for (const closedAtMs of issueClosedAt) {
-    if (Number.isNaN(closedAtMs) || closedAtMs < startMs) {
-      continue;
-    }
-
-    for (const bucket of buckets) {
-      if (closedAtMs >= bucket.start && closedAtMs < bucket.end) {
-        bucket.value += 1;
-        break;
-      }
-    }
-  }
-
-  return buckets.map((bucket) => ({
-    label: bucket.label,
-    value: bucket.value,
-  }));
-}
-
 function buildCommitsByRepo(
   commits: CommitFeedItem[],
   sinceMs: number
@@ -470,7 +392,6 @@ export async function getPortfolioActivity(
   username: string
 ): Promise<PortfolioActivity> {
   const sinceMs = Date.now() - WINDOW_DAYS * 24 * 60 * 60 * 1000;
-  const sinceIso = new Date(sinceMs).toISOString();
   const token = getAuthToken();
   const excludedRepos = getExcludedRepos(username);
 
@@ -488,12 +409,6 @@ export async function getPortfolioActivity(
       (repoName) => fetchRepoCommits(repoName, token, sinceMs)
     );
 
-    const issueTimestampsByRepo = await mapWithConcurrency(
-      repoNames,
-      CONCURRENCY,
-      (repoName) => fetchClosedIssueTimestamps(repoName, token, sinceIso, sinceMs)
-    );
-
     const commits = commitsByRepo
       .flat()
       .filter((commit) => Boolean(commit.createdAt))
@@ -501,8 +416,6 @@ export async function getPortfolioActivity(
         (a, b) =>
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
-
-    const issueTimestamps = issueTimestampsByRepo.flat();
 
     const commitsLast30Days = commits.filter((commit) => {
       const timestamp = new Date(commit.createdAt).getTime();
@@ -517,18 +430,15 @@ export async function getPortfolioActivity(
         .map((commit) => commit.repo)
     ).size;
 
-    const issuesClosedLast30Days = issueTimestamps.length;
-
     return {
       metrics: [
         { label: "Commits (30d)", value: String(commitsLast30Days) },
-        { label: "Issues Closed (30d)", value: String(issuesClosedLast30Days) },
         { label: "Active Repos (30d)", value: String(activeReposLast30Days) },
+        { label: "Repos Scanned", value: String(repoNames.length) },
       ],
       commits: commits.slice(0, MAX_FEED_ITEMS),
       charts: {
         commitsByDay: buildCommitsByDay(commits, sinceMs),
-        issuesByWeek: buildIssuesByWeek(issueTimestamps),
         commitsByRepo: buildCommitsByRepo(commits, sinceMs),
       },
       context: {
@@ -536,7 +446,6 @@ export async function getPortfolioActivity(
         privateReposScanned,
         publicReposScanned,
         commitsLoaded: commits.length,
-        issuesClosedLoaded: issueTimestamps.length,
       },
       hasLiveData: repoNames.length > 0,
       fetchedAt: new Date().toISOString(),
@@ -545,13 +454,12 @@ export async function getPortfolioActivity(
     return {
       metrics: [
         { label: "Commits (30d)", value: "N/A" },
-        { label: "Issues Closed (30d)", value: "N/A" },
         { label: "Active Repos (30d)", value: "N/A" },
+        { label: "Repos Scanned", value: "N/A" },
       ],
       commits: [],
       charts: {
         commitsByDay: [],
-        issuesByWeek: [],
         commitsByRepo: [],
       },
       context: {
@@ -559,7 +467,6 @@ export async function getPortfolioActivity(
         privateReposScanned: 0,
         publicReposScanned: 0,
         commitsLoaded: 0,
-        issuesClosedLoaded: 0,
       },
       hasLiveData: false,
       fetchedAt: new Date().toISOString(),
