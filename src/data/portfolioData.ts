@@ -58,113 +58,124 @@ export const portfolioProjects: PortfolioProject[] = [
   {
     slug: "hearthstone-hospitality",
     name: "Hearthstone Hospitality Platform",
-    status: "Live Prototype",
+    status: "Active Build",
     track: "flagship",
     oneLiner:
-      "Hospitality operations platform combining CRM, restaurant ordering, gift-shop ecommerce, and realtime staff analytics.",
+      "WordPress hospitality platform evolving from Chama Station Inn toward Hearthstone Hospitality with guest-facing experience and operational workflows.",
     summary:
-      "Production hospitality stack with schema design, API contracts, layered testing, and repeatable delivery workflows.",
+      "Hospitality product direction centered on WordPress-native operations, stakeholder handoff docs, and production-minded implementation planning.",
     stack: [
-      "Next.js 16",
-      "TypeScript",
-      "Supabase",
-      "PostgreSQL",
-      "Stripe",
-      "GitHub Actions",
-      "Playwright",
-      "pgTAP",
+      "WordPress",
+      "PHP",
+      "Elementor",
+      "JavaScript",
+      "SCSS/CSS",
+      "Handlebars",
     ],
     highlights: [
-      "Shipped CRM API contracts for GET/POST/PATCH/DELETE with integration coverage.",
-      "Implemented deterministic quality gates across CI and local pre-push workflows.",
-      "Maintained architecture, tracker, and implementation logs as auditable delivery artifacts.",
+      "Built around client-facing handoff artifacts covering product intent, architecture, and delivery phases.",
+      "Uses WordPress as the operational control surface for non-technical stakeholder editing.",
+      "Connects brand refresh direction with practical back-of-house workflow requirements.",
     ],
     proof: [
-      "22-table schema spanning CRM, orders, ecommerce, inventory, and event tracking.",
-      "48 role-based RLS policies for guest/staff/manager/admin boundaries.",
-      "146 pgTAP assertions for schema objects, constraints, and policy behavior.",
-      "Playwright CRM smoke coverage wired into CI.",
+      "Repository includes `app`, `conf`, and structured `docs/client-handoff` implementation packet.",
+      "Client handoff set includes architecture, acceptance walkthrough, and launch-direction docs.",
+      "Current public site context is mapped to a full guest-stay app pivot plan.",
     ],
     links: {
-      live: "https://chama-inn-cyo4.vercel.app/",
+      live: "https://chamastationinn.com/",
+      repo: "https://github.com/MSulSal/chamastationinn",
+      docs: "https://github.com/MSulSal/chamastationinn/tree/main/docs/client-handoff",
     },
   },
   {
-    slug: "opsledger",
-    name: "OpsLedger",
+    slug: "chestnut-square-academy",
+    name: "Chestnut Square Academy Website",
     status: "Active Build",
     track: "active",
     oneLiner:
-      "Spring Boot and React operations platform for service businesses managing clients, work orders, invoices, and deposit payments.",
+      "WordPress + Elementor delivery package for a school site with explicit owner-edit workflows and launch runbooks.",
     summary:
-      "OpsLedger demonstrates enterprise-oriented Java/Spring delivery with test-first implementation practices and operational discipline.",
+      "Content-managed site build focused on handoff clarity, predictable edits, and operational continuity after delivery.",
     stack: [
-      "Java 21",
-      "Spring Boot 3",
-      "React",
+      "WordPress",
+      "PHP",
+      "Elementor",
+      "HTML",
+      "CSS",
+      "JavaScript",
+    ],
+    highlights: [
+      "Includes owner handoff, launch-day runbook, and fact-verification documentation.",
+      "Implements editing profiles to support non-technical site maintenance.",
+      "Organized for repeatable client delivery, not one-off theme edits.",
+    ],
+    proof: [
+      "Repository contains dedicated `docs` and `scripts` paths for delivery operations.",
+      "README documents current status and edit-mode behavior for client ownership.",
+      "Recent commit history reflects active maintenance in 2026.",
+    ],
+    links: {
+      repo: "https://github.com/MSulSal/chestnut-square-academy",
+    },
+  },
+  {
+    slug: "stripe-webhook-reliability-service",
+    name: "Stripe Webhook Reliability Service",
+    status: "Active Build",
+    track: "active",
+    oneLiner:
+      "Backend reliability service focused on Stripe webhook correctness, idempotency, and failure recovery.",
+    summary:
+      "Service-oriented backend implementation with replay-safe event processing and production-support diagnostics.",
+    stack: [
       "TypeScript",
-      "PostgreSQL",
-      "Flyway",
+      "Node.js",
+      "Express",
+      "Stripe SDK",
+      "SQLite",
       "Docker",
+      "Vitest",
       "GitHub Actions",
     ],
     highlights: [
-      "Structured around clean backend layering and migration safety from day one.",
-      "Roadmap is publicly documented for transparent execution.",
-      "Built to demonstrate realistic business software delivery, not tutorial-only code.",
+      "Verifies Stripe signatures on inbound webhook requests.",
+      "Implements idempotency and retry-safe processing for event handling.",
+      "Ships with structured logging, test coverage, and containerized local run support.",
     ],
     proof: [
-      "Public engineering practices and roadmap docs are already in place.",
-      "Project targets full service-business workflow from intake to billing.",
-      "Workflow emphasizes milestone-linked commits and regression discipline.",
+      "Repository includes `tests`, Docker config, and CI workflow support.",
+      "README documents reliability guarantees and operational behavior.",
+      "Designed around duplicate prevention and failed-event recovery paths.",
     ],
     links: {
-      docs: "https://github.com/MSulSal/opsledger",
+      repo: "https://github.com/MSulSal/stripe-webhook-reliability-service",
     },
   },
   {
-    slug: "forced-design-lab",
-    name: "Forced Design Frontend",
-    status: "Active Build",
-    track: "active",
-    oneLiner:
-      "Frontend lab built to pressure-test design decisions under real product constraints, not template reuse.",
-    summary:
-      "Design-focused frontend build exploring high-contrast systems, hierarchy, and motion under practical product constraints.",
-    stack: ["HTML", "CSS", "Vanilla JavaScript"],
-    highlights: [
-      "Explores deliberate visual systems and high-contrast communication layouts.",
-      "Designed as a practical showcase for conversion-focused frontend decision making.",
-      "Acts as a design-forward complement to backend-heavy flagship work.",
-    ],
-    proof: [
-      "Built to show intentional typography, layout hierarchy, and usability clarity.",
-      "Targets portfolio differentiation against generic template-heavy sites.",
-      "Used as a sandbox for interface systems you can apply to client work quickly.",
-    ],
-    links: {},
-  },
-  {
-    slug: "labs",
-    name: "Technical Labs (Crypto, Concurrency, Graphics, Neural Nets, MCP)",
+    slug: "tnoc-interactive",
+    name: "TNOC Interactive",
     status: "Lab Track",
     track: "lab",
     oneLiner:
-      "Long-horizon labs focused on deeper systems understanding and practical experimentation.",
+      "Interactive adaptation of The Nature of Code with browser-based simulations and visual learning flows.",
     summary:
-      "Long-horizon tracks in cryptography, concurrency, graphics, neural nets, and MCP integrations.",
-    stack: ["Rust", "C/C++", "CUDA", "Python", "Node.js"],
+      "Simulation-focused frontend build used to demonstrate computational thinking and interactive system behavior.",
+    stack: ["JavaScript", "HTML", "CSS"],
     highlights: [
-      "Crypto lab focuses on threat models, reproducible benchmarks, and secure implementation choices.",
-      "Concurrency lab targets correctness, performance, and distributed systems intuition.",
-      "Graphics and neural-net labs develop first-principles systems thinking and research discipline.",
+      "Published with live GitHub Pages deployment.",
+      "Positions computational simulations as an explorable user experience.",
+      "Maintained as an active visual systems lab in the public profile.",
     ],
     proof: [
-      "Documented roadmaps and learning plans across multiple deep technical domains.",
-      "Commit-driven progression with explicit definitions of done.",
-      "Clear translation of learning artifacts into practical engineering outcomes.",
+      "Public repository + live site demonstrate complete project packaging.",
+      "Description and implementation align around educational simulation goals.",
+      "Useful as a polished technical depth signal without over-claiming production scope.",
     ],
-    links: {},
+    links: {
+      live: "https://msulsal.github.io/tnoc/",
+      repo: "https://github.com/MSulSal/tnoc",
+    },
   },
 ];
 
@@ -190,34 +201,34 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
     id: "languages",
     title: "Languages",
-    skills: ["Java", "TypeScript", "JavaScript", "Python", "SQL"],
+    skills: ["PHP", "TypeScript", "JavaScript", "Python", "SQL"],
   },
   {
     id: "backend",
     title: "Backend and Architecture",
     skills: [
-      "Spring Boot",
+      "WordPress",
       "Node.js",
+      "Express",
       "RESTful APIs",
-      "Microservices",
-      "Event-Driven Architecture",
-      "Serverless",
+      "Webhook Reliability",
+      "Idempotency Patterns",
     ],
   },
   {
     id: "frontend",
     title: "Frontend",
-    skills: ["React", "Next.js", "React Native", "Redux", "HTML/CSS"],
+    skills: ["Elementor", "HTML/CSS", "JavaScript", "Responsive UI"],
   },
   {
     id: "cloud-infra",
     title: "Data, Cloud and Infrastructure",
-    skills: ["PostgreSQL", "MySQL", "Docker", "Kubernetes", "AWS"],
+    skills: ["PostgreSQL", "SQLite", "Docker", "GitHub Pages", "Vercel"],
   },
   {
     id: "delivery",
     title: "Delivery and Tooling",
-    skills: ["GitHub Actions", "Jenkins", "Test Automation", "Git/GitHub"],
+    skills: ["GitHub Actions", "Vitest", "Playwright", "Git/GitHub"],
   },
 ];
 
@@ -270,9 +281,9 @@ export const roleTracks: RoleTrack[] = [
     summary:
       "Production-focused full-stack engineering with architecture depth and verifiable delivery outcomes.",
     topEvidence: [
-      "Core schema and API delivery across CRM flows with tested contracts.",
-      "Strong L4-L5 evidence in architecture ownership and release readiness.",
-      "Cross-stack implementation in Next.js/Supabase and Spring Boot tracks.",
+      "Current portfolio work spans WordPress product delivery and backend reliability services.",
+      "Projects include client handoff planning, implementation docs, and production-minded delivery packaging.",
+      "Cross-functional delivery evidence across PHP/WordPress and TypeScript/Node tracks.",
     ],
   },
   {
@@ -281,9 +292,9 @@ export const roleTracks: RoleTrack[] = [
     summary:
       "Layered quality strategy using unit, integration, database contract, and browser E2E gates.",
     topEvidence: [
-      "146 pgTAP assertions plus CI-enforced quality gates.",
-      "Deterministic Playwright smoke coverage integrated into release flow.",
-      "Risk-based testing discipline with explicit failure-path coverage.",
+      "Webhook reliability service includes automated tests and CI-backed verification paths.",
+      "Failure-path coverage emphasizes replay safety, duplicate prevention, and robust error handling.",
+      "Testing narrative is tied to operational behavior, not only happy-path validation.",
     ],
   },
   {
@@ -303,38 +314,23 @@ export const roleTracks: RoleTrack[] = [
     summary:
       "Analytics-ready data architecture with SQL quality controls and KPI-focused evolution path.",
     topEvidence: [
-      "Event-ready schema design and role-governed data boundaries.",
-      "Database tests validating constraints and policy assumptions.",
-      "Clear next roadmap for KPI dictionary, marts, and analysis memos.",
+      "Hospitality builds are scoped with measurable operations and guest-experience outcomes.",
+      "Documentation artifacts include implementation mapping and launch-readiness checklists.",
+      "Execution style emphasizes clear metrics and decision-ready project reporting.",
     ],
   },
 ];
 
 export const labTracks = [
   {
-    name: "MCP Sandbox",
+    name: "Computational Motion Lab",
     objective:
-      "Ship MCP integrations with production-style engineering hygiene.",
+      "Build interactive simulation intuition through browser-first computational experiments.",
   },
   {
-    name: "Crypto Lab",
+    name: "Interface Systems Lab",
     objective:
-      "Build cryptography depth from first principles to system-level tradeoffs.",
-  },
-  {
-    name: "Concurrency Lab",
-    objective:
-      "Develop rigorous intuition for correctness, parallelism, and distributed behavior.",
-  },
-  {
-    name: "Graphics Lab",
-    objective:
-      "Build rendering systems from scratch with architecture-first constraints.",
-  },
-  {
-    name: "Neural Nets Sandbox",
-    objective:
-      "Implement neural and agentic systems from fundamentals to reproducible experiments.",
+      "Iterate on visual hierarchy, interaction hooks, and conversion-focused static experiences.",
   },
 ];
 

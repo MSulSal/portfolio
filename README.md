@@ -13,9 +13,9 @@ This site is intentionally organized for fast technical clarity:
 ## Core Projects
 
 1. Hearthstone Hospitality Platform (flagship)
-2. OpsLedger (active build)
-3. Forced Design Frontend (active build)
-4. Technical labs (MCP, cryptography, concurrency, graphics, neural nets)
+2. Chestnut Square Academy Website (active build)
+3. Stripe Webhook Reliability Service (active build)
+4. TNOC Interactive (technical lab)
 
 ## Tech Stack
 
