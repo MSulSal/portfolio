@@ -17,10 +17,13 @@ const Home = () => {
       <section className="section-wrap pb-12 pt-16">
         <div className="container mx-auto grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
           <div className="space-y-7">
-            <span className="chip">Shipping full-stack systems</span>
+            <span className="chip">
+              Full-Stack Software Engineer | React, WordPress, APIs, Responsive UI
+            </span>
 
             <h1 className="h1-fluid max-w-4xl text-primary">
-              Built systems. Tested paths. Production-ready handoff.
+              Full-stack web products with strong frontend execution and
+              production-ready delivery.
             </h1>
 
             <p className="max-w-3xl text-base font-medium muted-text">
@@ -29,20 +32,23 @@ const Home = () => {
 
             <div className="code-panel max-w-3xl">
               <p className="uppercase tracking-[0.1em] muted-text">
-                core loop
+                execution focus
               </p>
               <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
-                {`scope() -> implement() -> test() -> ship() -> document()`}
+                {`React/Next.js frontend -> WordPress/PHP delivery -> Node/Spring APIs -> testing -> clean handoff`}
               </pre>
             </div>
 
             <div className="flex flex-wrap items-center gap-4">
               <Button size="lg" asChild>
-                <Link href="/projects">Review projects</Link>
+                <Link href="/projects">View projects</Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
-                <Link href="/contact">Talk about your project</Link>
+                <Link href="/resume">View resume</Link>
               </Button>
+              <Link href="/contact" className="link-inline text-sm uppercase tracking-[0.1em]">
+                Contact
+              </Link>
             </div>
 
             <div className="flex items-center gap-4">
@@ -131,7 +137,8 @@ const Home = () => {
             <p className="chip">Technical labs</p>
             <h2 className="h2-fluid mt-4 text-primary">Technical labs</h2>
             <p className="mt-4 text-sm leading-relaxed muted-text">
-              Active lab tracks in systems, performance, and applied research.
+              Supporting labs that reinforce frontend implementation depth and
+              systems fundamentals.
             </p>
             <ul className="mt-5 space-y-3 text-sm muted-text">
               {labTracks.map((lab) => (

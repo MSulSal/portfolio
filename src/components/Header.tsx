@@ -19,7 +19,7 @@ const Header = () => {
           <Nav />
           <ThemeToggle />
           <Button asChild>
-            <Link href="/contact">Start a conversation</Link>
+            <Link href="/contact">Contact</Link>
           </Button>
         </div>
 

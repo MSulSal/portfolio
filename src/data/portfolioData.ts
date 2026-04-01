@@ -43,9 +43,9 @@ export interface EmploymentEntry {
 
 export const profile = {
   name: "Suleman Saleem",
-  title: "Software Engineer",
+  title: "Full-Stack Software Engineer",
   focus:
-    "Build operational software with test-first delivery, production-safe architecture, and clear execution discipline.",
+    "I build responsive interfaces in React and Next.js, backend services in Node.js and Java/Spring Boot, and WordPress implementations that non-technical owners can actually maintain. Strong on execution, testing discipline, and clean handoff.",
   location: "Dallas-Fort Worth, TX",
   email: "msulemansaleem01@gmail.com",
   github: "https://github.com/MSulSal",
@@ -61,9 +61,9 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "Active Build",
     track: "flagship",
     oneLiner:
-      "WordPress hospitality platform evolving from Chama Station Inn toward Hearthstone Hospitality with guest-facing experience and operational workflows.",
+      "WordPress hospitality platform combining guest-facing experience, responsive presentation, and operational workflows for non-technical site ownership.",
     summary:
-      "Hospitality product direction centered on WordPress-native operations, stakeholder handoff docs, and production-minded implementation planning.",
+      "WordPress/PHP/Elementor hospitality implementation focused on frontend experience quality, operational workflows, and maintainable stakeholder handoff.",
     stack: [
       "WordPress",
       "PHP",
@@ -94,9 +94,9 @@ export const portfolioProjects: PortfolioProject[] = [
     status: "Active Build",
     track: "active",
     oneLiner:
-      "WordPress + Elementor delivery package for a school site with explicit owner-edit workflows and launch runbooks.",
+      "Responsive WordPress + Elementor school website built for maintainable content editing, launch readiness, and non-technical owner handoff.",
     summary:
-      "Content-managed site build focused on handoff clarity, predictable edits, and operational continuity after delivery.",
+      "Frontend-forward WordPress delivery with owner-edit workflows, structured launch preparation, and handoff artifacts for long-term maintainability.",
     stack: [
       "WordPress",
       "PHP",
@@ -181,81 +181,75 @@ export const portfolioProjects: PortfolioProject[] = [
 
 export const services = [
   {
-    title: "Feature Delivery and Ownership",
+    title: "Full-Stack Feature Delivery",
     detail:
-      "Own scoped features end-to-end with clean implementation, testing depth, and production-ready handoff.",
+      "Ship scoped features across frontend and backend with clean implementation, testing depth, and production-ready handoff.",
   },
   {
-    title: "Quality and Reliability Hardening",
+    title: "Frontend and Web Implementation",
+    detail:
+      "Build responsive interfaces, business websites, and maintainable UI flows in React, Next.js, and WordPress.",
+  },
+  {
+    title: "Quality and Reliability",
     detail:
       "Increase confidence with stronger test coverage, failure-path handling, and release guardrails.",
-  },
-  {
-    title: "Architecture and Stabilization",
-    detail:
-      "Improve boundaries, reduce fragility, and make systems easier to evolve under real product pressure.",
   },
 ];
 
 export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
-    id: "languages",
-    title: "Languages",
-    skills: ["Java", "PHP", "TypeScript", "JavaScript", "Python", "SQL"],
-  },
-  {
-    id: "backend",
-    title: "Backend and Architecture",
-    skills: [
-      "WordPress",
-      "Java/Spring Boot",
-      "Node.js",
-      "Express",
-      "RESTful APIs",
-      "Microservices",
-      "Event-Driven Architecture",
-      "Webhook Reliability",
-      "Idempotency Patterns",
-    ],
-  },
-  {
     id: "frontend",
     title: "Frontend",
     skills: [
+      "JavaScript",
+      "TypeScript",
       "React",
       "Next.js",
-      "React Native",
-      "Redux",
-      "Elementor",
-      "HTML/CSS",
-      "JavaScript",
+      "HTML5",
+      "CSS3",
       "Responsive UI",
     ],
   },
   {
-    id: "cloud-infra",
-    title: "Data, Cloud and Infrastructure",
+    id: "cms-web",
+    title: "CMS / Web Delivery",
+    skills: ["WordPress", "PHP", "Elementor"],
+  },
+  {
+    id: "backend",
+    title: "Backend",
     skills: [
-      "AWS",
-      "PostgreSQL",
+      "Node.js",
+      "Java",
+      "Spring Boot",
+      "RESTful APIs",
+      "Microservices",
       "MySQL",
+      "PostgreSQL",
       "SQLite",
-      "Docker",
-      "Kubernetes",
-      "GitHub Pages",
-      "Vercel",
     ],
   },
   {
     id: "delivery",
-    title: "Delivery and Tooling",
+    title: "Testing / Delivery",
     skills: [
+      "Git",
       "GitHub Actions",
-      "Jenkins",
       "Vitest",
       "Playwright",
-      "Test Automation",
-      "Git/GitHub",
+      "CI/CD",
+    ],
+  },
+  {
+    id: "cloud-infra",
+    title: "Cloud / Infrastructure",
+    skills: [
+      "AWS",
+      "Docker",
+      "Kubernetes",
+      "Vercel",
+      "GitHub Pages",
     ],
   },
 ];
