@@ -17,7 +17,6 @@ import {
   SiPython,
   SiReact,
   SiRedux,
-  SiSpringboot,
   SiTypescript,
 } from "react-icons/si";
 import { FiCode } from "react-icons/fi";
@@ -37,8 +36,6 @@ function iconForTech(tech: string): IconType {
   const normalized = normalizeTech(tech);
 
   const exact: Record<string, IconType> = {
-    java: SiSpringboot,
-    "spring boot": SiSpringboot,
     "node.js": SiNodedotjs,
     nodejs: SiNodedotjs,
     typescript: SiTypescript,
@@ -65,9 +62,6 @@ function iconForTech(tech: string): IconType {
     return exact[normalized];
   }
 
-  if (normalized.includes("spring")) {
-    return SiSpringboot;
-  }
   if (normalized.includes("node")) {
     return SiNodedotjs;
   }

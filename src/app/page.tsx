@@ -35,7 +35,7 @@ const Home = () => {
                 execution focus
               </p>
               <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
-                {`React/Next.js frontend -> WordPress/PHP delivery -> Node/Spring APIs -> testing -> clean handoff`}
+                {`React/Next.js frontend -> WordPress/PHP delivery -> Node.js APIs -> testing -> clean handoff`}
               </pre>
             </div>
 

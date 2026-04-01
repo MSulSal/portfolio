@@ -55,7 +55,7 @@ const ResumePage = async () => {
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
             Full-stack software engineer with experience building responsive
             interfaces in React and Next.js, along with backend services and
-            REST APIs in Node.js and Java/Spring Boot. Hands-on with
+            REST APIs in Node.js. Hands-on with
             WordPress, PHP, and Elementor for business-facing website delivery,
             with an emphasis on maintainable implementation, testing
             discipline, and clean handoff for non-technical stakeholders.

@@ -45,7 +45,7 @@ export const profile = {
   name: "Suleman Saleem",
   title: "Full-Stack Software Engineer",
   focus:
-    "I build responsive interfaces in React and Next.js, backend services in Node.js and Java/Spring Boot, and WordPress implementations that non-technical owners can actually maintain. Strong on execution, testing discipline, and clean handoff.",
+    "I build responsive interfaces in React and Next.js, backend services in Node.js, and WordPress implementations that non-technical owners can actually maintain. Strong on execution, testing discipline, and clean handoff.",
   location: "Dallas-Fort Worth, TX",
   email: "msulemansaleem01@gmail.com",
   github: "https://github.com/MSulSal",
@@ -221,13 +221,12 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
     title: "Backend",
     skills: [
       "Node.js",
-      "Java",
-      "Spring Boot",
       "RESTful APIs",
       "Microservices",
       "MySQL",
       "PostgreSQL",
       "SQLite",
+      "C#/.NET (in progress)",
     ],
   },
   {
@@ -264,7 +263,7 @@ export const employmentHistory: EmploymentEntry[] = [
     highlights: [
       "Built and shipped WordPress/PHP/Elementor prototypes and implementation packages for hospitality and education leads, including stakeholder handoff docs and launch runbooks.",
       "Developed full-stack proof-of-concept web apps using React/Next.js and TypeScript to validate workflow, UX direction, and integration feasibility.",
-      "Implemented backend services and API integrations in Node.js and Java/Spring Boot, including Stripe webhook reliability, idempotency controls, and structured logging.",
+      "Implemented backend services and API integrations in Node.js, including Stripe webhook reliability, idempotency controls, and structured logging.",
       "Owned end-to-end delivery lifecycle across requirements gathering, architecture, implementation, testing, deployment preparation, and stakeholder demos.",
       "Maintained an active GitHub engineering portfolio with frequent commits across web product delivery and backend reliability projects.",
     ],
@@ -276,7 +275,7 @@ export const employmentHistory: EmploymentEntry[] = [
     period: "06/2021 - 11/2023",
     location: "Seattle, WA",
     highlights: [
-      "Built scalable microservices and RESTful APIs for inventory management across 300+ stores using Java/Spring Boot and Node.js.",
+      "Built scalable microservices and RESTful APIs for inventory management across 300+ stores.",
       "Developed internal tools for automated data integrity testing and SFTP file transfer and processing.",
       "Designed responsive UIs in React and Next.js and wrote backend integration and unit tests.",
       "Collaborated in agile teams with CI/CD pipelines, trunk-based development, and event-driven data processing.",
