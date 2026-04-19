@@ -1,24 +1,3 @@
-﻿export type WorkTrack = "flagship" | "active" | "lab";
-
-export type ProjectStatus = "Live Prototype" | "Active Build" | "Lab Track";
-
-export interface PortfolioProject {
-  slug: string;
-  name: string;
-  status: ProjectStatus;
-  track: WorkTrack;
-  oneLiner: string;
-  summary: string;
-  stack: string[];
-  highlights: string[];
-  proof: string[];
-  links: {
-    live?: string;
-    repo?: string;
-    docs?: string;
-  };
-}
-
 export interface RoleTrack {
   id: string;
   label: string;
@@ -44,8 +23,6 @@ export interface EmploymentEntry {
 export const profile = {
   name: "Suleman Saleem",
   title: "Full-Stack Software Engineer",
-  focus:
-    "I build responsive interfaces in React and Next.js, backend services in Node.js, and WordPress implementations that non-technical owners can actually maintain. Strong on execution, testing discipline, and clean handoff.",
   location: "Dallas-Fort Worth, TX",
   email: "msulemansaleem01@gmail.com",
   github: "https://github.com/MSulSal",
@@ -54,146 +31,21 @@ export const profile = {
   upwork: "https://www.upwork.com/freelancers/~0155bc92ca790b58b7",
 };
 
-export const portfolioProjects: PortfolioProject[] = [
-  {
-    slug: "hearthstone-hospitality",
-    name: "Hearthstone Hospitality Platform",
-    status: "Active Build",
-    track: "flagship",
-    oneLiner:
-      "WordPress hospitality platform combining guest-facing experience, responsive presentation, and operational workflows for non-technical site ownership.",
-    summary:
-      "WordPress/PHP/Elementor hospitality implementation focused on frontend experience quality, operational workflows, and maintainable stakeholder handoff.",
-    stack: [
-      "WordPress",
-      "PHP",
-      "Elementor",
-      "JavaScript",
-      "SCSS/CSS",
-      "Handlebars",
-    ],
-    highlights: [
-      "Built around client-facing handoff artifacts covering product intent, architecture, and delivery phases.",
-      "Uses WordPress as the operational control surface for non-technical stakeholder editing.",
-      "Connects brand refresh direction with practical back-of-house workflow requirements.",
-    ],
-    proof: [
-      "Repository includes `app`, `conf`, and structured `docs/client-handoff` implementation packet.",
-      "Client handoff set includes architecture, acceptance walkthrough, and launch-direction docs.",
-      "Current public site context is mapped to a full guest-stay app pivot plan.",
-    ],
-    links: {
-      live: "https://chamastationinn.com/",
-      repo: "https://github.com/MSulSal/chamastationinn",
-      docs: "https://github.com/MSulSal/chamastationinn/tree/main/docs/client-handoff",
-    },
-  },
-  {
-    slug: "chestnut-square-academy",
-    name: "Chestnut Square Academy Website",
-    status: "Active Build",
-    track: "active",
-    oneLiner:
-      "Responsive WordPress + Elementor school website built for maintainable content editing, launch readiness, and non-technical owner handoff.",
-    summary:
-      "Frontend-forward WordPress delivery with owner-edit workflows, structured launch preparation, and handoff artifacts for long-term maintainability.",
-    stack: [
-      "WordPress",
-      "PHP",
-      "Elementor",
-      "HTML",
-      "CSS",
-      "JavaScript",
-    ],
-    highlights: [
-      "Includes owner handoff, launch-day runbook, and fact-verification documentation.",
-      "Implements editing profiles to support non-technical site maintenance.",
-      "Organized for repeatable client delivery, not one-off theme edits.",
-    ],
-    proof: [
-      "Repository contains dedicated `docs` and `scripts` paths for delivery operations.",
-      "README documents current status and edit-mode behavior for client ownership.",
-      "Recent commit history reflects active maintenance in 2026.",
-    ],
-    links: {
-      repo: "https://github.com/MSulSal/chestnut-square-academy",
-    },
-  },
-  {
-    slug: "stripe-webhook-reliability-service",
-    name: "Stripe Webhook Reliability Service",
-    status: "Active Build",
-    track: "active",
-    oneLiner:
-      "Backend reliability service focused on Stripe webhook correctness, idempotency, and failure recovery.",
-    summary:
-      "Service-oriented backend implementation with replay-safe event processing and production-support diagnostics.",
-    stack: [
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "Stripe SDK",
-      "SQLite",
-      "Docker",
-      "Vitest",
-      "GitHub Actions",
-    ],
-    highlights: [
-      "Verifies Stripe signatures on inbound webhook requests.",
-      "Implements idempotency and retry-safe processing for event handling.",
-      "Ships with structured logging, test coverage, and containerized local run support.",
-    ],
-    proof: [
-      "Repository includes `tests`, Docker config, and CI workflow support.",
-      "README documents reliability guarantees and operational behavior.",
-      "Designed around duplicate prevention and failed-event recovery paths.",
-    ],
-    links: {
-      repo: "https://github.com/MSulSal/stripe-webhook-reliability-service",
-    },
-  },
-  {
-    slug: "tnoc-interactive",
-    name: "TNOC Interactive",
-    status: "Lab Track",
-    track: "lab",
-    oneLiner:
-      "Interactive adaptation of The Nature of Code with browser-based simulations and visual learning flows.",
-    summary:
-      "Simulation-focused frontend build used to demonstrate computational thinking and interactive system behavior.",
-    stack: ["JavaScript", "HTML", "CSS"],
-    highlights: [
-      "Published with live GitHub Pages deployment.",
-      "Positions computational simulations as an explorable user experience.",
-      "Maintained as an active visual systems lab in the public profile.",
-    ],
-    proof: [
-      "Public repository + live site demonstrate complete project packaging.",
-      "Description and implementation align around educational simulation goals.",
-      "Useful as a polished technical depth signal without over-claiming production scope.",
-    ],
-    links: {
-      live: "https://msulsal.github.io/tnoc/",
-      repo: "https://github.com/MSulSal/tnoc",
-    },
-  },
-];
-
 export const services = [
   {
-    title: "Full-Stack Feature Delivery",
+    title: "Frontend Engineering",
     detail:
-      "Ship scoped features across frontend and backend with clean implementation, testing depth, and production-ready handoff.",
+      "Build responsive, maintainable web interfaces in React, Next.js, TypeScript, HTML, CSS, and JavaScript with strong implementation discipline and production polish.",
   },
   {
-    title: "Frontend and Web Implementation",
+    title: "API Integration and Product UI",
     detail:
-      "Build responsive interfaces, business websites, and maintainable UI flows in React, Next.js, and WordPress.",
+      "Connect frontend experiences to backend services cleanly, unblock product work at the integration layer, and turn requirements into usable flows that hold up in real-world use.",
   },
   {
-    title: "Quality and Reliability",
+    title: "Debugging, Quality, and Delivery",
     detail:
-      "Increase confidence with stronger test coverage, failure-path handling, and release guardrails.",
+      "Resolve UI bugs, improve responsiveness and stability, and ship with stronger confidence through testing discipline, cleanup, and practical release readiness.",
   },
 ];
 
@@ -232,24 +84,12 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
     id: "delivery",
     title: "Testing / Delivery",
-    skills: [
-      "Git",
-      "GitHub Actions",
-      "Vitest",
-      "Playwright",
-      "CI/CD",
-    ],
+    skills: ["Git", "GitHub Actions", "Vitest", "Playwright", "CI/CD"],
   },
   {
     id: "cloud-infra",
     title: "Cloud / Infrastructure",
-    skills: [
-      "AWS",
-      "Docker",
-      "Kubernetes",
-      "Vercel",
-      "GitHub Pages",
-    ],
+    skills: ["AWS", "Docker", "Kubernetes", "Vercel", "GitHub Pages"],
   },
 ];
 
@@ -261,11 +101,11 @@ export const employmentHistory: EmploymentEntry[] = [
     period: "05/2025 - Current",
     location: "Dallas-Fort Worth, TX",
     highlights: [
-      "Built and shipped WordPress/PHP/Elementor prototypes and implementation packages for hospitality and education leads, including stakeholder handoff docs and launch runbooks.",
-      "Developed full-stack proof-of-concept web apps using React/Next.js and TypeScript to validate workflow, UX direction, and integration feasibility.",
-      "Implemented backend services and API integrations in Node.js, including Stripe webhook reliability, idempotency controls, and structured logging.",
-      "Owned end-to-end delivery lifecycle across requirements gathering, architecture, implementation, testing, deployment preparation, and stakeholder demos.",
-      "Maintained an active GitHub engineering portfolio with frequent commits across web product delivery and backend reliability projects.",
+      "Built and shipped responsive web interfaces and content-managed frontends for hospitality and education leads, with clear editing workflows and launch-ready handoff.",
+      "Developed product-facing proof-of-concept interfaces in React, Next.js, and TypeScript to validate navigation, layout, UX direction, and integration feasibility.",
+      "Implemented supporting backend services and API integrations in Node.js, including Stripe webhook reliability, idempotency controls, and structured logging.",
+      "Owned delivery across requirements, implementation, debugging, testing, deployment preparation, and stakeholder demos.",
+      "Maintained an active public engineering portfolio showing frontend implementation work alongside backend integration depth.",
     ],
   },
   {
@@ -354,17 +194,3 @@ export const labTracks = [
       "Iterate on visual hierarchy, interaction hooks, and conversion-focused static experiences.",
   },
 ];
-
-export function getProjectBySlug(slug: string) {
-  if (slug === "chama-inn") {
-    return portfolioProjects.find(
-      (project) => project.slug === "hearthstone-hospitality",
-    );
-  }
-
-  return portfolioProjects.find((project) => project.slug === slug);
-}
-
-export const featuredProjects = portfolioProjects.filter(
-  (project) => project.track !== "lab",
-);

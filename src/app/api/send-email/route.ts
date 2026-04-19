@@ -30,19 +30,28 @@ export async function POST(request: Request) {
     }
 
     const email = body.email?.trim();
+    const firstname = body.firstname?.trim();
+    const lastname = body.lastname?.trim();
+    const service = body.service?.trim();
     const message = body.message?.trim();
 
-    if (!email || !message) {
+    if (!firstname || !lastname || !email || !service || !message) {
       return NextResponse.json(
-        { error: "Email and message are required" },
+        { error: "All contact fields are required" },
         { status: 400 }
       );
     }
 
-    const fullName = `${body.firstname || ""} ${body.lastname || ""}`.trim();
+    const fullName = `${firstname} ${lastname}`.trim();
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const inbox = process.env.EMAIL || "msulemansaleem01@gmail.com";
-    const from = process.env.RESEND_FROM || "Portfolio Contact <onboarding@resend.dev>";
+    const inbox =
+      process.env.CONTACT_TO_EMAIL ||
+      process.env.EMAIL ||
+      "msulemansaleem01@gmail.com";
+    const from =
+      process.env.CONTACT_FROM_EMAIL ||
+      process.env.RESEND_FROM ||
+      "Portfolio Contact <onboarding@resend.dev>";
 
     const escapeHtml = (value: string) =>
       value
@@ -60,13 +69,13 @@ export async function POST(request: Request) {
       text: [
         `Name: ${fullName || "Not provided"}`,
         `Email: ${email}`,
-        `Engagement: ${body.service || "Not specified"}`,
+        `Engagement: ${service}`,
         `Message:\n${message}`,
       ].join("\n\n"),
       html: [
         `<p><strong>Name:</strong> ${escapeHtml(fullName || "Not provided")}</p>`,
         `<p><strong>Email:</strong> ${escapeHtml(email)}</p>`,
-        `<p><strong>Engagement:</strong> ${escapeHtml(body.service || "Not specified")}</p>`,
+        `<p><strong>Engagement:</strong> ${escapeHtml(service)}</p>`,
         `<p><strong>Message:</strong></p>`,
         `<p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>`,
       ].join(""),

@@ -1,28 +1,6 @@
 # Suleman Saleem Portfolio
 
-Portfolio showcasing product engineering, test discipline, and operational reliability across modern full-stack systems.
-
-## Positioning
-
-This site is intentionally organized for fast technical clarity:
-
-1. Flagship project evidence first
-2. Active build lanes second
-3. Supporting technical labs third
-
-## Core Projects
-
-1. Hearthstone Hospitality Platform (flagship)
-2. Chestnut Square Academy Website (active build)
-3. Stripe Webhook Reliability Service (active build)
-4. TNOC Interactive (technical lab)
-
-## Tech Stack
-
-1. Next.js App Router
-2. TypeScript
-3. Tailwind CSS
-4. Resend contact integration
+Next.js portfolio site focused on frontend execution with full-stack depth.
 
 ## Local Run
 
@@ -33,18 +11,28 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Contact Form Setup
+## Featured Projects Source
 
-Set environment variables before using `/contact` email send:
+Featured project cards are generated from GitHub pinned repositories for `MSulSal`.
+
+Order and inclusion behavior:
+
+1. Fetch pinned repos from GitHub (GraphQL).
+2. Apply local presentation overrides from `src/data/projectOverrides.ts`.
+3. Hide repos when `hidden: true` in the override map.
+4. If pinned fetch is unavailable, fall back to a recent-repo list.
+
+## Environment Variables
 
 ```bash
-RESEND_API_KEY=your_resend_key
-EMAIL=your_gmail@example.com
+# GitHub project/activity access
+GH_ACTIVITY_FN_TOKEN=github_token_with_repo_access
+# optional explicit token for pinned repo fetch
+GITHUB_PINNED_REPOS_TOKEN=github_token_with_repo_access
+
+# Contact form email send (Resend)
+RESEND_API_KEY=your_resend_api_key
+CONTACT_TO_EMAIL=your_gmail@example.com
 # optional
-RESEND_FROM=Portfolio Contact <onboarding@resend.dev>
+CONTACT_FROM_EMAIL=Portfolio Contact <onboarding@resend.dev>
 ```
-
-## Notes
-
-- This repository is the public portfolio surface.
-- Some active build docs reference private or separate repos; the portfolio presents only truthful shipped evidence and current execution lanes.

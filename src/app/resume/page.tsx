@@ -5,14 +5,18 @@ import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
 import {
   employmentHistory,
-  featuredProjects,
   profile,
   technicalSkillGroups,
 } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
+import { getFeaturedProjectsFromGitHub } from "@/lib/githubPinnedProjects";
 
 const ResumePage = async () => {
-  const activity = await getPortfolioActivity(profile.githubUsername);
+  const [activity, featuredWork] = await Promise.all([
+    getPortfolioActivity(profile.githubUsername),
+    getFeaturedProjectsFromGitHub(profile.githubUsername),
+  ]);
+  const featuredProjects = featuredWork.projects;
 
   return (
     <main className="section-wrap pt-14">
@@ -20,14 +24,14 @@ const ResumePage = async () => {
         <section className="surface-card p-7 sm:p-10">
           <span className="chip">Resume</span>
           <h1 className="h1-fluid mt-4 text-primary">
-            {profile.name}
+            Software engineer with strong frontend execution
           </h1>
-          <p className="mt-2 text-lg font-semibold text-primary">{profile.title}</p>
+
+          <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-primary">
+            {profile.name}
+          </p>
           <p className="mt-1 text-sm uppercase tracking-[0.08em] muted-text">
             {profile.location}
-          </p>
-          <p className="mt-2 text-sm font-semibold uppercase tracking-[0.08em] muted-text">
-            Target roles: Front End Developer, Full-Stack Engineer, Backend Engineer
           </p>
 
           <div className="mt-5 flex flex-wrap gap-4 text-sm font-semibold">
@@ -53,12 +57,9 @@ const ResumePage = async () => {
           </div>
 
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
-            Full-stack software engineer with experience building responsive
-            interfaces in React and Next.js, along with backend services and
-            REST APIs in Node.js. Hands-on with
-            WordPress, PHP, and Elementor for business-facing website delivery,
-            with an emphasis on maintainable implementation, testing
-            discipline, and clean handoff for non-technical stakeholders.
+            Professional experience building responsive interfaces, integrating
+            APIs, and shipping maintainable web products with React, Next.js,
+            JavaScript, TypeScript, Node.js, and modern frontend tooling.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -133,29 +134,58 @@ const ResumePage = async () => {
         <section className="surface-card p-7 sm:p-10">
           <span className="chip">Selected projects</span>
           <h2 className="h2-fluid mt-4 text-primary">Selected projects</h2>
-          <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {featuredProjects.map((project) => (
-              <article key={project.slug} className="surface-subtle p-5">
-                <h3 className="text-lg font-semibold text-primary">{project.name}</h3>
-                <p className="mt-2 text-sm leading-relaxed muted-text">
-                  {project.oneLiner}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.stack.slice(0, 4).map((skill) => (
-                    <TechBadge key={skill} tech={skill} />
-                  ))}
-                </div>
-                <div className="mt-5">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="link-inline text-sm uppercase tracking-[0.08em]"
-                  >
-                    View project
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
+          {featuredProjects.length > 0 ? (
+            <div className="mt-7 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {featuredProjects.map((project) => (
+                <article key={project.repoFullName} className="surface-subtle p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-lg font-semibold text-primary">{project.title}</h3>
+                    {project.type ? <span className="chip">{project.type}</span> : null}
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed muted-text">
+                    {project.summary}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.tags.slice(0, 4).map((skill) => (
+                      <TechBadge key={`${project.repoFullName}-${skill}`} tech={skill} />
+                    ))}
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-[0.08em]">
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link-inline"
+                    >
+                      Repository
+                    </a>
+                    {project.liveUrl ? (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-inline"
+                      >
+                        Live demo
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-7 surface-subtle p-5">
+              <p className="text-sm muted-text">
+                Featured repositories are syncing from GitHub.
+              </p>
+            </div>
+          )}
+
+          {featuredWork.source !== "pinned" ? (
+            <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
+              Pinned repository sync unavailable; showing fallback repositories.
+            </p>
+          ) : null}
         </section>
 
         <section className="surface-card p-7 sm:p-10">

@@ -5,6 +5,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const GitActivityPanel = async () => {
   const activity = await getPortfolioActivity(profile.githubUsername);
+  const isSyncing =
+    !activity.hasLiveData &&
+    activity.context.reposScanned === 0 &&
+    activity.commits.length === 0;
+  const metricItems = isSyncing
+    ? activity.metrics.map((metric) => ({
+        label: metric.label,
+        value: "Syncing...",
+      }))
+    : activity.metrics;
 
   return (
     <aside className="surface-card p-6 sm:p-7">
@@ -21,7 +31,7 @@ const GitActivityPanel = async () => {
       </div>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-        {activity.metrics.map((item) => (
+        {metricItems.map((item) => (
           <div key={item.label} className="surface-subtle p-4">
             <p className="text-[11px] font-semibold uppercase tracking-[0.1em] muted-text">
               {item.label}
@@ -39,7 +49,13 @@ const GitActivityPanel = async () => {
         </p>
 
         <ScrollArea className="mt-3 h-[320px] pr-2">
-          {activity.commits.length > 0 ? (
+          {isSyncing ? (
+            <div className="surface-subtle p-4">
+              <p className="text-sm muted-text">
+                Syncing live commit feed from GitHub.
+              </p>
+            </div>
+          ) : activity.commits.length > 0 ? (
             <ul className="space-y-3">
               {activity.commits.map((commit) => (
                 <li key={commit.id} className="surface-subtle p-3">
@@ -75,13 +91,19 @@ const GitActivityPanel = async () => {
         </ScrollArea>
       </div>
 
-      <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
-        {activity.context.reposScanned} repos scanned (
-        {activity.context.privateReposScanned} private /{" "}
-        {activity.context.publicReposScanned} public)
-      </p>
+      {isSyncing ? (
+        <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
+          Syncing repository metadata...
+        </p>
+      ) : (
+        <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
+          {activity.context.reposScanned} repos scanned (
+          {activity.context.privateReposScanned} private /{" "}
+          {activity.context.publicReposScanned} public)
+        </p>
+      )}
 
-      {!activity.hasLiveData ? (
+      {!activity.hasLiveData && !isSyncing ? (
         <p className="mt-4 text-xs muted-text">
           Live metrics could not be fetched. Ensure `GH_ACTIVITY_FN_TOKEN`
           (or `GITHUB_ACTIVITY_TOKEN`) has repository access.

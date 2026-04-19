@@ -3,13 +3,8 @@ import { notFound } from "next/navigation";
 
 import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
-import { getProjectBySlug, portfolioProjects } from "@/data/portfolioData";
-
-export async function generateStaticParams() {
-  return portfolioProjects.map((project) => ({
-    type: project.slug,
-  }));
-}
+import { profile } from "@/data/portfolioData";
+import { getFeaturedProjectsFromGitHub } from "@/lib/githubPinnedProjects";
 
 type ParamsPromise = Promise<{
   type: string;
@@ -21,7 +16,8 @@ export default async function ProjectDetailPage({
   params: ParamsPromise;
 }) {
   const resolved = await params;
-  const project = getProjectBySlug(resolved.type);
+  const featuredWork = await getFeaturedProjectsFromGitHub(profile.githubUsername);
+  const project = featuredWork.projects.find((item) => item.slug === resolved.type);
 
   if (!project) {
     notFound();
@@ -38,8 +34,8 @@ export default async function ProjectDetailPage({
           <div className="surface-card p-7 sm:p-10">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <span className="chip">{project.status}</span>
-                <h1 className="h1-fluid mt-4 text-primary">{project.name}</h1>
+                <span className="chip">{project.type || "Project"}</span>
+                <h1 className="h1-fluid mt-4 text-primary">{project.title}</h1>
                 <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
                   {project.summary}
                 </p>
@@ -48,52 +44,57 @@ export default async function ProjectDetailPage({
 
             <section className="mt-8">
               <h2 className="h3-fluid text-primary">Delivery highlights</h2>
-              <ul className="mt-4 space-y-2 text-sm muted-text">
-                {project.highlights.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
+              {project.highlights.length > 0 ? (
+                <ul className="mt-4 space-y-2 text-sm muted-text">
+                  {project.highlights.map((item) => (
+                    <li key={item}>- {item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm muted-text">
+                  Repository details are documented in GitHub, including current
+                  implementation scope and delivery status.
+                </p>
+              )}
             </section>
 
             <section className="mt-8">
-              <h2 className="h3-fluid text-primary">Key outcomes</h2>
-              <ul className="mt-4 space-y-2 text-sm muted-text">
-                {project.proof.map((item) => (
-                  <li key={item}>- {item}</li>
-                ))}
-              </ul>
+              <h2 className="h3-fluid text-primary">Repository</h2>
+              <p className="mt-4 text-sm muted-text">{project.repoFullName}</p>
+              {project.updatedAt ? (
+                <p className="mt-1 text-sm muted-text">
+                  Last updated:{" "}
+                  {new Intl.DateTimeFormat("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  }).format(new Date(project.updatedAt))}
+                </p>
+              ) : null}
             </section>
 
             <section className="mt-8">
               <h2 className="h3-fluid text-primary">Stack</h2>
               <div className="mt-4 flex flex-wrap gap-2">
-                {project.stack.map((tech) => (
-                  <TechBadge key={tech} tech={tech} />
+                {project.tags.map((tech) => (
+                  <TechBadge key={`${project.repoFullName}-${tech}`} tech={tech} />
                 ))}
               </div>
             </section>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              {project.links.live ? (
+              {project.liveUrl ? (
                 <Button asChild>
-                  <a href={project.links.live} target="_blank" rel="noopener noreferrer">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                     Live Preview
                   </a>
                 </Button>
               ) : null}
 
-              {project.links.repo ? (
+              {project.repoUrl ? (
                 <Button variant="outline" asChild>
-                  <a href={project.links.repo} target="_blank" rel="noopener noreferrer">
+                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                     Repository
-                  </a>
-                </Button>
-              ) : null}
-
-              {project.links.docs ? (
-                <Button variant="outline" asChild>
-                  <a href={project.links.docs} target="_blank" rel="noopener noreferrer">
-                    Docs or Repo
                   </a>
                 </Button>
               ) : null}
