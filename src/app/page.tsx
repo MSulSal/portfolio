@@ -4,7 +4,7 @@ import GitActivityPanel from "@/components/GitActivityPanel";
 import Socials from "@/components/Socials";
 import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
-import { labTracks, profile, services } from "@/data/portfolioData";
+import { profile, services } from "@/data/portfolioData";
 import { getFeaturedProjectsFromGitHub } from "@/lib/githubPinnedProjects";
 
 const Home = async () => {
@@ -145,7 +145,7 @@ const Home = async () => {
       </section>
 
       <section className="section-wrap py-12">
-        <div className="container mx-auto grid gap-8 md:grid-cols-2">
+        <div className="container mx-auto">
           <div className="surface-card p-7">
             <p className="chip">Services</p>
             <h2 className="h2-fluid mt-4 text-primary">Ways I can help</h2>
@@ -158,23 +158,6 @@ const Home = async () => {
                   <p className="mt-1 text-sm leading-relaxed muted-text">
                     {service.detail}
                   </p>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="surface-card p-7">
-            <p className="chip">Technical labs</p>
-            <h2 className="h2-fluid mt-4 text-primary">Technical labs</h2>
-            <p className="mt-4 text-sm leading-relaxed muted-text">
-              Supporting labs that reinforce frontend implementation depth and
-              systems fundamentals.
-            </p>
-            <ul className="mt-5 space-y-3 text-sm muted-text">
-              {labTracks.map((lab) => (
-                <li key={lab.name}>
-                  <p className="font-semibold text-primary">{lab.name}</p>
-                  <p className="muted-text">{lab.objective}</p>
                 </li>
               ))}
             </ul>

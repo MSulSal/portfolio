@@ -181,16 +181,3 @@ export const roleTracks: RoleTrack[] = [
     ],
   },
 ];
-
-export const labTracks = [
-  {
-    name: "Computational Motion Lab",
-    objective:
-      "Build interactive simulation intuition through browser-first computational experiments.",
-  },
-  {
-    name: "Interface Systems Lab",
-    objective:
-      "Iterate on visual hierarchy, interaction hooks, and conversion-focused static experiences.",
-  },
-];
