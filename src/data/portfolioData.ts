@@ -78,7 +78,7 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
       "MySQL",
       "PostgreSQL",
       "SQLite",
-      "C#/.NET (in progress)",
+      "C#/.NET",
     ],
   },
   {
@@ -89,23 +89,22 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
     id: "cloud-infra",
     title: "Cloud / Infrastructure",
-    skills: ["AWS", "Docker", "Kubernetes", "Vercel", "GitHub Pages"],
+    skills: ["AWS", "Docker", "Vercel", "GitHub Pages"],
   },
 ];
 
 export const employmentHistory: EmploymentEntry[] = [
   {
-    id: "independent-software-engineer",
-    title: "Independent Software Engineer (Freelance / Contract)",
-    company: "Self-Employed",
-    period: "05/2025 - Current",
-    location: "Dallas-Fort Worth, TX",
+    id: "techlink-nm-software-engineer",
+    title: "Software Engineer",
+    company: "TechLink NM",
+    period: "06/2025 - Current",
+    location: "McKinney, TX",
     highlights: [
-      "Built and shipped responsive web interfaces and content-managed frontends for hospitality and education leads, with clear editing workflows and launch-ready handoff.",
-      "Developed product-facing proof-of-concept interfaces in React, Next.js, and TypeScript to validate navigation, layout, UX direction, and integration feasibility.",
-      "Implemented supporting backend services and API integrations in Node.js, including Stripe webhook reliability, idempotency controls, and structured logging.",
-      "Owned delivery across requirements, implementation, debugging, testing, deployment preparation, and stakeholder demos.",
-      "Maintained an active public engineering portfolio showing frontend implementation work alongside backend integration depth.",
+      "Built a production-ready full-stack platform with Next.js, React, TypeScript, Tailwind CSS, and Vercel.",
+      "Developed API-driven appointment intake, onboarding, customer communication, media, and transactional workflows with backend validation and recovery for incomplete submissions and edge cases.",
+      "Integrated Square, Cloudinary, Twilio, Resend, and Google Maps APIs using webhooks, fallback behavior, and production troubleshooting.",
+      "Managed CI/CD, deployment environments, production debugging, and release readiness.",
     ],
   },
   {
@@ -117,20 +116,19 @@ export const employmentHistory: EmploymentEntry[] = [
     highlights: [
       "Built scalable microservices and RESTful APIs for inventory management across 300+ stores.",
       "Developed internal tools for automated data integrity testing and SFTP file transfer and processing.",
-      "Designed responsive UIs in React and Next.js and wrote backend integration and unit tests.",
+      "Created responsive internal web interfaces and wrote backend integration and unit tests.",
       "Collaborated in agile teams with CI/CD pipelines, trunk-based development, and event-driven data processing.",
     ],
   },
   {
     id: "software-engineer-intern",
     title: "Software Engineer Intern",
-    company: "UNT Systems",
+    company: "UNT Cyber Forensics Lab",
     period: "01/2021 - 05/2021",
     location: "Denton, TX",
     highlights: [
-      "Assisted in design and development of a mobile app for theft and identity protection using React Native.",
-      "Implemented real-time security rating updates, geolocation features, and user authentication.",
-      "Developed permissions-based functionality for multiple user roles, improving usability and security.",
+      "Helped develop and test a mobile application with authentication, geolocation, and role-based permissions.",
+      "Implemented and validated real-time security-rating updates and user workflows.",
     ],
   },
 ];
