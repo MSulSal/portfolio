@@ -33,19 +33,19 @@ export const profile = {
 
 export const services = [
   {
-    title: "Frontend Engineering",
+    title: "Full-Stack Product Engineering",
     detail:
-      "Build responsive, maintainable web interfaces in React, Next.js, TypeScript, HTML, CSS, and JavaScript with strong implementation discipline and production polish.",
+      "Build end-to-end web products with React, Next.js, TypeScript, Node.js, SQL-backed workflows, and maintainable delivery across the stack.",
   },
   {
-    title: "API Integration and Product UI",
+    title: "APIs, Integrations, and Data",
     detail:
-      "Connect frontend experiences to backend services cleanly, unblock product work at the integration layer, and turn requirements into usable flows that hold up in real-world use.",
+      "Design and connect REST services, webhooks, third-party APIs, and data workflows with validation, recovery, and production-safe failure handling.",
   },
   {
-    title: "Debugging, Quality, and Delivery",
+    title: "Quality, Delivery, and Operations",
     detail:
-      "Resolve UI bugs, improve responsiveness and stability, and ship with stronger confidence through testing discipline, cleanup, and practical release readiness.",
+      "Ship with automated testing, CI/CD, release discipline, observability-minded debugging, and practical production support.",
   },
 ];
 
@@ -64,13 +64,8 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
     ],
   },
   {
-    id: "cms-web",
-    title: "CMS / Web Delivery",
-    skills: ["WordPress", "PHP", "Elementor"],
-  },
-  {
     id: "backend",
-    title: "Backend",
+    title: "Backend / Data",
     skills: [
       "Node.js",
       "RESTful APIs",
@@ -90,6 +85,11 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
     id: "cloud-infra",
     title: "Cloud / Infrastructure",
     skills: ["AWS", "Docker", "Vercel", "GitHub Pages"],
+  },
+  {
+    id: "cms-web",
+    title: "CMS / Web Delivery",
+    skills: ["WordPress", "PHP", "Elementor"],
   },
 ];
 
@@ -140,7 +140,7 @@ export const roleTracks: RoleTrack[] = [
     summary:
       "Production-focused full-stack engineering with architecture depth and verifiable delivery outcomes.",
     topEvidence: [
-      "Current portfolio work spans WordPress product delivery and backend reliability services.",
+      "Current portfolio work spans Next.js product delivery, API integrations, and backend reliability services.",
       "Projects include client handoff planning, implementation docs, and production-minded delivery packaging.",
       "Cross-functional delivery evidence across PHP/WordPress and TypeScript/Node tracks.",
     ],

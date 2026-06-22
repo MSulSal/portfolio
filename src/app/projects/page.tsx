@@ -13,8 +13,8 @@ const ProjectsPage = async () => {
           <span className="chip">Projects</span>
           <h1 className="h1-fluid mt-4 text-primary">Projects</h1>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Frontend implementation first, with full-stack and backend depth
-            where it helps products ship cleanly.
+            Full-stack product work spanning responsive interfaces, APIs,
+            integrations, data workflows, testing, and reliable delivery.
           </p>
         </div>
 
@@ -22,8 +22,8 @@ const ProjectsPage = async () => {
           <h2 className="h2-fluid text-primary">Featured Work</h2>
           <p className="mt-3 max-w-4xl text-sm leading-relaxed muted-text">
             Selected projects pulled from my current GitHub pinned repositories,
-            with frontend implementation first and supporting backend depth
-            where it strengthens delivery.
+            emphasizing end-to-end engineering decisions and verifiable delivery
+            across frontend, backend, data, and operations.
           </p>
 
           {projects.length > 0 ? (

@@ -24,7 +24,7 @@ const ResumePage = async () => {
         <section className="surface-card p-7 sm:p-10">
           <span className="chip">Resume</span>
           <h1 className="h1-fluid mt-4 text-primary">
-            Software engineer with strong frontend execution
+            Full-stack software engineer building reliable web products
           </h1>
 
           <p className="mt-3 text-sm font-semibold uppercase tracking-[0.08em] text-primary">
@@ -57,14 +57,14 @@ const ResumePage = async () => {
           </div>
 
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
-            Professional experience building responsive interfaces, integrating
-            APIs, and shipping maintainable web products with React, Next.js,
-            JavaScript, TypeScript, Node.js, and modern frontend tooling.
+            Professional experience delivering React and Next.js interfaces,
+            Node and REST services, SQL-backed workflows, third-party
+            integrations, automated tests, CI/CD, and production troubleshooting.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild>
-              <a href="/resume.pdf" download="Suleman-Saleem-Resume.pdf">
+              <a href="/resume.pdf" download="Suleman-Saleem-Full-Stack-Resume.pdf">
                 Download resume PDF
               </a>
             </Button>
@@ -81,8 +81,8 @@ const ResumePage = async () => {
           <span className="chip">Core skills</span>
           <h2 className="h2-fluid mt-4 text-primary">Technical stack</h2>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Skills aligned to full-stack product delivery with strong frontend
-            implementation.
+            Skills aligned to end-to-end product delivery across frontend,
+            backend, data, integrations, testing, and operations.
           </p>
 
           <div className="mt-7 grid gap-5 lg:grid-cols-2">
@@ -213,9 +213,7 @@ const ResumePage = async () => {
 
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs uppercase tracking-[0.08em] muted-text">
             <span>
-              Repos scanned: {activity.context.reposScanned} (
-              {activity.context.privateReposScanned} private /{" "}
-              {activity.context.publicReposScanned} public)
+              Public repos scanned: {activity.context.publicReposScanned}
             </span>
             <span>Commits processed: {activity.context.commitsLoaded}</span>
           </div>

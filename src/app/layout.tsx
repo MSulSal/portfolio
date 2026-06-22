@@ -10,17 +10,17 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sulemansaleem.dev"),
+  metadataBase: new URL("https://suleman-saleem.com"),
   title: {
-    default: "Suleman Saleem | Software Engineer",
+    default: "Suleman Saleem | Full-Stack Software Engineer",
     template: "%s | Suleman Saleem",
   },
   description:
-    "Portfolio for Suleman Saleem: test-first software delivery across product engineering, quality automation, and operational reliability.",
+    "Full-stack software engineering portfolio spanning React and Next.js interfaces, APIs, integrations, data workflows, testing, CI/CD, and operational reliability.",
   openGraph: {
-    title: "Suleman Saleem | Software Engineer",
+    title: "Suleman Saleem | Full-Stack Software Engineer",
     description:
-      "Portfolio showing production-minded software delivery and verifiable engineering outcomes.",
+      "Portfolio showing full-stack product delivery and verifiable engineering outcomes.",
     type: "website",
     locale: "en_US",
     siteName: "Suleman Saleem Portfolio",

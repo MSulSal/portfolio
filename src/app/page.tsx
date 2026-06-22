@@ -17,29 +17,28 @@ const Home = async () => {
         <div className="container mx-auto grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
           <div className="space-y-7">
             <span className="chip">
-              Software Engineer | React, Next.js, TypeScript, Responsive UI
+              Full-Stack Software Engineer | React, Next.js, Node.js, APIs & SQL
             </span>
 
             <h1 className="h1-fluid max-w-4xl text-primary">
-              Responsive frontend delivery with React, Next.js, and clean API
-              integration.
+              Full-stack product engineering from responsive UI to APIs, data,
+              and production delivery.
             </h1>
 
             <p className="max-w-3xl text-base font-medium muted-text">
-              I&apos;m a software engineer with professional experience building
-              responsive interfaces in React and Next.js, integrating APIs and
-              backend services, and shipping maintainable web products. I work
-              across the stack when needed, but the value I bring first is
-              frontend execution: clean UI implementation, responsive behavior,
-              debugging, performance-minded delivery, and reliable handoff.
+              I&apos;m a full-stack software engineer with professional experience
+              building React and Next.js interfaces, API and microservice
+              workflows, SQL-backed systems, third-party integrations, tests,
+              and CI/CD paths. I connect the layers needed to ship reliable web
+              products and troubleshoot them in production.
             </p>
 
             <div className="code-panel max-w-3xl">
               <p className="uppercase tracking-[0.1em] muted-text">
-                frontend delivery focus
+                full-stack delivery focus
               </p>
               <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
-                {`React/Next.js UI -> API integration -> responsive refinement -> debugging/performance -> clean handoff`}
+                {`React/Next.js UI -> API and webhook services -> SQL-backed workflows -> testing and CI/CD -> production support`}
               </pre>
             </div>
 

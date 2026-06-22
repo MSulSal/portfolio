@@ -1,6 +1,6 @@
 # Suleman Saleem Portfolio
 
-Next.js portfolio site focused on frontend execution with full-stack depth.
+Next.js portfolio site focused on full-stack product engineering across frontend, APIs, integrations, data workflows, testing, and delivery.
 
 ## Local Run
 
