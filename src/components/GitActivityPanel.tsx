@@ -97,9 +97,7 @@ const GitActivityPanel = async () => {
         </p>
       ) : (
         <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
-          {activity.context.reposScanned} repos scanned (
-          {activity.context.privateReposScanned} private /{" "}
-          {activity.context.publicReposScanned} public)
+          {activity.context.publicReposScanned} public repos scanned
         </p>
       )}
 

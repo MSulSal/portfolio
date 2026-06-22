@@ -192,31 +192,12 @@ async function fetchRepos(username: string, token: string): Promise<GitHubRepo[]
     return collected;
   };
 
-  const affiliation = "owner,collaborator,organization_member";
-  const repos: GitHubRepo[] = [];
-
-  if (token) {
-    const privateRepos = await fetchRepoPages(
-      `https://api.github.com/user/repos?visibility=private&sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
-    );
-    const publicRepos = await fetchRepoPages(
-      `https://api.github.com/user/repos?visibility=public&sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
-    );
-
-    repos.push(...privateRepos, ...publicRepos);
-
-    if (repos.length === 0) {
-      const fallback = await fetchRepoPages(
-        `https://api.github.com/user/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&affiliation=${affiliation}`
-      );
-      repos.push(...fallback);
-    }
-  } else {
-    const publicOwnedRepos = await fetchRepoPages(
-      `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&type=owner`
-    );
-    repos.push(...publicOwnedRepos);
-  }
+  // The portfolio is public, so its activity feed must only read public repos
+  // owned by the profile user. An authenticated `/user/repos` request can
+  // return private and collaborator repos, which must never be rendered here.
+  const repos = await fetchRepoPages(
+    `https://api.github.com/users/${username}/repos?sort=pushed&direction=desc&per_page=${PER_PAGE}&type=owner`
+  );
 
   const deduped = Array.from(
     repos.reduce((map, repo) => {
@@ -228,7 +209,7 @@ async function fetchRepos(username: string, token: string): Promise<GitHubRepo[]
   );
 
   return deduped
-    .filter((repo) => !repo.archived)
+    .filter((repo) => !repo.archived && repo.private !== true)
     .sort(
       (a, b) =>
         new Date(b.pushed_at || 0).getTime() - new Date(a.pushed_at || 0).getTime()
@@ -397,11 +378,13 @@ export async function getPortfolioActivity(
 
   try {
     const repos = (await fetchRepos(username, token)).filter(
-      (repo) => !excludedRepos.has(repo.full_name.toLowerCase())
+      (repo) =>
+        repo.private !== true &&
+        !excludedRepos.has(repo.full_name.toLowerCase())
     );
     const repoNames = Array.from(new Set(repos.map((repo) => repo.full_name)));
-    const privateReposScanned = repos.filter((repo) => Boolean(repo.private)).length;
-    const publicReposScanned = repos.length - privateReposScanned;
+    const privateReposScanned = 0;
+    const publicReposScanned = repos.length;
 
     const commitsByRepo = await mapWithConcurrency(
       repoNames,

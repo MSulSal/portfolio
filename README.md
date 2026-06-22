@@ -25,10 +25,11 @@ Order and inclusion behavior:
 ## Environment Variables
 
 ```bash
-# GitHub project/activity access
-GH_ACTIVITY_FN_TOKEN=github_token_with_repo_access
-# optional explicit token for pinned repo fetch
-GITHUB_PINNED_REPOS_TOKEN=github_token_with_repo_access
+# Optional GitHub API token. Grant public-repository read access only.
+# Never give this portfolio token access to private repositories.
+GH_ACTIVITY_FN_TOKEN=github_token_with_public_repo_read_access
+# Optional explicit token for pinned public-repository fetch
+GITHUB_PINNED_REPOS_TOKEN=github_token_with_public_repo_read_access
 
 # Contact form email send (Resend)
 RESEND_API_KEY=your_resend_api_key
