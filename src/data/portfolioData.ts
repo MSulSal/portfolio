@@ -33,9 +33,9 @@ export const profile = {
 
 export const services = [
   {
-    title: "Full-Stack Product Engineering",
+    title: "Full-Stack and Enterprise Applications",
     detail:
-      "Build end-to-end web products with React, Next.js, TypeScript, Node.js, SQL-backed workflows, and maintainable delivery across the stack.",
+      "Build database-backed customer and operational applications with React, Next.js, TypeScript, Node.js, SQL workflows, and maintainable delivery across the stack.",
   },
   {
     title: "APIs, Integrations, and Data",
@@ -43,9 +43,9 @@ export const services = [
       "Design and connect REST services, webhooks, third-party APIs, and data workflows with validation, recovery, and production-safe failure handling.",
   },
   {
-    title: "Quality, Delivery, and Operations",
+    title: "Quality and Production Delivery",
     detail:
-      "Ship with automated testing, CI/CD, release discipline, observability-minded debugging, and practical production support.",
+      "Ship with automated testing, CI/CD, release discipline, production debugging, failure recovery, and practical operational support.",
   },
 ];
 
@@ -79,7 +79,14 @@ export const technicalSkillGroups: TechnicalSkillGroup[] = [
   {
     id: "delivery",
     title: "Testing / Delivery",
-    skills: ["Git", "GitHub Actions", "Vitest", "Playwright", "CI/CD"],
+    skills: [
+      "Git",
+      "GitHub Actions",
+      "Vitest",
+      "Playwright",
+      "CI/CD",
+      "Production Troubleshooting",
+    ],
   },
   {
     id: "cloud-infra",

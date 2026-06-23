@@ -17,20 +17,20 @@ const Home = async () => {
         <div className="container mx-auto grid gap-10 lg:grid-cols-[minmax(0,1.12fr)_minmax(0,0.88fr)] xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
           <div className="space-y-7">
             <span className="chip">
-              Full-Stack Software Engineer | React, Next.js, Node.js, APIs & SQL
+              Full-Stack Software Engineer | Enterprise Apps, APIs & Integrations
             </span>
 
             <h1 className="h1-fluid max-w-4xl text-primary">
-              Full-stack product engineering from responsive UI to APIs, data,
-              and production delivery.
+              Full-stack product and application engineering from responsive UI
+              to APIs, data, and production delivery.
             </h1>
 
             <p className="max-w-3xl text-base font-medium muted-text">
               I&apos;m a full-stack software engineer with professional experience
               building React and Next.js interfaces, API and microservice
-              workflows, SQL-backed systems, third-party integrations, tests,
-              and CI/CD paths. I connect the layers needed to ship reliable web
-              products and troubleshoot them in production.
+              workflows, database-driven applications, third-party integrations,
+              tests, and CI/CD paths. I connect the layers needed to ship reliable
+              customer and operational software and troubleshoot it in production.
             </p>
 
             <div className="code-panel max-w-3xl">
@@ -38,7 +38,7 @@ const Home = async () => {
                 full-stack delivery focus
               </p>
               <pre className="mt-3 overflow-auto whitespace-pre-wrap text-primary">
-                {`React/Next.js UI -> API and webhook services -> SQL-backed workflows -> testing and CI/CD -> production support`}
+                {`React/Next.js UI -> API and webhook services -> database-driven workflows -> testing and CI/CD -> production support`}
               </pre>
             </div>
 
@@ -146,8 +146,8 @@ const Home = async () => {
       <section className="section-wrap py-12">
         <div className="container mx-auto">
           <div className="surface-card p-7">
-            <p className="chip">Services</p>
-            <h2 className="h2-fluid mt-4 text-primary">Ways I can help</h2>
+            <p className="chip">Engineering focus</p>
+            <h2 className="h2-fluid mt-4 text-primary">What I build</h2>
             <ul className="mt-5 space-y-4">
               {services.map((service) => (
                 <li key={service.title}>

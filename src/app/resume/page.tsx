@@ -58,7 +58,7 @@ const ResumePage = async () => {
 
           <p className="mt-4 max-w-4xl text-base leading-relaxed muted-text">
             Professional experience delivering React and Next.js interfaces,
-            Node and REST services, SQL-backed workflows, third-party
+            Node and REST services, database-driven workflows, third-party
             integrations, automated tests, CI/CD, and production troubleshooting.
           </p>
 
@@ -81,8 +81,8 @@ const ResumePage = async () => {
           <span className="chip">Core skills</span>
           <h2 className="h2-fluid mt-4 text-primary">Technical stack</h2>
           <p className="mt-4 text-base leading-relaxed muted-text">
-            Skills aligned to end-to-end product delivery across frontend,
-            backend, data, integrations, testing, and operations.
+            Skills aligned to end-to-end application delivery across frontend,
+            backend, data, integrations, testing, and production support.
           </p>
 
           <div className="mt-7 grid gap-5 lg:grid-cols-2">
