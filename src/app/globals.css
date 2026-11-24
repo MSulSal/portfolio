@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --radius: 0.625rem;
   --bg: #eaf1fb;
   --surface: rgba(255, 255, 255, 0.78);
   --surface-strong: rgba(255, 255, 255, 0.94);
@@ -11,6 +12,7 @@
   --muted: #334155;
   --accent: #0f766e;
   --accent-hover: #115e59;
+  --accent-ink: #ffffff;
   --teal: #0369a1;
   --teal-hover: #075985;
   --shadow: 0 20px 48px -36px rgba(15, 23, 42, 0.34);
@@ -26,6 +28,7 @@
   --muted: #93a4bd;
   --accent: #2dd4bf;
   --accent-hover: #14b8a6;
+  --accent-ink: #041615;
   --teal: #22d3ee;
   --teal-hover: #06b6d4;
   --shadow: 0 26px 68px -54px rgba(20, 184, 166, 0.45);
@@ -101,9 +104,108 @@
   a {
     @apply transition-colors duration-200;
   }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
 }
 
 @layer components {
+  .portfolio-shell {
+    width: min(100% - clamp(2rem, 8vw, 12rem), 83rem);
+    margin-inline: auto;
+  }
+
+  .portfolio-hero {
+    padding-block: clamp(2.5rem, 3.4vw, 3.25rem);
+  }
+
+  .portfolio-hero-split {
+    @apply grid items-center;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+
+  .portfolio-hero-title {
+    max-width: 15ch;
+    font-size: clamp(2.65rem, 4.7vw, 4.25rem);
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .portfolio-label {
+    @apply text-xs font-semibold uppercase tracking-[0.12em];
+    color: var(--muted);
+  }
+
+  .hero-preview-frame {
+    @apply overflow-hidden rounded-xl border;
+    background: var(--surface-strong);
+    border-color: var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-preview-frame img {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .hero-preview-bar {
+    @apply flex items-center gap-1.5 border-b px-3 py-2.5;
+    border-color: var(--border);
+    background: var(--code-bg);
+  }
+
+  .hero-preview-bar span {
+    @apply size-1.5 rounded-full;
+    background: var(--muted);
+    opacity: 0.65;
+  }
+
+  .portfolio-section {
+    @apply border-t py-8 sm:py-10;
+    border-color: var(--border);
+    scroll-margin-top: 4.75rem;
+  }
+
+  .work-grid {
+    @apply grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3;
+  }
+
+  .work-card {
+    @apply flex min-w-0 flex-col rounded-xl border p-3;
+    background: var(--surface);
+    border-color: var(--border);
+  }
+
+  .work-card-visual {
+    @apply overflow-hidden rounded-lg border;
+    border-color: var(--border);
+  }
+
+  .work-card-visual img {
+    aspect-ratio: 16 / 8;
+    object-fit: cover;
+  }
+
+  .work-card-workflow {
+    @apply flex flex-col justify-center px-4 py-3;
+    aspect-ratio: 16 / 8;
+    background: var(--code-bg);
+  }
+
+  @media (min-width: 768px) {
+    .portfolio-hero-split {
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    }
+
+    .hero-preview-frame img {
+      aspect-ratio: 1.9;
+    }
+  }
+
   .section-wrap {
     @apply py-12 sm:py-14 lg:py-20;
   }

@@ -2,6 +2,7 @@ import {
   projectPresentationOverrides,
   type ProjectPresentationOverride,
 } from "@/data/projectOverrides";
+import { pinnedProjectSnapshot } from "@/data/pinnedProjectSnapshot";
 
 export interface FeaturedProject {
   slug: string;
@@ -17,12 +18,13 @@ export interface FeaturedProject {
   updatedAt?: string;
   featuredBadge?: string;
   preferredCtaLabel?: string;
+  preview?: ProjectPresentationOverride["preview"];
+  workflow?: ProjectPresentationOverride["workflow"];
 }
 
 export interface FeaturedProjectsResult {
   projects: FeaturedProject[];
-  source: "pinned" | "recent-fallback" | "none";
-  warning?: string;
+  source: "pinned" | "snapshot" | "none";
 }
 
 interface RawRepoProject {
@@ -39,6 +41,7 @@ interface RawRepoProject {
 interface GitHubPinnedRepository {
   name: string;
   nameWithOwner: string;
+  visibility: "PUBLIC" | "PRIVATE" | "INTERNAL";
   description?: string | null;
   url: string;
   homepageUrl?: string | null;
@@ -68,21 +71,8 @@ interface GitHubGraphQLResponse {
   }>;
 }
 
-interface GitHubRestRepo {
-  name: string;
-  full_name: string;
-  description?: string | null;
-  html_url: string;
-  homepage?: string | null;
-  language?: string | null;
-  topics?: string[] | null;
-  pushed_at?: string | null;
-  archived?: boolean;
-}
-
 const REVALIDATE_SECONDS = 900;
 const PINNED_LIMIT = 12;
-const FALLBACK_LIMIT = 8;
 
 function getAuthToken() {
   return (
@@ -123,8 +113,10 @@ function formatTag(value: string): string {
     react: "React",
     nextjs: "Next.js",
     next: "Next.js",
+    "next.js": "Next.js",
     nodejs: "Node.js",
     node: "Node.js",
+    "node.js": "Node.js",
     wordpress: "WordPress",
     php: "PHP",
     html: "HTML",
@@ -136,9 +128,11 @@ function formatTag(value: string): string {
     postgresql: "PostgreSQL",
     api: "API",
     apis: "APIs",
+    sqlite: "SQLite",
+    elementor: "Elementor",
   };
 
-  if (dictionary[normalized]) {
+  if (Object.hasOwn(dictionary, normalized)) {
     return dictionary[normalized];
   }
 
@@ -185,19 +179,6 @@ function normalizeRepoFromPinned(repo: GitHubPinnedRepository): RawRepoProject {
     primaryLanguage: repo.primaryLanguage?.name || undefined,
     topics,
     updatedAt: repo.pushedAt || undefined,
-  };
-}
-
-function normalizeRepoFromRest(repo: GitHubRestRepo): RawRepoProject {
-  return {
-    name: repo.name,
-    fullName: repo.full_name,
-    description: repo.description?.trim() || "",
-    url: repo.html_url,
-    homepageUrl: repo.homepage || undefined,
-    primaryLanguage: repo.language || undefined,
-    topics: repo.topics || [],
-    updatedAt: repo.pushed_at || undefined,
   };
 }
 
@@ -252,10 +233,16 @@ function applyOverride(
     tags,
     highlights: override?.highlights || [],
     repoUrl: override?.forceRepoUrl || project.url,
-    liveUrl: override?.forceLiveUrl || normalizeHomepageUrl(project.homepageUrl),
+    liveUrl: normalizeHomepageUrl(
+      override?.forceLiveUrl === undefined
+        ? project.homepageUrl
+        : override.forceLiveUrl ?? undefined
+    ),
     updatedAt: project.updatedAt,
     featuredBadge: override?.featuredBadge,
     preferredCtaLabel: override?.preferredCtaLabel,
+    preview: override?.preview,
+    workflow: override?.workflow,
   };
 }
 
@@ -263,10 +250,6 @@ async function fetchPinnedRepos(
   username: string,
   token: string
 ): Promise<RawRepoProject[]> {
-  if (!token) {
-    return [];
-  }
-
   const query = `
     query PinnedRepositories($login: String!, $limit: Int!) {
       user(login: $login) {
@@ -275,6 +258,7 @@ async function fetchPinnedRepos(
             ... on Repository {
               name
               nameWithOwner
+              visibility
               description
               url
               homepageUrl
@@ -303,6 +287,7 @@ async function fetchPinnedRepos(
       query,
       variables: { login: username, limit: PINNED_LIMIT },
     }),
+    signal: AbortSignal.timeout(5000),
     next: { revalidate: REVALIDATE_SECONDS },
   });
 
@@ -318,33 +303,14 @@ async function fetchPinnedRepos(
     throw new Error(message);
   }
 
-  const nodes = payload.data?.user?.pinnedItems?.nodes || [];
-  return nodes
-    .filter((node): node is GitHubPinnedRepository => Boolean(node?.name))
-    .map(normalizeRepoFromPinned);
-}
-
-async function fetchFallbackRepos(
-  username: string,
-  token: string
-): Promise<RawRepoProject[]> {
-  const endpoint = token
-    ? `https://api.github.com/user/repos?sort=updated&direction=desc&per_page=${FALLBACK_LIMIT}&affiliation=owner,collaborator,organization_member`
-    : `https://api.github.com/users/${username}/repos?sort=updated&direction=desc&per_page=${FALLBACK_LIMIT}&type=owner`;
-
-  const response = await fetch(endpoint, {
-    headers: buildHeaders(token),
-    next: { revalidate: REVALIDATE_SECONDS },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Fallback repo fetch failed (${response.status})`);
+  const nodes = payload.data?.user?.pinnedItems?.nodes;
+  if (!Array.isArray(nodes)) {
+    throw new Error("GitHub did not return a pinned repository list");
   }
 
-  const repos = (await response.json()) as GitHubRestRepo[];
-  return (Array.isArray(repos) ? repos : [])
-    .filter((repo) => !repo.archived)
-    .map(normalizeRepoFromRest);
+  return nodes
+    .filter((node): node is GitHubPinnedRepository => node?.visibility === "PUBLIC")
+    .map(normalizeRepoFromPinned);
 }
 
 function applyOverridesInOrder(repos: RawRepoProject[]): FeaturedProject[] {
@@ -367,48 +333,25 @@ export async function getFeaturedProjectsFromGitHub(
 ): Promise<FeaturedProjectsResult> {
   const token = getAuthToken();
 
-  try {
-    const pinnedRepos = await fetchPinnedRepos(username, token);
-    if (pinnedRepos.length > 0) {
+  if (token) {
+    try {
+      const pinnedRepos = await fetchPinnedRepos(username, token);
       return {
         projects: applyOverridesInOrder(pinnedRepos),
         source: "pinned",
       };
-    }
-  } catch (error: unknown) {
-    const warning =
-      error instanceof Error ? error.message : "Unable to fetch pinned repositories.";
-
-    try {
-      const fallbackRepos = await fetchFallbackRepos(username, token);
-      return {
-        projects: applyOverridesInOrder(fallbackRepos),
-        source: "recent-fallback",
-        warning,
-      };
     } catch {
-      return {
-        projects: [],
-        source: "none",
-        warning,
-      };
+      // Use the public snapshot when authenticated pin sync is unavailable.
     }
   }
 
-  try {
-    const fallbackRepos = await fetchFallbackRepos(username, token);
-    return {
-      projects: applyOverridesInOrder(fallbackRepos),
-      source: "recent-fallback",
-      warning:
-        "Pinned repositories are unavailable without a GitHub token. Showing recently updated repositories.",
-    };
-  } catch {
-    return {
-      projects: [],
-      source: "none",
-      warning:
-        "No GitHub project data is currently available. Check token and API limits.",
-    };
+  if (username.toLowerCase() !== pinnedProjectSnapshot.username.toLowerCase()) {
+    return { projects: [], source: "none" };
   }
+
+  const fallback = pinnedProjectSnapshot.repos.map((repo) => {
+    const fullName = `${pinnedProjectSnapshot.username}/${repo.name}`;
+    return { ...repo, fullName, url: `https://github.com/${fullName}` };
+  });
+  return { projects: applyOverridesInOrder(fallback), source: "snapshot" };
 }

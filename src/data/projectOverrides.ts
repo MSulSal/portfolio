@@ -6,9 +6,11 @@ export interface ProjectPresentationOverride {
 	highlights?: string[];
 	featuredBadge?: string;
 	preferredCtaLabel?: string;
-	forceLiveUrl?: string;
+	forceLiveUrl?: string | null;
 	forceRepoUrl?: string;
 	tags?: string[];
+	preview?: { src: string; alt: string };
+	workflow?: { label: string; steps: string[] };
 }
 
 export const projectPresentationOverrides: Record<
@@ -38,12 +40,52 @@ export const projectPresentationOverrides: Record<
 	"stripe-webhook-reliability-service": {
 		displayTitle: "Stripe Webhook Reliability Service",
 		summary:
-			"Backend reliability service that reinforces API integration, correctness, and failure-path handling for web products.",
+			"An Express service that stores Stripe events before processing and retries recoverable failures.",
 		type: "Backend",
+		tags: ["TypeScript", "Node.js", "Express", "SQLite"],
+		workflow: {
+			label: "Webhook processing",
+			steps: ["Verify signature", "Store event by ID", "Retry transient failures"],
+		},
+		highlights: [
+			"A unique Stripe event ID and atomic event claiming prevent duplicate processing during retries and replays.",
+			"Structured logs and a health endpoint help diagnose failures.",
+		],
+	},
+	"charity-directory": {
+		displayTitle: "Conrad's Charities",
+		summary:
+			"A searchable nonprofit directory and map for finding local help, donation links, and volunteer opportunities.",
+		type: "Full-stack web app",
+		tags: ["Next.js", "React", "TypeScript", "Leaflet"],
+		preview: {
+			src: "/projects/conrads-charities.webp",
+			alt: "Conrad's Charities homepage with a search form for charity type and location",
+		},
+		highlights: [
+			"The resource finder resolves cities and ZIP codes from the directory's own data, keeping location queries out of third-party geocoding services.",
+			"Organization profiles link directly to donation, volunteer, and verification sources.",
+		],
 	},
 	bridalelegancenm: {
 		displayTitle: "Bridal Elegance NM",
-		summary: "Marketing website rebuild for Bridal Elegance NM.",
+		summary: "A bridal salon website rebuild with browsable collections and a showroom gallery.",
+		type: "Business website",
+		tags: ["Next.js", "React", "TypeScript"],
+		preview: {
+			src: "/projects/bridal-elegance.webp",
+			alt: "Bridal Elegance NM homepage with a full-width bridal gown photograph",
+		},
+		highlights: ["A gallery lightbox lets visitors browse showroom photos without leaving the page."],
+	},
+	bifourcation: {
+		displayTitle: "Bifourcation",
+		summary: "An interactive canvas that reconstructs freehand drawings with Fourier rotors.",
+		type: "Creative coding",
+	},
+	"hearthstone-hospitality": {
+		type: "WordPress",
+		forceLiveUrl: null,
 	},
 	portfolio: {
 		hidden: true,

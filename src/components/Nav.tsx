@@ -3,49 +3,31 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { cn } from "@/lib/utils";
+
 const links = [
-  { name: "Home", path: "/", external: false },
-  { name: "Projects", path: "/projects", external: false },
-  { name: "Resume", path: "/resume", external: false },
-  { name: "Contact", path: "/contact", external: false },
+  { name: "Projects", path: "/projects" },
+  { name: "Resume", path: "/resume" },
 ];
 
-const Nav = () => {
+export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-6">
-      {links.map((link) => {
-        const isActive = !link.external && pathname === link.path;
-
-        if (link.external) {
-          return (
-            <a
-              key={link.name}
-              href={link.path}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium tracking-tight text-[color:var(--muted)] hover:text-accent"
-            >
-              {link.name}
-            </a>
-          );
-        }
-
+    <nav aria-label="Main" className="flex items-center gap-6">
+      {links.map(({ name, path }) => {
+        const isActive = pathname === path || pathname.startsWith(`${path}/`);
         return (
           <Link
-            key={link.name}
-            href={link.path}
-            className={`text-sm font-medium tracking-tight transition-colors hover:text-accent ${
-              isActive ? "text-accent" : "text-[color:var(--muted)]"
-            }`}
+            key={path}
+            href={path}
+            aria-current={pathname === path ? "page" : undefined}
+            className={cn("text-sm font-medium hover:text-accent", isActive ? "text-accent" : "muted-text")}
           >
-            {link.name}
+            {name}
           </Link>
         );
       })}
     </nav>
   );
-};
-
-export default Nav;
+}

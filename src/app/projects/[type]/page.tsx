@@ -1,107 +1,71 @@
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ProjectPreview } from "@/components/ProjectCard";
 import TechBadge from "@/components/TechBadge";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/portfolioData";
 import { getFeaturedProjectsFromGitHub } from "@/lib/githubPinnedProjects";
 
-type ParamsPromise = Promise<{
-  type: string;
-}>;
-
 export default async function ProjectDetailPage({
   params,
 }: {
-  params: ParamsPromise;
+  params: Promise<{ type: string }>;
 }) {
-  const resolved = await params;
-  const featuredWork = await getFeaturedProjectsFromGitHub(profile.githubUsername);
-  const project = featuredWork.projects.find((item) => item.slug === resolved.type);
+  const [{ type }, { projects }] = await Promise.all([
+    params,
+    getFeaturedProjectsFromGitHub(profile.githubUsername),
+  ]);
+  const project = projects.find((item) => item.slug === type);
 
-  if (!project) {
-    notFound();
-  }
+  if (!project) notFound();
 
   return (
-    <main className="section-wrap pt-14">
-      <div className="container mx-auto">
-        <div className="max-w-5xl space-y-8">
-          <Link href="/projects" className="link-inline text-sm uppercase tracking-[0.1em]">
-            Back to projects
-          </Link>
+    <main className="portfolio-shell pb-16 pt-12 sm:pt-16">
+      <Link href="/projects" className="link-inline inline-flex items-center gap-2 text-sm">
+        <ArrowLeft className="size-4" aria-hidden="true" /> All projects
+      </Link>
 
-          <div className="surface-card p-7 sm:p-10">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <span className="chip">{project.type || "Project"}</span>
-                <h1 className="h1-fluid mt-4 text-primary">{project.title}</h1>
-                <p className="mt-4 max-w-3xl text-base leading-relaxed muted-text">
-                  {project.summary}
-                </p>
-              </div>
-            </div>
+      <article className="mt-7 max-w-5xl">
+        {project.type ? <p className="portfolio-label">{project.type}</p> : null}
+        <h1 className="h1-fluid mt-3 break-words text-primary">{project.title}</h1>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed muted-text">{project.summary}</p>
 
-            <section className="mt-8">
-              <h2 className="h3-fluid text-primary">Delivery highlights</h2>
-              {project.highlights.length > 0 ? (
-                <ul className="mt-4 space-y-2 text-sm muted-text">
-                  {project.highlights.map((item) => (
-                    <li key={item}>- {item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-4 text-sm muted-text">
-                  Repository details are documented in GitHub, including current
-                  implementation scope and delivery status.
-                </p>
-              )}
-            </section>
+        {project.tags.length > 0 ? (
+          <ul aria-label="Technologies" className="mt-5 flex flex-wrap gap-2">
+            {project.tags.map((tag) => <li key={tag}><TechBadge tech={tag} /></li>)}
+          </ul>
+        ) : null}
 
-            <section className="mt-8">
-              <h2 className="h3-fluid text-primary">Repository</h2>
-              <p className="mt-4 text-sm muted-text">{project.repoFullName}</p>
-              {project.updatedAt ? (
-                <p className="mt-1 text-sm muted-text">
-                  Last updated:{" "}
-                  {new Intl.DateTimeFormat("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  }).format(new Date(project.updatedAt))}
-                </p>
-              ) : null}
-            </section>
-
-            <section className="mt-8">
-              <h2 className="h3-fluid text-primary">Stack</h2>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.tags.map((tech) => (
-                  <TechBadge key={`${project.repoFullName}-${tech}`} tech={tech} />
-                ))}
-              </div>
-            </section>
-
-            <div className="mt-10 flex flex-wrap gap-3">
-              {project.liveUrl ? (
-                <Button asChild>
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    Live Preview
-                  </a>
-                </Button>
-              ) : null}
-
-              {project.repoUrl ? (
-                <Button variant="outline" asChild>
-                  <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                    Repository
-                  </a>
-                </Button>
-              ) : null}
-            </div>
-          </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          {project.liveUrl ? (
+            <Button asChild>
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                {project.preferredCtaLabel || "Live demo"}
+              </a>
+            </Button>
+          ) : null}
+          <Button variant="outline" asChild>
+            <a href={project.repoUrl} target="_blank" rel="noopener noreferrer">Repository</a>
+          </Button>
         </div>
-      </div>
+
+        {project.preview ? (
+          <figure className="mt-8 overflow-hidden rounded-xl border border-[color:var(--border)]">
+            <ProjectPreview preview={project.preview} sizes="(max-width: 1023px) 92vw, 1024px" />
+          </figure>
+        ) : null}
+
+        {project.highlights.length > 0 ? (
+          <section className="portfolio-section mt-8 max-w-3xl" aria-labelledby="highlights-title">
+            <h2 id="highlights-title" className="h3-fluid text-primary">Implementation highlights</h2>
+            <ul className="mt-4 grid list-disc gap-2 pl-5 text-sm leading-relaxed muted-text marker:text-accent">
+              {project.highlights.map((item) => <li key={item}>{item}</li>)}
+            </ul>
+          </section>
+        ) : null}
+      </article>
     </main>
   );
 }

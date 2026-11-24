@@ -1,114 +1,54 @@
 import AnimatedMetricValue from "@/components/AnimatedMetricValue";
 import { profile } from "@/data/portfolioData";
 import { getPortfolioActivity } from "@/lib/githubActivity";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
-const GitActivityPanel = async () => {
+export default async function GitActivityPanel() {
   const activity = await getPortfolioActivity(profile.githubUsername);
-  const isSyncing =
-    !activity.hasLiveData &&
-    activity.context.reposScanned === 0 &&
-    activity.commits.length === 0;
-  const metricItems = isSyncing
-    ? activity.metrics.map((metric) => ({
-        label: metric.label,
-        value: "Syncing...",
-      }))
-    : activity.metrics;
 
   return (
-    <aside className="surface-card p-6 sm:p-7">
-      <div className="flex items-center justify-between gap-3">
-        <p className="chip">Live activity</p>
-        <a
-          href={profile.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link-inline text-xs uppercase tracking-[0.08em]"
-        >
-          GitHub
-        </a>
+    <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)]">
+      <div>
+        <a href={profile.github} className="link-inline text-sm">View GitHub profile</a>
+        {activity.hasLiveData ? (
+          <dl className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {activity.metrics.map((item) => (
+              <div key={item.label} className="surface-subtle p-3">
+                <dt className="text-xs muted-text">{item.label}</dt>
+                <dd className="mt-1 text-lg font-semibold tabular-nums text-primary">
+                  <span className="sr-only">{item.value}</span>
+                  <span aria-hidden="true" className="motion-reduce:hidden"><AnimatedMetricValue value={item.value} /></span>
+                  <span aria-hidden="true" className="hidden motion-reduce:inline">{item.value}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
       </div>
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
-        {metricItems.map((item) => (
-          <div key={item.label} className="surface-subtle p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.1em] muted-text">
-              {item.label}
-            </p>
-            <p className="mt-2 text-lg font-semibold text-primary">
-              <AnimatedMetricValue value={item.value} />
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-7">
-        <p className="text-xs font-semibold uppercase tracking-[0.1em] muted-text">
-          Recent commits
-        </p>
-
-        <ScrollArea className="mt-3 h-[320px] pr-2">
-          {isSyncing ? (
-            <div className="surface-subtle p-4">
-              <p className="text-sm muted-text">
-                Syncing live commit feed from GitHub.
-              </p>
-            </div>
-          ) : activity.commits.length > 0 ? (
-            <ul className="space-y-3">
+      {activity.commits.length > 0 ? (
+        <div className="surface-subtle p-4">
+          <h3 id="recent-commits" className="text-sm font-semibold text-primary">Recent commits</h3>
+          <div role="region" aria-labelledby="recent-commits" tabIndex={0} className="mt-2 max-h-64 overflow-y-auto overscroll-contain pr-2">
+            <ul className="divide-y divide-[color:var(--border)]">
               {activity.commits.map((commit) => (
-                <li key={commit.id} className="surface-subtle p-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="truncate text-xs font-semibold uppercase tracking-[0.08em] muted-text">
-                      {commit.repo}
-                    </p>
-                    <span className="text-xs muted-text">{commit.relativeTime}</span>
+                <li key={commit.id} className="py-3">
+                  <div className="flex flex-wrap justify-between gap-x-3 text-xs muted-text">
+                    <span className="break-all font-mono">{commit.repo}</span>
+                    <time dateTime={commit.createdAt}>{commit.relativeTime}</time>
                   </div>
-
-                  <a
-                    href={commit.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 block text-sm font-semibold text-primary hover:text-accent"
-                  >
+                  <a href={commit.url} className="mt-1 inline-block break-words text-sm font-semibold text-primary hover:text-accent">
                     {commit.message}
                   </a>
-
-                  <p className="mt-2 text-[11px] font-mono muted-text">
-                    {commit.shortSha}
-                  </p>
                 </li>
               ))}
             </ul>
-          ) : (
-            <div className="surface-subtle p-4">
-              <p className="text-sm muted-text">
-                No recent commits were found for the connected repositories.
-              </p>
-            </div>
-          )}
-        </ScrollArea>
-      </div>
-
-      {isSyncing ? (
-        <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
-          Syncing repository metadata...
-        </p>
+          </div>
+        </div>
       ) : (
-        <p className="mt-4 text-xs uppercase tracking-[0.08em] muted-text">
-          {activity.context.publicReposScanned} public repos scanned
+        <p className="text-sm muted-text">
+          {activity.hasLiveData ? "No recent public commits to show." : "GitHub activity is temporarily unavailable."}
         </p>
       )}
-
-      {!activity.hasLiveData && !isSyncing ? (
-        <p className="mt-4 text-xs muted-text">
-          Live metrics could not be fetched. Ensure `GH_ACTIVITY_FN_TOKEN`
-          (or `GITHUB_ACTIVITY_TOKEN`) has repository access.
-        </p>
-      ) : null}
-    </aside>
+    </div>
   );
-};
-
-export default GitActivityPanel;
+}

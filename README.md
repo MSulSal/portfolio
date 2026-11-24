@@ -17,10 +17,12 @@ Featured project cards are generated from GitHub pinned repositories for `MSulSa
 
 Order and inclusion behavior:
 
-1. Fetch pinned repos from GitHub (GraphQL).
+1. Fetch public pinned repos from GitHub (GraphQL) in profile order.
 2. Apply local presentation overrides from `src/data/projectOverrides.ts`.
 3. Hide repos when `hidden: true` in the override map.
-4. If pinned fetch is unavailable, fall back to a recent-repo list.
+4. If the token is missing or GitHub is unavailable, use the saved public pin snapshot in `src/data/pinnedProjectSnapshot.ts`. Successful fetches always use the current pins, including an empty list.
+
+Optional project previews use real screenshots in `public/projects/`. Set `forceLiveUrl: null` for a project whose demo should be hidden.
 
 ## Environment Variables
 
